@@ -40,6 +40,8 @@ class AmplifyClassImpl extends AmplifyClass {
         return API.addPlugin(plugin.cast());
       case Category.dataStore:
         return DataStore.addPlugin(plugin.cast());
+      case Category.notifications:
+        return Notifications.addPlugin(plugin.cast());
       case Category.hub:
         throw UnimplementedError();
     }
@@ -57,6 +59,7 @@ class AmplifyClassImpl extends AmplifyClass {
         ...Auth.plugins,
         ...DataStore.plugins,
         ...Storage.plugins,
+        ...Notifications.plugins,
       ].map((p) => p.configure(config: amplifyConfig)),
       eagerError: true,
     );
@@ -70,6 +73,7 @@ class AmplifyClassImpl extends AmplifyClass {
       Auth.reset(),
       DataStore.reset(),
       Storage.reset(),
+      Notifications.reset(),
     ]);
     await super.reset();
   }

@@ -57,6 +57,8 @@ class MethodChannelAmplify extends AmplifyClass {
         );
       } else if (plugin is APIPluginInterface) {
         await API.addPlugin(plugin);
+      } else if (plugin is NotificationsPluginInterface) {
+        await Notifications.addPlugin(plugin);
       } else {
         throw AmplifyException(
           'The type of plugin ${plugin.runtimeType} is not yet supported '
@@ -117,10 +119,11 @@ class MethodChannelAmplify extends AmplifyClass {
 
   @override
   Future<void> reset() async {
-    Auth.reset();
-    Analytics.reset();
-    Storage.reset();
-    DataStore.reset();
-    API.reset();
+    Auth.plugins.clear();
+    Analytics.plugins.clear();
+    Storage.plugins.clear();
+    DataStore.plugins.clear();
+    API.plugins.clear();
+    Notifications.plugins.clear();
   }
 }

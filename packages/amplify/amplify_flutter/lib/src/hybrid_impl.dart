@@ -72,6 +72,8 @@ class AmplifyHybridImpl extends AmplifyClassImpl {
         );
       } else if (plugin is APIPluginInterface) {
         await API.addPlugin(plugin);
+      } else if (plugin is NotificationsPluginInterface) {
+        await Notifications.addPlugin(plugin);
       } else {
         throw AmplifyException(
           'The type of plugin ${plugin.runtimeType} is not yet supported '

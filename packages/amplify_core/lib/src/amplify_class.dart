@@ -47,6 +47,9 @@ abstract class AmplifyClass {
   /// The API category.
   final APICategory API = APICategory();
 
+  /// The Notifications category.
+  final NotificationsCategory Notifications = NotificationsCategory();
+
   /// The Amplify event hub.
   final AmplifyHub Hub = AmplifyHub();
 
