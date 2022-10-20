@@ -98,6 +98,9 @@ export 'src/types/models/model_provider.dart';
 export 'src/types/models/model_schema.dart';
 export 'src/types/models/model_schema_definition.dart';
 
+/// Notifications
+export 'src/types/notifications/notification_types.dart';
+
 /// Query
 export 'src/types/query/query_field.dart';
 export 'src/types/query/query_model_identifier.dart';
