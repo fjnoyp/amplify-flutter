@@ -27,9 +27,9 @@ class NotificationsCategory extends AmplifyCategory<NotificationsPluginInterface
         : throw _pluginNotAddedException('Notifications');
   }
 
-  Future<void> promptUserPermission() {
+  Future<void> requestMessagingPermission() {
     return plugins.length == 1
-        ? plugins[0].promptUserPermission()
+        ? plugins[0].requestMessagingPermission()
         : throw _pluginNotAddedException('Notifications');
   }
 
@@ -39,5 +39,10 @@ class NotificationsCategory extends AmplifyCategory<NotificationsPluginInterface
         : throw _pluginNotAddedException('Notifications');
   }
 
+   Future<String> getToken() {
+    return plugins.length == 1
+        ? plugins[0].getToken()
+        : throw _pluginNotAddedException('Notifications');
+  }
 
 }

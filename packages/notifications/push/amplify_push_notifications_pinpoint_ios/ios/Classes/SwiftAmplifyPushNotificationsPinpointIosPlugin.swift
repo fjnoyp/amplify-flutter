@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
-import amplify_core
+import Amplify
+import amplify_flutter_ios
 import Foundation
 
 extension Data {

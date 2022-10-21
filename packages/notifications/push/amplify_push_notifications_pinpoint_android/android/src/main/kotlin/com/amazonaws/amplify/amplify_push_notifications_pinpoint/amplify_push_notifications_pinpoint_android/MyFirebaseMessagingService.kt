@@ -4,7 +4,7 @@ package com.amazonaws.amplify.amplify_push_notifications_pinpoint.amplify_push_n
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import com.amazonaws.amplify.amplify_core.AtomicResult
+import com.amazonaws.amplify.AtomicResult
 import com.amplifyframework.core.Amplify
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

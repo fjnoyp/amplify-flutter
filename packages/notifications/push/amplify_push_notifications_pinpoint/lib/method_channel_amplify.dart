@@ -85,16 +85,16 @@ class AmplifyNotificationsPinpointMethodChannel
     return permissionOptions;
   }
 
-  @override
-  Future<void> identifyUser({
-    required String userId,
-    required AnalyticsUserProfile userProfile,
-  }) async {
-    print("userId -> $userId");
-    print("userProfile -> $userProfile");
+  // @override
+  // Future<void> identifyUser({
+  //   required String userId,
+  //   required AnalyticsUserProfile userProfile,
+  // }) async {
+  //   print("userId -> $userId");
+  //   print("userProfile -> $userProfile");
 
-    // await _methodChannel.invokeMethod<bool>('identifyUser');
-  }
+  //   // await _methodChannel.invokeMethod<bool>('identifyUser');
+  // }
 
   @override
   Future<Stream<String>> onNewToken() async {
@@ -110,33 +110,33 @@ class AmplifyNotificationsPinpointMethodChannel
     return '';
   }
 
-  @override
-  Future<Stream<RemoteMessage>> onForegroundNotificationReceived() async {
-    return Stream.empty();
-  }
+  // @override
+  // Future<Stream<RemoteMessage>> onForegroundNotificationReceived() async {
+  //   return Stream.empty();
+  // }
 
-  @override
-  Future<Stream<RemoteMessage>> onBackgroundNotificationReceived() async {
-    return Stream.empty();
-  }
+  // @override
+  // Future<Stream<RemoteMessage>> onBackgroundNotificationReceived() async {
+  //   return Stream.empty();
+  // }
 
-  @override
-  Future<Stream<RemoteMessage>> onNotificationOpenedApp() async {
-    return Stream.empty();
-  }
+  // @override
+  // Future<Stream<RemoteMessage>> onNotificationOpenedApp() async {
+  //   return Stream.empty();
+  // }
 
-  @override
-  Future<RemoteMessage> getInitialNotification() async {
-    return RemoteMessage();
-  }
+  // @override
+  // Future<RemoteMessage> getInitialNotification() async {
+  //   return RemoteMessage();
+  // }
 
-  @override
-  Future<int> getBadgeCount() async {
-    return 0;
-  }
+  // @override
+  // Future<int> getBadgeCount() async {
+  //   return 0;
+  // }
 
-  @override
-  Future<void> setBadgeCount() async {}
+  // @override
+  // Future<void> setBadgeCount() async {}
 
   //   /// Create an EndpointRequest object from a local Endpoint instance
   // EndpointRequest _endpointToRequest(PublicEndpoint publicEndpoint) {

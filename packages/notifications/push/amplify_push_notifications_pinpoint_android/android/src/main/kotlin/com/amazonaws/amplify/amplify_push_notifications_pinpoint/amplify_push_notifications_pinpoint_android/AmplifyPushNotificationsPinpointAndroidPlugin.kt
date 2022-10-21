@@ -25,7 +25,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import androidx.annotation.NonNull
-import com.amazonaws.amplify.amplify_core.AtomicResult
+import com.amazonaws.amplify.AtomicResult
 import com.amplifyframework.core.Amplify
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -56,7 +56,7 @@ public class AmplifyPushNotificationsPinpointAndroidPlugin : FlutterPlugin, Acti
       // interact with the service.  Because we have bound to a explicit
       // service that we know is running in our own process, we can
       // cast its IBinder to a concrete class and directly access it.
-      mBoundService = service.javaClass
+//      mBoundService = service.javaClass
       LOG.info("Connected to service")
 
       // Tell the user about this for our demo.
