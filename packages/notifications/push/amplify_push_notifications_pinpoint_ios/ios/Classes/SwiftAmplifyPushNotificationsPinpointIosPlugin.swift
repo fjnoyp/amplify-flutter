@@ -13,13 +13,16 @@ extension Data {
 public class SwiftAmplifyPushNotificationsPinpointIosPlugin: NSObject, FlutterPlugin {
 
     let channel:FlutterMethodChannel?;
+
     public init(channel:FlutterMethodChannel) {
         self.channel = channel
     }
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "com.amazonaws.amplify/notifications_pinpoint", binaryMessenger: registrar.messenger())
+      let newTokenChannel = FlutterEventChannel(name: "com.amazonaws.amplify/event_channel/notifications_pinpoint", binaryMessenger: registrar.messenger())
       let instance = SwiftAmplifyPushNotificationsPinpointIosPlugin(channel:channel)
     registrar.addMethodCallDelegate(instance, channel: channel)
+      registrar.addMethodCallDelegate(instance, channel: newTokenChannel)
     registrar.addApplicationDelegate(instance)
   }
 

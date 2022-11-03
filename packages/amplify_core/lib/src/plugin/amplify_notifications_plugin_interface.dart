@@ -28,7 +28,8 @@ abstract class NotificationsPluginInterface extends AmplifyPluginInterface {
         'registerForRemoteNotifications() has not been implemented');
   }
 
-  Future<void> requestMessagingPermission() {
+  Future<PushNotificationSettings> requestMessagingPermission(
+      {PushNotificationSettings? pushNotificationSettings}) {
     throw UnimplementedError(
         'requestMessagingPermission() has not been implemented');
   }
@@ -45,5 +46,43 @@ abstract class NotificationsPluginInterface extends AmplifyPluginInterface {
     );
   }
 
-  Future<void> onConfigure() async {}
+  Future<Stream<RemotePushMessage>> onForegroundNotificationReceived() {
+    throw UnimplementedError(
+        'requestMessagingPermission() has not been implemented');
+  }
+
+  Future<Stream<RemotePushMessage>> onBackgroundNotificationReceived() {
+    throw UnimplementedError(
+        'onBackgroundNotificationReceived() has not been implemented');
+  }
+
+  Future<Stream<RemotePushMessage>> onNotificationOpenedApp() {
+    throw UnimplementedError(
+        'onNotificationOpenedApp() has not been implemented');
+  }
+
+  Future<RemotePushMessage> getInitialNotification() {
+    throw UnimplementedError(
+        'getInitialNotification() has not been implemented');
+  }
+
+  Future<void> identifyUser({
+    required String userId,
+    required NotificationsUserProfile userProfile,
+  }) {
+    throw UnimplementedError('identifyUser() has not been implemented');
+  }
+
+  Future<void> unregisterForRemoteNotifications() {
+    throw UnimplementedError(
+        'unregisterForRemoteNotifications() has not been implemented');
+  }
+
+  Future<int> getBadgeCount() {
+    throw UnimplementedError('getBadgeCount() has not been implemented');
+  }
+
+  Future<void> setBadgeCount(int badgeCount) {
+    throw UnimplementedError('setBadgeCount() has not been implemented');
+  }
 }

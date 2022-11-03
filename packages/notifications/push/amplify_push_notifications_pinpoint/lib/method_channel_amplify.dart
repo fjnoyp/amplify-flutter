@@ -35,6 +35,17 @@ class AmplifyNotificationsPinpointMethodChannel
   static Stream<String> get newTokenStream => _newTokenStream ??=
       _eventChannel.receiveBroadcastStream().map((event) => event.toString());
 
+  Future<dynamic> nativeMethodCallHandler(MethodCall methodCall) async {
+    print('Native call!');
+    switch (methodCall.method) {
+      case "getToken" :
+        print("Received device token");
+        break;
+      default:
+        return "Nothing";
+    }
+  }
+
   @override
   Future<void> addPlugin() async {
     try {
@@ -56,17 +67,17 @@ class AmplifyNotificationsPinpointMethodChannel
     }
   }
 
-  Future<dynamic> nativeMethodCallHandler(MethodCall methodCall) async {
-    print('Native call!');
-    switch (methodCall.method) {
-      case "getToken" :
-        print("Received device token");
-        break;
-      default:
-        return "Nothing";
-        break;
-    }
+  @override
+  Future<void> configure({
+    AmplifyConfig? config,
+  }) async {
+
+    // Register native listeners for token generattion and notification handling 
+    // Initialize Pinpoint and Endpoint Clients 
+    // Register FCM and APNS if auto-registeration is enabled
+
   }
+
 
   @override
   Future<void> registerForRemoteNotifications() async {
@@ -75,26 +86,26 @@ class AmplifyNotificationsPinpointMethodChannel
 
   @override
   Future<PushNotificationSettings> requestMessagingPermission(
-      {PushNotificationSettings? permissionOptions}) async {
-    permissionOptions ??= PushNotificationSettings();
+      {PushNotificationSettings? pushNotificationSettings}) async {
+    pushNotificationSettings ??= PushNotificationSettings();
 
     await _methodChannel.invokeMethod<bool>('requestMessagingPermission');
 
-    permissionOptions.authorizationStatus = AuthorizationStatus.authorized;
-    print("permissionOptions -> ${permissionOptions.authorizationStatus}");
-    return permissionOptions;
+    pushNotificationSettings.authorizationStatus = AuthorizationStatus.authorized;
+    print("pushNotificationSettings -> ${pushNotificationSettings.authorizationStatus}");
+    return pushNotificationSettings;
   }
 
-  // @override
-  // Future<void> identifyUser({
-  //   required String userId,
-  //   required AnalyticsUserProfile userProfile,
-  // }) async {
-  //   print("userId -> $userId");
-  //   print("userProfile -> $userProfile");
+  @override
+  Future<void> identifyUser({
+    required String userId,
+    required NotificationsUserProfile userProfile,
+  }) async {
+    print("userId -> $userId");
+    print("userProfile -> $userProfile");
 
-  //   // await _methodChannel.invokeMethod<bool>('identifyUser');
-  // }
+    // await _methodChannel.invokeMethod<bool>('identifyUser');
+  }
 
   @override
   Future<Stream<String>> onNewToken() async {
@@ -110,48 +121,34 @@ class AmplifyNotificationsPinpointMethodChannel
     return '';
   }
 
-  // @override
-  // Future<Stream<RemoteMessage>> onForegroundNotificationReceived() async {
-  //   return Stream.empty();
-  // }
+  @override
+  Future<Stream<RemotePushMessage>> onForegroundNotificationReceived() async {
+    return Stream.empty();
+  }
 
-  // @override
-  // Future<Stream<RemoteMessage>> onBackgroundNotificationReceived() async {
-  //   return Stream.empty();
-  // }
+  @override
+  Future<Stream<RemotePushMessage>> onBackgroundNotificationReceived() async {
+    return Stream.empty();
+  }
 
-  // @override
-  // Future<Stream<RemoteMessage>> onNotificationOpenedApp() async {
-  //   return Stream.empty();
-  // }
+  @override
+  Future<Stream<RemotePushMessage>> onNotificationOpenedApp() async {
+    return Stream.empty();
+  }
 
-  // @override
-  // Future<RemoteMessage> getInitialNotification() async {
-  //   return RemoteMessage();
-  // }
+  @override
+  Future<RemotePushMessage> getInitialNotification() async {
+    return RemotePushMessage();
+  }
 
-  // @override
-  // Future<int> getBadgeCount() async {
-  //   return 0;
-  // }
+  @override
+  Future<int> getBadgeCount() async {
+    return 0;
+  }
 
-  // @override
-  // Future<void> setBadgeCount() async {}
+  @override
+  Future<void> setBadgeCount(int badgeCount) async {
 
-  //   /// Create an EndpointRequest object from a local Endpoint instance
-  // EndpointRequest _endpointToRequest(PublicEndpoint publicEndpoint) {
-  //   return EndpointRequest(
-  //     address: publicEndpoint.address,
-  //     attributes: publicEndpoint.attributes,
-  //     channelType: publicEndpoint.channelType,
-  //     demographic: publicEndpoint.demographic,
-  //     effectiveDate: publicEndpoint.effectiveDate,
-  //     endpointStatus: publicEndpoint.endpointStatus,
-  //     location: publicEndpoint.location,
-  //     metrics: publicEndpoint.metrics,
-  //     optOut: publicEndpoint.optOut,
-  //     requestId: publicEndpoint.requestId,
-  //     user: publicEndpoint.user,
-  //   );
-  // }
+  }
+
 }

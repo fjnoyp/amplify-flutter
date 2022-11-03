@@ -13,6 +13,12 @@
  * permissions and limitations under the License.
  */
 
+export 'push_notifications/android_notification.dart';
+export 'push_notifications/apple_notification.dart';
 export 'push_notifications/authorization_status.dart';
 export 'push_notifications/messaging_permission_parameters.dart';
-export 'push_notifications/remote_message.dart';
+export 'push_notifications/notifications_user_profile.dart';
+export 'push_notifications/pinpoint_message_payload.dart';
+export 'push_notifications/remote_push_message.dart';
+export 'push_notifications/remote_push_noificaiton.dart';
+
