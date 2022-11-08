@@ -12,6 +12,10 @@ class AndroidNotification {
   // AndroidNotificationVisibility visibility;
   // String clickAction;
 
-AndroidNotification({required this.channelId, required this.color, required this.imageUrl, required this.smallIcon,})
-
+  AndroidNotification({
+    required this.channelId,
+    required this.color,
+    required this.imageUrl,
+    required this.smallIcon,
+  });
 }

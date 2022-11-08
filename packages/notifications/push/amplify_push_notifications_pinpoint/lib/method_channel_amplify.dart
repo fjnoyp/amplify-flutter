@@ -75,6 +75,7 @@ class AmplifyNotificationsPinpointMethodChannel
     // Register native listeners for token generattion and notification handling 
     // Initialize Pinpoint and Endpoint Clients 
     // Register FCM and APNS if auto-registeration is enabled
+    // Create an Endpoint with a unique endpointId 
 
   }
 
