@@ -19,8 +19,8 @@ import 'package:flutter/services.dart';
 import '../amplify_push_notifications_pinpoint.dart';
 // import 'package:amplify_push_notifications_pinpoint/lib/sdk/pinpoint.dart';
 
-const MethodChannel _methodChannel = MethodChannel(
-    'com.amazonaws.amplify/notifications_pinpoint');
+const MethodChannel _methodChannel =
+    MethodChannel('com.amazonaws.amplify/notifications_pinpoint');
 
 const EventChannel _eventChannel =
     EventChannel('com.amazonaws.amplify/event_channel/notifications_pinpoint');
@@ -38,7 +38,7 @@ class AmplifyNotificationsPinpointMethodChannel
   Future<dynamic> nativeMethodCallHandler(MethodCall methodCall) async {
     print('Native call!');
     switch (methodCall.method) {
-      case "getToken" :
+      case "getToken":
         print("Received device token");
         break;
       default:
@@ -47,7 +47,9 @@ class AmplifyNotificationsPinpointMethodChannel
   }
 
   @override
-  Future<void> addPlugin() async {
+  Future<void> addPlugin({
+    required AmplifyAuthProviderRepository authProviderRepo,
+  }) async {
     try {
       _methodChannel.setMethodCallHandler(nativeMethodCallHandler);
 
@@ -70,15 +72,13 @@ class AmplifyNotificationsPinpointMethodChannel
   @override
   Future<void> configure({
     AmplifyConfig? config,
+    required AmplifyAuthProviderRepository authProviderRepo,
   }) async {
-
-    // Register native listeners for token generattion and notification handling 
-    // Initialize Pinpoint and Endpoint Clients 
+    // Register native listeners for token generattion and notification handling
+    // Initialize Pinpoint and Endpoint Clients
     // Register FCM and APNS if auto-registeration is enabled
-    // Create an Endpoint with a unique endpointId 
-
+    // Create an Endpoint with a unique endpointId
   }
-
 
   @override
   Future<void> registerForRemoteNotifications() async {
@@ -92,8 +92,10 @@ class AmplifyNotificationsPinpointMethodChannel
 
     await _methodChannel.invokeMethod<bool>('requestMessagingPermission');
 
-    pushNotificationSettings.authorizationStatus = AuthorizationStatus.authorized;
-    print("pushNotificationSettings -> ${pushNotificationSettings.authorizationStatus}");
+    pushNotificationSettings.authorizationStatus =
+        AuthorizationStatus.authorized;
+    print(
+        "pushNotificationSettings -> ${pushNotificationSettings.authorizationStatus}");
     return pushNotificationSettings;
   }
 
@@ -117,7 +119,7 @@ class AmplifyNotificationsPinpointMethodChannel
   @override
   Future<String> getToken() async {
     String? token = await _methodChannel.invokeMethod<String>('getToken');
-        print("Token -> $token");
+    print("Token -> $token");
 
     return '';
   }
@@ -148,8 +150,5 @@ class AmplifyNotificationsPinpointMethodChannel
   }
 
   @override
-  Future<void> setBadgeCount(int badgeCount) async {
-
-  }
-
+  Future<void> setBadgeCount(int badgeCount) async {}
 }
