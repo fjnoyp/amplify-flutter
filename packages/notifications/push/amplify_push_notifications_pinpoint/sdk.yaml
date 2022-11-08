@@ -1,0 +1,3 @@
+apis:
+  pinpoint:
+  - com.amazonaws.pinpoint#UpdateEndpoint
