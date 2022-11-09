@@ -1,3 +1,4 @@
 apis:
   pinpoint:
+  - com.amazonaws.pinpoint#PutEvents
   - com.amazonaws.pinpoint#UpdateEndpoint
