@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:amplify_push_notifications_pinpoint/amplify_push_notifications_pinpoint.dart';
 import 'amplifyconfiguration.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+
+
 
 void main() {
+  AmplifyLogger().logLevel = LogLevel.info;
   runApp(const MyApp());
 }
 
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    // _configureAmplify();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -34,11 +35,13 @@ class _MyAppState extends State<MyApp> {
     // Configure analytics plugin
     AmplifyPushNotificaitonsPinpoint notificationsPlugin =
         AmplifyPushNotificaitonsPinpoint();
+    final authPlugin = AmplifyAuthCognito();
 
-    Amplify.addPlugins([notificationsPlugin]);
+    Amplify.addPlugins([authPlugin, notificationsPlugin]);
 
     try {
       await Amplify.configure(amplifyconfig);
+      
     } catch (e) {
       print(e.toString());
     }
@@ -52,16 +55,17 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
+          child: ListView(
             children: [
               const Text('Configuration APIs'),
               TextButton(
                 onPressed: () async {
-                  try {
-                    await Amplify.configure(amplifyconfig);
-                  } catch (e) {
-                    print(e.toString());
-                  }
+                  _configureAmplify();
+                  // try {
+                  //   await Amplify.configure(amplifyconfig);
+                  // } catch (e) {
+                  //   print(e.toString());
+                  // }
                 },
                 child: const Text('configure'),
               ),

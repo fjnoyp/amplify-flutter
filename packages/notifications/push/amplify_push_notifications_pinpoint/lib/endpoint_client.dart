@@ -13,8 +13,9 @@
 // limitations under the License.
 
 // import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/endpoint_client/endpoint_global_fields_manager.dart';
-// import 'package:amplify_push_notifications_pinpoint/lib/sdk/pinpoint.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:amplify_push_notifications_pinpoint/endpoint_global_fields_manager.dart';
+import 'package:amplify_push_notifications_pinpoint/src/sdk/pinpoint.dart';
 import 'package:amplify_secure_storage_dart/amplify_secure_storage_dart.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:meta/meta.dart';
@@ -42,11 +43,12 @@ class EndpointClient {
 
   /// {@macro amplify_analytics_pinpoint_dart.endpoint_client}
   static Future<EndpointClient> getInstance(
-    String appId,
-    SecureStorageInterface keyValueStore,
-    PinpointClient pinpointClient,
-    DeviceContextInfo? deviceContextInfo,
-  ) async {
+      String appId,
+      SecureStorageInterface keyValueStore,
+      PinpointClient pinpointClient,
+      String deviceToken
+      // DeviceContextInfo? deviceContextInfo,
+      ) async {
     if (_instance != null) return _instance!;
 
     // Retrieve Unique ID
@@ -60,22 +62,27 @@ class EndpointClient {
       );
     }
 
+    _logger.info("EndpointId -> $savedFixedEndpointId");
+
     final globalFieldsManager =
         await EndpointGlobalFieldsManager.getInstance(keyValueStore);
 
     final endpointBuilder = PublicEndpointBuilder()
-      ..effectiveDate = DateTime.now().toUtc().toIso8601String()
-      ..demographic = (EndpointDemographicBuilder()
-        ..appVersion = deviceContextInfo?.appVersion
-        ..locale = deviceContextInfo?.locale
-        ..make = deviceContextInfo?.make
-        ..model = deviceContextInfo?.model
-        ..modelVersion = deviceContextInfo?.modelVersion
-        ..platform = deviceContextInfo?.platform?.name
-        ..platformVersion = deviceContextInfo?.platformVersion
-        ..timezone = deviceContextInfo?.timezone)
-      ..location =
-          (EndpointLocationBuilder()..country = deviceContextInfo?.countryCode);
+      ..address = deviceToken
+      ..channelType = ChannelType.gcm
+      ..optOut = 'NONE';
+    // ..effectiveDate = DateTime.now().toUtc().toIso8601String();
+    // ..demographic = (EndpointDemographicBuilder()
+    //   ..appVersion = deviceContextInfo?.appVersion
+    //   ..locale = deviceContextInfo?.locale
+    //   ..make = deviceContextInfo?.make
+    //   ..model = deviceContextInfo?.model
+    //   ..modelVersion = deviceContextInfo?.modelVersion
+    //   ..platform = deviceContextInfo?.platform?.name
+    //   ..platformVersion = deviceContextInfo?.platformVersion
+    //   ..timezone = deviceContextInfo?.timezone)
+    // ..location =
+    //     (EndpointLocationBuilder()..country = deviceContextInfo?.countryCode);
 
     _instance = EndpointClient(
       appId,
@@ -84,6 +91,8 @@ class EndpointClient {
       globalFieldsManager,
       endpointBuilder,
     );
+    _logger.info("_instance -> $_instance");
+
     return _instance!;
   }
 
@@ -100,7 +109,8 @@ class EndpointClient {
   final EndpointGlobalFieldsManager _globalFieldsManager;
 
   static final AmplifyLogger _logger =
-      AmplifyLogger.category(Category.notifications).createChild('EndpointClient');
+      AmplifyLogger.category(Category.notifications)
+          .createChild('EndpointClient');
 
   static const String _endpointIdStorageKey = 'UniqueId';
 
@@ -172,9 +182,9 @@ class EndpointClient {
     // Note that the [copyFromProfile]'s properties are copied to Endpoint metrics/attributes
     // Instead of the [EndpointUserBuilder] object
     if (userProfile.properties != null) {
-      await _globalFieldsManager
-          .addAttributes(userProfile.properties!.attributes);
-      await _globalFieldsManager.addMetrics(userProfile.properties!.metrics);
+      // await _globalFieldsManager
+      //     .addAttributes(userProfile.properties!.attributes);
+      // await _globalFieldsManager.addMetrics(userProfile.properties!.metrics);
     }
 
     _endpointBuilder.user = newUserBuilder;
@@ -186,30 +196,46 @@ class EndpointClient {
   /// Copy globalAttributes and globalMetrics into EndpointBuilder before build()
   PublicEndpoint getPublicEndpoint() {
     // Attributes must be sent with map value type List<String>, not String
-    final attributes = <String, List<String>>{};
-    _globalFieldsManager.globalAttributes.forEach((key, value) {
-      attributes[key] = [value];
-    });
+    // final attributes = <String, List<String>>{};
+    // _globalFieldsManager.globalAttributes.forEach((key, value) {
+    //   attributes[key] = [value];
+    // });
 
-    _endpointBuilder
-      ..attributes = ListMultimapBuilder(attributes)
-      ..metrics = MapBuilder(_globalFieldsManager.globalMetrics);
+    // _endpointBuilder
+    //   ..attributes = ListMultimapBuilder(attributes)
+    //   ..metrics = MapBuilder(_globalFieldsManager.globalMetrics);
     return _endpointBuilder.build();
   }
 
   /// Send local Endpoint instance to AWS Pinpoint
   Future<void> updateEndpoint() async {
     try {
-      await _pinpointClient
+      _logger.info(" IN Update endpoint result ");
+      final endpointReq = _endpointToRequest(getPublicEndpoint());
+      _logger.info("endpointReq -> $endpointReq");
+      _logger.info("_pinpointClient -> $_pinpointClient}");
+
+      _pinpointClient
           .updateEndpoint(
             UpdateEndpointRequest(
               applicationId: _appId,
               endpointId: _fixedEndpointId,
-              endpointRequest: _endpointToRequest(getPublicEndpoint()),
+              endpointRequest: endpointReq,
             ),
           )
-          .result;
-    } on Exception catch (error) {
+          .result
+          .then((res) => _logger.info("Update endpoint result -> $res"))
+          .onError(
+            (error, stackTrace) =>
+                _logger.info("Error updating endpoint $error"),
+          )
+          .whenComplete(() => _logger.info("Update endpoint complete"))
+          .timeout(
+            const Duration(seconds: 20),
+            onTimeout: () => _logger.info("Request timed out!"),
+          );
+      // _logger.info("Update endpoint result -> $res");
+    } catch (error) {
       _logger.error('updateEndpoint - exception encountered: $error');
       rethrow;
     }
@@ -217,19 +243,18 @@ class EndpointClient {
 
   /// Create an EndpointRequest object from a local Endpoint instance
   EndpointRequest _endpointToRequest(PublicEndpoint publicEndpoint) {
-    return EndpointRequest.build(
-      (b) => b
-        ..address = publicEndpoint.address
-        ..attributes.replace(publicEndpoint.attributes)
-        ..channelType = publicEndpoint.channelType
-        ..demographic = publicEndpoint.demographic?.toBuilder()
-        ..effectiveDate = publicEndpoint.effectiveDate
-        ..endpointStatus = publicEndpoint.endpointStatus
-        ..location = publicEndpoint.location?.toBuilder()
-        ..metrics.replace(publicEndpoint.metrics ?? const {})
-        ..optOut = publicEndpoint.optOut
-        ..requestId = publicEndpoint.requestId
-        ..user = publicEndpoint.user?.toBuilder(),
-    );
+    return EndpointRequest.build((b) => b
+          ..address = publicEndpoint.address
+          // ..attributes.replace(publicEndpoint.attributes)
+          ..channelType = publicEndpoint.channelType
+          // ..demographic = publicEndpoint.demographic?.toBuilder()
+          ..effectiveDate = publicEndpoint.effectiveDate
+          ..endpointStatus = publicEndpoint.endpointStatus
+          // ..location = publicEndpoint.location?.toBuilder()
+          // ..metrics.replace(publicEndpoint.metrics ?? const {})
+          ..optOut = publicEndpoint.optOut
+          ..requestId = publicEndpoint.requestId
+        // ..user = publicEndpoint.user?.toBuilder(),
+        );
   }
 }

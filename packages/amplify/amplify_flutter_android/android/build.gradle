@@ -38,7 +38,7 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 23
     }
     lintOptions {
         disable 'InvalidPackage'

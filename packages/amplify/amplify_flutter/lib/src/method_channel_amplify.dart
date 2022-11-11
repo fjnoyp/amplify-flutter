@@ -113,6 +113,7 @@ class MethodChannelAmplify extends AmplifyClassImpl {
       await Future.wait(
         Analytics.plugins.map((plugin) => plugin.onConfigure()),
       );
+
     } on PlatformException catch (e) {
       if (e.code == 'AnalyticsException') {
         throw AnalyticsException.fromMap(

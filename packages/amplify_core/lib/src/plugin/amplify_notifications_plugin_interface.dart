@@ -23,6 +23,8 @@ abstract class NotificationsPluginInterface extends AmplifyPluginInterface {
   @nonVirtual
   Category get category => Category.notifications;
 
+  Future<void> onConfigure() async {}
+
   Future<void> registerForRemoteNotifications() {
     throw UnimplementedError(
         'registerForRemoteNotifications() has not been implemented');
