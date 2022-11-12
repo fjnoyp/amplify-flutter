@@ -215,7 +215,7 @@ class EndpointClient {
       _logger.info("endpointReq -> $endpointReq");
       _logger.info("_pinpointClient -> $_pinpointClient}");
 
-      _pinpointClient
+      final res = await _pinpointClient
           .updateEndpoint(
             UpdateEndpointRequest(
               applicationId: _appId,
@@ -223,18 +223,18 @@ class EndpointClient {
               endpointRequest: endpointReq,
             ),
           )
-          .result
-          .then((res) => _logger.info("Update endpoint result -> $res"))
-          .onError(
-            (error, stackTrace) =>
-                _logger.info("Error updating endpoint $error"),
-          )
-          .whenComplete(() => _logger.info("Update endpoint complete"))
-          .timeout(
-            const Duration(seconds: 20),
-            onTimeout: () => _logger.info("Request timed out!"),
-          );
-      // _logger.info("Update endpoint result -> $res");
+          .result;
+          // .then((res) => _logger.info("Update endpoint result -> $res"))
+          // .onError(
+          //   (error, stackTrace) =>
+          //       _logger.info("Error updating endpoint $error"),
+          // )
+          // .whenComplete(() => _logger.info("Update endpoint complete"))
+          // .timeout(
+          //   const Duration(seconds: 20),
+          //   onTimeout: () => _logger.info("Request timed out!"),
+          // );
+      _logger.info("Update endpoint result -> $res");
     } catch (error) {
       _logger.error('updateEndpoint - exception encountered: $error');
       rethrow;
@@ -245,15 +245,15 @@ class EndpointClient {
   EndpointRequest _endpointToRequest(PublicEndpoint publicEndpoint) {
     return EndpointRequest.build((b) => b
           ..address = publicEndpoint.address
-          // ..attributes.replace(publicEndpoint.attributes)
           ..channelType = publicEndpoint.channelType
-          // ..demographic = publicEndpoint.demographic?.toBuilder()
           ..effectiveDate = publicEndpoint.effectiveDate
           ..endpointStatus = publicEndpoint.endpointStatus
-          // ..location = publicEndpoint.location?.toBuilder()
-          // ..metrics.replace(publicEndpoint.metrics ?? const {})
           ..optOut = publicEndpoint.optOut
-          ..requestId = publicEndpoint.requestId
+          ..requestId = publicEndpoint.requestId,
+        // ..attributes.replace(publicEndpoint.attributes)
+        // ..demographic = publicEndpoint.demographic?.toBuilder()
+        // ..location = publicEndpoint.location?.toBuilder()
+        // ..metrics.replace(publicEndpoint.metrics ?? const {})
         // ..user = publicEndpoint.user?.toBuilder(),
         );
   }

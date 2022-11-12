@@ -42,7 +42,7 @@ android {
         test.resources.srcDirs += '../../amplify_auth_cognito/test/resources'
     }
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 24
     }
     lintOptions {
         disable 'AndroidGradlePluginVersion'

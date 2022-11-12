@@ -88,8 +88,8 @@ class AmplifyNotificationsPinpointMethodChannel
     try {
       _logger.info("configureCustom works!");
 
-      const appId = '858c8062d5e041b88f0d1e3e93c13589';
-      const region = 'us-west-2';
+      const appId = '3ff4b3c988e548d2ac5dc50fe907cc29';
+      const region = 'us-east-1';
 
       // Prepare PinpointClient
       final authProvider = authProviderRepo
