@@ -134,7 +134,7 @@ class AmplifyPushNotifications extends PushNotificationsPluginInterface {
 
     // Initialize Endpoint Client
     await _serviceProviderClient.init(
-      config: config,
+      config: analyticsConfig,
       authProviderRepo: authProviderRepo,
     );
 
@@ -143,10 +143,13 @@ class AmplifyPushNotifications extends PushNotificationsPluginInterface {
     final deviceToken = await onTokenReceived.first;
     await _registerDevice(deviceToken);
 
+    // await _serviceProviderClient.recordNotificationEvent(eventType: 'test');
+    // await _serviceProviderClient.identifyUser(userId: 'test');
+
     // Initialize listeners
-    onTokenReceived.listen(_tokenReceivedListener);
-    onNotificationReceivedInForeground.listen(_foregroundNotificationListener);
-    onNotificationOpened.listen(_notificationOpenedListener);
+    // onTokenReceived.listen(_tokenReceivedListener);
+    // onNotificationReceivedInForeground.listen(_foregroundNotificationListener);
+    // onNotificationOpened.listen(_notificationOpenedListener);
 
     // TODO: Register the callback dispatcher
 

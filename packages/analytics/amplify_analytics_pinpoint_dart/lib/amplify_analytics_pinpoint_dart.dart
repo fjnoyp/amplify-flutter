@@ -13,3 +13,5 @@ export 'src/impl/flutter_provider_interfaces/app_lifecycle_provider.dart';
 export 'src/impl/flutter_provider_interfaces/cached_events_path_provider.dart';
 export 'src/impl/flutter_provider_interfaces/device_context_info_provider.dart';
 export 'src/impl/flutter_provider_interfaces/legacy_native_data_provider.dart';
+export 'src/sdk/src/pinpoint/model/channel_type.dart';
+export 'src/sdk/src/pinpoint/model/not_found_exception.dart';
