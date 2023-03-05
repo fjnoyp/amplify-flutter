@@ -137,18 +137,19 @@ class AmplifyPushNotifications extends PushNotificationsPluginInterface {
       config: analyticsConfig,
       authProviderRepo: authProviderRepo,
     );
-
+    await _serviceProviderClient.identifyUser(
+      userId: 'test-user-2',
+      userProfile: AnalyticsUserProfile(name: 'test-user-name-2'),
+    );
     // Block configure if registering device is not complete
     // TODO: Catch and throw exceptions originating from token or device registration
     final deviceToken = await onTokenReceived.first;
+    print('token: $deviceToken');
     await _registerDevice(deviceToken);
-
-    // await _serviceProviderClient.recordNotificationEvent(eventType: 'test');
-    // await _serviceProviderClient.identifyUser(userId: 'test');
 
     // Initialize listeners
     // onTokenReceived.listen(_tokenReceivedListener);
-    // onNotificationReceivedInForeground.listen(_foregroundNotificationListener);
+    onNotificationReceivedInForeground.listen(_foregroundNotificationListener);
     // onNotificationOpened.listen(_notificationOpenedListener);
 
     // TODO: Register the callback dispatcher
@@ -160,28 +161,19 @@ class AmplifyPushNotifications extends PushNotificationsPluginInterface {
 
   void _foregroundNotificationListener(
     PushNotificationMessage pushNotificationMessage,
-  ) {
-    _logger.info(
-      'Successfully listrening to foreground events: $pushNotificationMessage',
-    );
-
-    // TODO(Samaritan1011001): Record Analytics
-  }
-
-  void _backgroundNotificationListener(
-    PushNotificationMessage pushNotificationMessage,
-  ) {
-    // TODO(Samaritan1011001): Record Analytics
-  }
+  ) =>
+      _serviceProviderClient.recordNotificationEvent(
+        eventType: AWSPinpointMessageEvent.foregroundMessageReceived,
+        notification: pushNotificationMessage,
+      );
 
   void _notificationOpenedListener(
     PushNotificationMessage pushNotificationMessage,
-  ) {
-    _logger.info(
-      'Successfully listrening to notification opened events: $pushNotificationMessage',
-    );
-    // TODO(Samaritan1011001): Record Analytics
-  }
+  ) =>
+      _serviceProviderClient.recordNotificationEvent(
+        eventType: AWSPinpointMessageEvent.notificationOpened,
+        notification: pushNotificationMessage,
+      );
 
   Future<String> _tokenReceivedListener(
     String address,
