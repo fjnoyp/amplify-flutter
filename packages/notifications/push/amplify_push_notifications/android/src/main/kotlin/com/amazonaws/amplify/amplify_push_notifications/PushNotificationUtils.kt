@@ -21,13 +21,13 @@ fun RemoteMessage.asPayload(): NotificationPayload {
     val sendTime = this.sentTime
     val data = this.data
     val body = this.notification?.body
-        ?: data[PushNotificationsConstants.MESSAGE_ATTRIBUTE_KEY]
+        ?: data[PushNotificationsConstants.MESSAGE]
         ?: data[PushNotificationsConstants.PINPOINT_NOTIFICATION_BODY]
     val title = this.notification?.title
-        ?: data[PushNotificationsConstants.TITLE_ATTRIBUTE_KEY]
+        ?: data[PushNotificationsConstants.TITLE]
         ?: data[PushNotificationsConstants.PINPOINT_NOTIFICATION_TITLE]
     val imageUrl = this.notification?.imageUrl?.toString()
-        ?: data[PushNotificationsConstants.IMAGEURL_ATTRIBUTE_KEY]
+        ?: data[PushNotificationsConstants.IMAGEURL]
         ?: data[PushNotificationsConstants.PINPOINT_NOTIFICATION_IMAGEURL]
 
 
