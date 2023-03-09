@@ -111,7 +111,7 @@ class PinpointProvider implements ServiceProviderClient {
         return;
       }
 
-      final eventInfo = _getEventInfo(notification: notification);
+      final eventInfo = _constructEventInfo(notification: notification);
       await _analyticsClient.eventClient.recordEvent(
         eventType: '${eventInfo.first as String}.${eventType.name}',
         properties: eventInfo.last as AnalyticsProperties,
@@ -142,7 +142,7 @@ class PinpointProvider implements ServiceProviderClient {
     }
   }
 
-  Set<Object> _getEventInfo({
+  Set<Object> _constructEventInfo({
     required PushNotificationMessage notification,
   }) {
     final data = notification.data;
