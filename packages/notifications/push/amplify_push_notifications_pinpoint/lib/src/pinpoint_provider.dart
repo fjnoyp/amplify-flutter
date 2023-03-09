@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:convert';
 import 'dart:io' show Platform;
 
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
@@ -18,16 +19,25 @@ final AmplifyLogger _logger = AmplifyLogger.category(Category.pushNotifications)
 /// {@endtemplate}
 class PinpointProvider implements ServiceProviderClient {
   /// {@macro amplify_push_notifications_pinpoint.pinpoint_provider}
-  late FlutterAnalyticsClient _analyticsClient;
+  PinpointProvider() {
+    _androidCampaignIdKey += _campaginIdKey;
+    _androidCampaignActivityIdKey += _campaignActivityIdKey;
+    _androidCampaignTreatmentIdKey += _treatmentIdKey;
+  }
 
-  final _androidCampaignIdKey = 'pinpoint.campaign.campaign_id';
-  final _androidCampaignActivityIdKey =
+  late FlutterAnalyticsClient _analyticsClient;
+  final _campaginIdKey = 'campaign_id';
+  final _campaignActivityIdKey = 'campaign_activity_id';
+  final _treatmentIdKey = 'treatment_id';
+  String _androidCampaignIdKey = 'pinpoint.campaign.';
+  String _androidCampaignActivityIdKey =
       'pinpoint.campaign.campaign_activity_id';
-  final _androidCampaignTreatmentIdKey = 'pinpoint.campaign.treatment_id';
+  String _androidCampaignTreatmentIdKey = 'pinpoint.campaign.treatment_id';
   bool _isInitialized = false;
+
   @override
   Future<void> init({
-    required PinpointPluginConfig config,
+    required NotificationsPinpointPluginConfig config,
     required AmplifyAuthProviderRepository authProviderRepo,
   }) async {
     try {
@@ -35,14 +45,13 @@ class PinpointProvider implements ServiceProviderClient {
         final authProvider = authProviderRepo
             .getAuthProvider(APIAuthorizationType.iam.authProviderToken);
 
-        // TODO(Samaritan1011001): Update to use notifications
         if (authProvider == null) {
-          throw const AnalyticsException(
+          throw const PushNotificationException(
             'No AWSIamAmplifyAuthProvider available. Is Auth category added and configured?',
           );
         }
-        final region = config.pinpointAnalytics.region;
-        final appId = config.pinpointAnalytics.appId;
+        final region = config.region;
+        final appId = config.appId;
 
         _analyticsClient = FlutterAnalyticsClient(
           endpointInfoStoreManager: FlutterEndpointInfoStoreManager(
@@ -103,11 +112,8 @@ class PinpointProvider implements ServiceProviderClient {
       }
 
       final eventInfo = _getEventInfo(notification: notification);
-
-      // TODO(Samaritan1011001): Test for journey and for iOS payload
-      // TODO(Samaritan1011001): Event char length is too long even for _campaign.received_foreground
       await _analyticsClient.eventClient.recordEvent(
-        eventType: '${eventInfo.first as String}.$eventType',
+        eventType: '${eventInfo.first as String}.${eventType.name}',
         properties: eventInfo.last as AnalyticsProperties,
       );
     } on Exception catch (e) {
@@ -140,55 +146,70 @@ class PinpointProvider implements ServiceProviderClient {
     required PushNotificationMessage notification,
   }) {
     final data = notification.data;
-
     final analyticsProperties = AnalyticsProperties();
     var source = AWSPinpointMessageEventSource.campaign.name;
+    var campaign = <String, String>{};
+    var journey = <String, String>{};
+    var pinpointData = <Object?, Object?>{};
+
+    // Android payload contain pinpoint.campaign.* format
     if (data.containsKey(_androidCampaignIdKey)) {
       source = AWSPinpointMessageEventSource.campaign.name;
-      analyticsProperties.addStringProperty(
-        'campaign_id',
-        data[_androidCampaignIdKey] as String,
-      );
+      campaign[_campaginIdKey] = data[_androidCampaignIdKey] as String;
       if (data.containsKey(_androidCampaignActivityIdKey)) {
-        analyticsProperties.addStringProperty(
-          'campaign_activity_id',
-          data[_androidCampaignActivityIdKey] as String,
-        );
+        campaign[_campaignActivityIdKey] =
+            data[_androidCampaignActivityIdKey] as String;
       }
       if (data.containsKey(_androidCampaignTreatmentIdKey)) {
-        analyticsProperties.addStringProperty(
-          'treatment_id',
-          data[_androidCampaignTreatmentIdKey] as String,
+        campaign[_treatmentIdKey] =
+            data[_androidCampaignTreatmentIdKey] as String;
+      }
+    }
+
+    if (data.containsKey('pinpoint')) {
+      // Check for nested pinpoint value in Android's data and decode.
+      if (data['pinpoint'] is String) {
+        pinpointData =
+            jsonDecode(data['pinpoint'] as String) as Map<Object?, Object?>;
+      } else {
+        pinpointData = data['pinpoint'] as Map<Object?, Object?>;
+      }
+
+      // iOS payload conatin a nested map of pinpoint, campaign, * format
+      if (pinpointData.containsKey('campaign')) {
+        source = AWSPinpointMessageEventSource.campaign.name;
+        campaign = Map<String, String>.from(
+          pinpointData['campaign'] as Map<Object?, Object?>,
+        );
+      }
+
+      // Common way of represting journeys both on Android and iOS payloads
+      if (pinpointData.containsKey('journey')) {
+        source = AWSPinpointMessageEventSource.journey.name;
+        journey = Map<String, String>.from(
+          pinpointData['journey'] as Map<Object?, Object?>,
         );
       }
     }
 
-    // TODO(Samaritan1011001): Pinpoint object only exists on iOS so check what should go into analytics properties then
-    if (data.containsKey('pinpoint')) {
-      final pinpointData = (data['pinpoint'] as Map<Object, Object>);
-      if (pinpointData.containsKey('campaign')) {
-        source = AWSPinpointMessageEventSource.campaign.name;
-        analyticsProperties.addStringProperty(
-          'campaign',
-          pinpointData['campaign'] as String,
-        );
-      } else if (pinpointData.containsKey('journey')) {
-        source = AWSPinpointMessageEventSource.journey.name;
-        analyticsProperties.addStringProperty(
-          'journey',
-          pinpointData['journey'] as String,
-        );
-      }
+    if (campaign.isNotEmpty) {
+      campaign.forEach(analyticsProperties.addStringProperty);
+    }
+
+    if (journey.isNotEmpty) {
+      journey.forEach(analyticsProperties.addStringProperty);
     }
 
     return {source, analyticsProperties};
   }
 
-// TODO(Samaritan1011001): should we use deviceContextInfo? Can this be infered in Analytics? Should we add ChannelType.apnsSandbox?
   ChannelType? _getChannelType() {
     if (Platform.isAndroid) {
       return ChannelType.gcm;
     } else if (Platform.isIOS) {
+      if (zDebugMode) {
+        return ChannelType.apnsSandbox;
+      }
       return ChannelType.apns;
     }
     return null;

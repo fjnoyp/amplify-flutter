@@ -14,7 +14,7 @@ import 'package:amplify_core/amplify_core.dart';
 /// {@endtemplate}
 abstract class ServiceProviderClient {
   Future<void> init({
-    required PinpointPluginConfig config,
+    required NotificationsPinpointPluginConfig config,
     required AmplifyAuthProviderRepository authProviderRepo,
   });
   Future<void> registerDevice(String deviceToken);
