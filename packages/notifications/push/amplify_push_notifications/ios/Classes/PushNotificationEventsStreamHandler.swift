@@ -37,6 +37,10 @@ class PushNotificationEventsStreamHandler: NSObject, FlutterStreamHandler {
     private var eventQueue: [AmplifyPushNotificationsEvent] = []
     private var eventSink: FlutterEventSink?
 
+    var countOfQueuedEvents: Int {
+        get { return eventQueue.count }
+    }
+
     init(eventType: NativeEvent, binaryMessenger: FlutterBinaryMessenger) {
         eventChannel = FlutterEventChannel(name: eventType.eventChannelName, binaryMessenger: binaryMessenger)
         super.init()
@@ -94,7 +98,13 @@ class PushNotificationEventsStreamHandler: NSObject, FlutterStreamHandler {
     }
 }
 
-struct EventsStreamHandlers {
+protocol EventsStreamHandlersProtocol {
+    var tokenReceived: PushNotificationEventsStreamHandler { get }
+    var notificationOpened: PushNotificationEventsStreamHandler { get }
+    var foregroundMessageReceived: PushNotificationEventsStreamHandler { get }
+}
+
+struct EventsStreamHandlers: EventsStreamHandlersProtocol {
     let tokenReceived: PushNotificationEventsStreamHandler
     let notificationOpened: PushNotificationEventsStreamHandler
     let foregroundMessageReceived: PushNotificationEventsStreamHandler
