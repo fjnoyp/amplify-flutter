@@ -61,8 +61,8 @@ void main() {
     if (methodCall.method == 'listen') {
       await testWidgetsFlutterBinding.defaultBinaryMessenger
           .handlePlatformMessage(
-        tokenReceivedEventChannel.name,
-        tokenReceivedEventChannel.codec
+        internalTokenReceivedEventChannel.name,
+        internalTokenReceivedEventChannel.codec
             .encodeSuccessEnvelope(<String, dynamic>{'token': '123'}),
         (_) {},
       );
@@ -77,8 +77,8 @@ void main() {
     if (methodCall.method == 'listen') {
       await testWidgetsFlutterBinding.defaultBinaryMessenger
           .handlePlatformMessage(
-        tokenReceivedEventChannel.name,
-        tokenReceivedEventChannel.codec.encodeErrorEnvelope(
+        internalTokenReceivedEventChannel.name,
+        internalTokenReceivedEventChannel.codec.encodeErrorEnvelope(
           code: 'test',
           message: 'error',
         ),
@@ -100,7 +100,7 @@ void main() {
     );
 
     testWidgetsFlutterBinding.defaultBinaryMessenger.setMockMethodCallHandler(
-      MethodChannel(tokenReceivedEventChannel.name),
+      MethodChannel(internalTokenReceivedEventChannel.name),
       handler,
     );
   });
@@ -117,7 +117,7 @@ void main() {
       );
 
       testWidgetsFlutterBinding.defaultBinaryMessenger.setMockMethodCallHandler(
-        MethodChannel(tokenReceivedEventChannel.name),
+        MethodChannel(internalTokenReceivedEventChannel.name),
         handler,
       );
     });
@@ -165,7 +165,7 @@ void main() {
     test('should fail configure when registering device is unsuccessfull',
         () async {
       testWidgetsFlutterBinding.defaultBinaryMessenger.setMockMethodCallHandler(
-        MethodChannel(tokenReceivedEventChannel.name),
+        MethodChannel(internalTokenReceivedEventChannel.name),
         throwErrorHandler,
       );
       expect(

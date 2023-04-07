@@ -21,11 +21,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// {@endtemplate}
 const configSecureStorageKey = 'configSecureStorageKey';
 
-/// {@template amplify_push_notifications.config_storage}
-/// Token event channel made public for testing purposes.
+/// {@template amplify_push_notifications.internal_token_received_event_channel}
+/// Internal Token event channel to separate the event streams between external and internal use.
+/// Made public for testing purposes.
 /// {@endtemplate}
 @visibleForTesting
-const tokenReceivedEventChannel = EventChannel(
+const internalTokenReceivedEventChannel = EventChannel(
+  'com.amazonaws.amplify/push_notification/event/INTERNAL_TOKEN_RECEIVED',
+);
+const _externalTokenReceivedEventChannel = EventChannel(
   'com.amazonaws.amplify/push_notification/event/TOKEN_RECEIVED',
 );
 const _notificationOpenedEventChannel = EventChannel(
@@ -83,12 +87,20 @@ abstract class AmplifyPushNotifications
       _dependencyManager = dependencyManager;
     }
 
-    _onTokenReceived = tokenReceivedEventChannel
+    _externalOnTokenReceived = _externalTokenReceivedEventChannel
         .receiveBroadcastStream()
         .cast<Map<Object?, Object?>>()
         .map((payload) {
       return payload['token'] as String;
     }).distinct();
+
+    _internalOnTokenReceived = internalTokenReceivedEventChannel
+        .receiveBroadcastStream()
+        .cast<Map<Object?, Object?>>()
+        .map((payload) {
+      return payload['token'] as String;
+    }).distinct();
+
     _onForegroundNotificationReceived = _foregroundNotificationEventChannel
         .receiveBroadcastStream()
         .cast<Map<Object?, Object?>>()
@@ -106,7 +118,9 @@ abstract class AmplifyPushNotifications
       _dependencyManager.expect();
   PushNotificationsHostApi get _hostApi => _dependencyManager.expect();
   AmplifySecureStorage get _amplifySecureStorage => _dependencyManager.expect();
-  late final Stream<String> _onTokenReceived;
+  late final Stream<String> _externalOnTokenReceived;
+  late final Stream<String> _internalOnTokenReceived;
+
   late final Stream<PushNotificationMessage> _onForegroundNotificationReceived;
   late final Stream<PushNotificationMessage> _onNotificationOpened;
   var _isConfigured = false;
@@ -128,7 +142,7 @@ abstract class AmplifyPushNotifications
     if (!_isConfigured) {
       throw _needsConfigurationException;
     }
-    return _onTokenReceived;
+    return _externalOnTokenReceived;
   }
 
   @override
@@ -233,6 +247,7 @@ abstract class AmplifyPushNotifications
       value: jsonEncode(config),
     );
     _isConfigured = true;
+    print('configured');
   }
 
   @override
@@ -312,7 +327,7 @@ abstract class AmplifyPushNotifications
   Future<void> _registerDeviceWhenConfigure() async {
     late String deviceToken;
     try {
-      deviceToken = await _onTokenReceived.first;
+      deviceToken = await _internalOnTokenReceived.first;
     } on PlatformException catch (error) {
       // the error mostly like is the App doesn't have corresponding
       // capability to request a push notification device token
@@ -362,7 +377,9 @@ abstract class AmplifyPushNotifications
 
   void _attachEventChannelListeners() {
     // Initialize listeners
-    _onTokenReceived.listen(_tokenReceivedListener).onError((Object error) {
+    _internalOnTokenReceived
+        .listen(_tokenReceivedListener)
+        .onError((Object error) {
       _logger.error(
         'Unexpected error $error received from onTokenReceived event channel.',
       );

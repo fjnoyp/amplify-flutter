@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import com.amplifyframework.annotations.InternalAmplifyApi
 import com.amplifyframework.notifications.pushnotifications.NotificationContentProvider
 import com.amplifyframework.notifications.pushnotifications.NotificationPayload
@@ -16,6 +15,7 @@ import com.amplifyframework.pushnotifications.pinpoint.PushNotificationsConstant
 import com.amplifyframework.pushnotifications.pinpoint.PushNotificationsUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
+import io.flutter.Log
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.random.Random
@@ -98,14 +98,19 @@ fun refreshToken() {
     FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
         if (!task.isSuccessful) {
             if (task.exception == null) {
-                println("Error in refresh token")
-                io.flutter.Log.e(TAG, "UnknownError: fetching device token.")
+                Log.e(TAG, "UnknownError: fetching device token.")
             } else {
                 StreamHandlers.tokenReceived!!.sendError(task.exception!!)
+                StreamHandlers.internalTokenReceived!!.sendError(task.exception!!)
             }
             return@addOnCompleteListener
         }
         StreamHandlers.tokenReceived!!.send(
+            mapOf(
+                "token" to task.result
+            )
+        )
+        StreamHandlers.internalTokenReceived!!.send(
             mapOf(
                 "token" to task.result
             )
@@ -169,5 +174,5 @@ fun NotificationPayload.toWritableMap(): Map<Any, Any?> {
             "channelId" to payload?.channelId,
         ),
 
-    )
+        )
 }

@@ -41,14 +41,17 @@ void main() {
         () async => amplifyBackgroundProcessing(
           amplifySecureStorage: mockStorage,
         ),
-        throwsA(isA<PushNotificationException>()),
+        throwsA(
+          isA<PushNotificationException>().having(
+            (e) => e.message,
+            'Cached config not found',
+            contains('config was not found'),
+          ),
+        ),
       );
     });
-  });
 
-  group('amplifyBackgroundProcessing', () {
-    test('should fail when the config stored in secure storage is not found',
-        () async {
+    test('should pass', () async {
       log.clear();
       final mockStorage = MockAmplifySecureStorage();
       when(mockStorage.read(key: anyNamed('key')))

@@ -40,6 +40,7 @@ class PushNotificationFirebaseMessagingService : FirebaseMessagingService() {
         StreamHandlers.initStreamHandlers(false)
         Handler(baseContext.mainLooper).post {
             StreamHandlers.tokenReceived!!.send(mapOf("token" to token))
+            StreamHandlers.internalTokenReceived!!.send(mapOf("token" to token))
         }
     }
 

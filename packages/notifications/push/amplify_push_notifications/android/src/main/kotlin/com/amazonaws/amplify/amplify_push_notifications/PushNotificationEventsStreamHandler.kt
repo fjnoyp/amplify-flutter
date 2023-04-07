@@ -13,11 +13,12 @@ private const val TAG = "PushNotificationEventsStreamHandler"
 
 @InternalAmplifyApi
 enum class NativeEvent {
-    TOKEN_RECEIVED, NOTIFICATION_OPENED, LAUNCH_NOTIFICATION_OPENED, FOREGROUND_MESSAGE_RECEIVED, BACKGROUND_MESSAGE_RECEIVED, ERROR;
+    TOKEN_RECEIVED,INTERNAL_TOKEN_RECEIVED, NOTIFICATION_OPENED, LAUNCH_NOTIFICATION_OPENED, FOREGROUND_MESSAGE_RECEIVED, BACKGROUND_MESSAGE_RECEIVED, ERROR;
 
     val eventName: String
         get() = when (this) {
             TOKEN_RECEIVED -> "TOKEN_RECEIVED"
+            INTERNAL_TOKEN_RECEIVED -> "INTERNAL_TOKEN_RECEIVED"
             NOTIFICATION_OPENED -> "NOTIFICATION_OPENED"
             LAUNCH_NOTIFICATION_OPENED -> "LAUNCH_NOTIFICATION_OPENED"
             FOREGROUND_MESSAGE_RECEIVED -> "FOREGROUND_MESSAGE_RECEIVED"
@@ -117,6 +118,8 @@ class StreamHandlers {
 
         var tokenReceived: PushNotificationEventsStreamHandler? = null
 
+        var internalTokenReceived: PushNotificationEventsStreamHandler? = null
+
         var notificationOpened: PushNotificationEventsStreamHandler? = null
 
         var foregroundMessageReceived: PushNotificationEventsStreamHandler? = null
@@ -141,6 +144,9 @@ class StreamHandlers {
                 tokenReceived = PushNotificationEventsStreamHandler(
                     NativeEvent.TOKEN_RECEIVED
                 )
+                internalTokenReceived = PushNotificationEventsStreamHandler(
+                    NativeEvent.INTERNAL_TOKEN_RECEIVED
+                )
                 notificationOpened = PushNotificationEventsStreamHandler(
                     NativeEvent.NOTIFICATION_OPENED
                 )
@@ -157,6 +163,7 @@ class StreamHandlers {
         fun initEventChannels(binaryMessenger: BinaryMessenger) {
             if (isInitStreamHandlers) {
                 tokenReceived?.initEventChannel(binaryMessenger)
+                internalTokenReceived?.initEventChannel(binaryMessenger)
                 notificationOpened?.initEventChannel(binaryMessenger)
                 foregroundMessageReceived?.initEventChannel(binaryMessenger)
             }
@@ -167,6 +174,7 @@ class StreamHandlers {
          */
         fun deInit() {
             tokenReceived?.deInitEventChannel()
+            internalTokenReceived?.deInitEventChannel()
             notificationOpened?.deInitEventChannel()
             foregroundMessageReceived?.deInitEventChannel()
             tokenReceived = null
