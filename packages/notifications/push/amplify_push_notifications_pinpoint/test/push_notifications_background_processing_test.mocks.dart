@@ -3,10 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
+import 'package:amplify_core/amplify_core.dart' as _i4;
 import 'package:amplify_secure_storage/src/amplify_secure_storage.vm.dart'
-    as _i4;
+    as _i5;
 import 'package:amplify_secure_storage_dart/amplify_secure_storage_dart.dart'
     as _i2;
 import 'package:aws_common/aws_common.dart' as _i3;
@@ -44,11 +45,229 @@ class _FakeAWSLogger_1 extends _i1.SmartFake implements _i3.AWSLogger {
         );
 }
 
+class _FakeAuthCategory_2<
+        PluginAuthUser extends _i4.AuthUser<_i4.SignInDetails>,
+        PluginUserAttributeKey extends _i4.AuthUserAttributeKey,
+        PluginAuthUserAttribute extends _i4
+            .AuthUserAttribute<PluginUserAttributeKey>,
+        PluginAuthDevice extends _i4.AuthDevice,
+        PluginSignUpResult extends _i4.SignUpResult,
+        PluginConfirmSignUpResult extends _i4.SignUpResult,
+        PluginResendSignUpCodeResult extends _i4.ResendSignUpCodeResult,
+        PluginSignInResult extends _i4.SignInResult<PluginUserAttributeKey>,
+        PluginConfirmSignInResult extends _i4.SignInResult<PluginUserAttributeKey>,
+        PluginSignOutResult extends _i4.SignOutResult,
+        PluginUpdatePasswordResult extends _i4.UpdatePasswordResult,
+        PluginResetPasswordResult extends _i4.ResetPasswordResult,
+        PluginConfirmResetPasswordResult extends _i4.ResetPasswordResult,
+        PluginAuthSession extends _i4.AuthSession,
+        PluginSignInWithWebUIResult extends _i4
+            .SignInResult<PluginUserAttributeKey>,
+        PluginUpdateUserAttributeResult extends _i4.UpdateUserAttributeResult,
+        PluginConfirmUserAttributeResult extends _i4.ConfirmUserAttributeResult,
+        PluginResendUserAttributeConfirmationCodeResult extends _i4
+            .ResendUserAttributeConfirmationCodeResult,
+        Plugin extends _i4.AuthPluginInterface<
+            PluginAuthUser,
+            PluginUserAttributeKey,
+            PluginAuthUserAttribute,
+            PluginAuthDevice,
+            PluginSignUpResult,
+            PluginConfirmSignUpResult,
+            PluginResendSignUpCodeResult,
+            PluginSignInResult,
+            PluginConfirmSignInResult,
+            PluginSignOutResult,
+            PluginUpdatePasswordResult,
+            PluginResetPasswordResult,
+            PluginConfirmResetPasswordResult,
+            PluginAuthSession,
+            PluginSignInWithWebUIResult,
+            PluginUpdateUserAttributeResult,
+            PluginConfirmUserAttributeResult,
+            PluginResendUserAttributeConfirmationCodeResult>>
+    extends _i1.SmartFake
+    implements
+        _i4.AuthCategory<
+            PluginAuthUser,
+            PluginUserAttributeKey,
+            PluginAuthUserAttribute,
+            PluginAuthDevice,
+            PluginSignUpResult,
+            PluginConfirmSignUpResult,
+            PluginResendSignUpCodeResult,
+            PluginSignInResult,
+            PluginConfirmSignInResult,
+            PluginSignOutResult,
+            PluginUpdatePasswordResult,
+            PluginResetPasswordResult,
+            PluginConfirmResetPasswordResult,
+            PluginAuthSession,
+            PluginSignInWithWebUIResult,
+            PluginUpdateUserAttributeResult,
+            PluginConfirmUserAttributeResult,
+            PluginResendUserAttributeConfirmationCodeResult,
+            Plugin> {
+  _FakeAuthCategory_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAnalyticsCategory_3 extends _i1.SmartFake
+    implements _i4.AnalyticsCategory {
+  _FakeAnalyticsCategory_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeStorageCategory_4<
+        PluginStorageListOperation extends _i4.StorageListOperation<
+            _i4.StorageListRequest, _i4.StorageListResult<_i4.StorageItem>>,
+        PluginStorageGetPropertiesOperation extends _i4.StorageGetPropertiesOperation<
+            _i4.StorageGetPropertiesRequest,
+            _i4.StorageGetPropertiesResult<_i4.StorageItem>>,
+        PluginStorageGetUrlOperation extends _i4.StorageGetUrlOperation<
+            _i4.StorageGetUrlRequest, _i4.StorageGetUrlResult>,
+        PluginStorageUploadDataOperation extends _i4.StorageUploadDataOperation<
+            _i4.StorageUploadDataRequest,
+            _i4.StorageUploadDataResult<_i4.StorageItem>>,
+        PluginStorageUploadFileOperation extends _i4.StorageUploadFileOperation<
+            _i4.StorageUploadFileRequest,
+            _i4.StorageUploadFileResult<_i4.StorageItem>>,
+        PluginStorageDownloadDataOperation extends _i4.StorageDownloadDataOperation<
+            _i4.StorageDownloadDataRequest,
+            _i4.StorageDownloadDataResult<_i4.StorageItem>>,
+        PluginStorageDownloadFileOperation extends _i4.StorageDownloadFileOperation<
+            _i4.StorageDownloadFileRequest,
+            _i4.StorageDownloadFileResult<_i4.StorageItem>>,
+        PluginStorageCopyOperation extends _i4.StorageCopyOperation<
+            _i4.StorageCopyRequest<_i4.StorageItem>,
+            _i4.StorageCopyResult<_i4.StorageItem>>,
+        PluginStorageMoveOperation extends _i4.StorageMoveOperation<
+            _i4.StorageMoveRequest<_i4.StorageItem>,
+            _i4.StorageMoveResult<_i4.StorageItem>>,
+        PluginStorageRemoveOperation extends _i4.StorageRemoveOperation<
+            _i4.StorageRemoveRequest, _i4.StorageRemoveResult<_i4.StorageItem>>,
+        PluginStorageRemoveManyOperation extends _i4.StorageRemoveManyOperation<
+            _i4.StorageRemoveManyRequest,
+            _i4.StorageRemoveManyResult<_i4.StorageItem>>,
+        PluginStorageItem extends _i4.StorageItem,
+        PluginTransferProgress extends _i4.StorageTransferProgress,
+        Plugin extends _i4.StoragePluginInterface<
+            PluginStorageListOperation,
+            PluginStorageGetPropertiesOperation,
+            PluginStorageGetUrlOperation,
+            PluginStorageUploadDataOperation,
+            PluginStorageUploadFileOperation,
+            PluginStorageDownloadDataOperation,
+            PluginStorageDownloadFileOperation,
+            PluginStorageCopyOperation,
+            PluginStorageMoveOperation,
+            PluginStorageRemoveOperation,
+            PluginStorageRemoveManyOperation,
+            PluginStorageItem,
+            PluginTransferProgress>> extends _i1.SmartFake
+    implements
+        _i4.StorageCategory<
+            PluginStorageListOperation,
+            PluginStorageGetPropertiesOperation,
+            PluginStorageGetUrlOperation,
+            PluginStorageUploadDataOperation,
+            PluginStorageUploadFileOperation,
+            PluginStorageDownloadDataOperation,
+            PluginStorageDownloadFileOperation,
+            PluginStorageCopyOperation,
+            PluginStorageMoveOperation,
+            PluginStorageRemoveOperation,
+            PluginStorageRemoveManyOperation,
+            PluginStorageItem,
+            PluginTransferProgress,
+            Plugin> {
+  _FakeStorageCategory_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDataStoreCategory_5 extends _i1.SmartFake
+    implements _i4.DataStoreCategory {
+  _FakeDataStoreCategory_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAPICategory_6 extends _i1.SmartFake implements _i4.APICategory {
+  _FakeAPICategory_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAmplifyHub_7 extends _i1.SmartFake implements _i4.AmplifyHub {
+  _FakeAmplifyHub_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeNotificationsCategory_8 extends _i1.SmartFake
+    implements _i4.NotificationsCategory {
+  _FakeNotificationsCategory_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDependencyManager_9 extends _i1.SmartFake
+    implements _i4.DependencyManager {
+  _FakeDependencyManager_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAmplifyConfig_10 extends _i1.SmartFake implements _i4.AmplifyConfig {
+  _FakeAmplifyConfig_10(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [AmplifySecureStorage].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAmplifySecureStorage extends _i1.Mock
-    implements _i4.AmplifySecureStorage {
+    implements _i5.AmplifySecureStorage {
   MockAmplifySecureStorage() {
     _i1.throwOnMissingStub(this);
   }
@@ -75,26 +294,26 @@ class MockAmplifySecureStorage extends _i1.Mock
         ),
       ) as _i3.AWSLogger);
   @override
-  _i5.Future<void> delete({required String? key}) => (super.noSuchMethod(
+  _i6.Future<void> delete({required String? key}) => (super.noSuchMethod(
         Invocation.method(
           #delete,
           [],
           {#key: key},
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
   @override
-  _i5.Future<String?> read({required String? key}) => (super.noSuchMethod(
+  _i6.Future<String?> read({required String? key}) => (super.noSuchMethod(
         Invocation.method(
           #read,
           [],
           {#key: key},
         ),
-        returnValue: _i5.Future<String?>.value(),
-      ) as _i5.Future<String?>);
+        returnValue: _i6.Future<String?>.value(),
+      ) as _i6.Future<String?>);
   @override
-  _i5.Future<void> write({
+  _i6.Future<void> write({
     required String? key,
     required String? value,
   }) =>
@@ -107,7 +326,322 @@ class MockAmplifySecureStorage extends _i1.Mock
             #value: value,
           },
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [AmplifyClass].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAmplifyClass extends _i1.Mock implements _i4.AmplifyClass {
+  MockAmplifyClass() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.AuthCategory<
+          _i4.AuthUser<_i4.SignInDetails>,
+          _i4.AuthUserAttributeKey,
+          _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>,
+          _i4.AuthDevice,
+          _i4.SignUpResult,
+          _i4.SignUpResult,
+          _i4.ResendSignUpCodeResult,
+          _i4.SignInResult<_i4.AuthUserAttributeKey>,
+          _i4.SignInResult<_i4.AuthUserAttributeKey>,
+          _i4.SignOutResult,
+          _i4.UpdatePasswordResult,
+          _i4.ResetPasswordResult,
+          _i4.ResetPasswordResult,
+          _i4.AuthSession,
+          _i4.SignInResult<_i4.AuthUserAttributeKey>,
+          _i4.UpdateUserAttributeResult,
+          _i4.ConfirmUserAttributeResult,
+          _i4.ResendUserAttributeConfirmationCodeResult,
+          _i4.AuthPluginInterface<_i4.AuthUser<_i4.SignInDetails>, _i4.AuthUserAttributeKey, _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>, _i4.AuthDevice, _i4.SignUpResult, _i4.SignUpResult, _i4.ResendSignUpCodeResult, _i4.SignInResult<_i4.AuthUserAttributeKey>, _i4.SignInResult<_i4.AuthUserAttributeKey>, _i4.SignOutResult, _i4.UpdatePasswordResult, _i4.ResetPasswordResult, _i4.ResetPasswordResult, _i4.AuthSession, _i4.SignInResult<_i4.AuthUserAttributeKey>, _i4.UpdateUserAttributeResult, _i4.ConfirmUserAttributeResult, _i4.ResendUserAttributeConfirmationCodeResult>>
+      get Auth => (super.noSuchMethod(
+            Invocation.getter(#Auth),
+            returnValue: _FakeAuthCategory_2<
+                _i4.AuthUser<_i4.SignInDetails>,
+                _i4.AuthUserAttributeKey,
+                _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>,
+                _i4.AuthDevice,
+                _i4.SignUpResult,
+                _i4.SignUpResult,
+                _i4.ResendSignUpCodeResult,
+                _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                _i4.SignOutResult,
+                _i4.UpdatePasswordResult,
+                _i4.ResetPasswordResult,
+                _i4.ResetPasswordResult,
+                _i4.AuthSession,
+                _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                _i4.UpdateUserAttributeResult,
+                _i4.ConfirmUserAttributeResult,
+                _i4.ResendUserAttributeConfirmationCodeResult,
+                _i4.AuthPluginInterface<
+                    _i4.AuthUser<_i4.SignInDetails>,
+                    _i4.AuthUserAttributeKey,
+                    _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>,
+                    _i4.AuthDevice,
+                    _i4.SignUpResult,
+                    _i4.SignUpResult,
+                    _i4.ResendSignUpCodeResult,
+                    _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                    _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                    _i4.SignOutResult,
+                    _i4.UpdatePasswordResult,
+                    _i4.ResetPasswordResult,
+                    _i4.ResetPasswordResult,
+                    _i4.AuthSession,
+                    _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                    _i4.UpdateUserAttributeResult,
+                    _i4.ConfirmUserAttributeResult,
+                    _i4.ResendUserAttributeConfirmationCodeResult>>(
+              this,
+              Invocation.getter(#Auth),
+            ),
+          ) as _i4.AuthCategory<
+              _i4.AuthUser<_i4.SignInDetails>,
+              _i4.AuthUserAttributeKey,
+              _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>,
+              _i4.AuthDevice,
+              _i4.SignUpResult,
+              _i4.SignUpResult,
+              _i4.ResendSignUpCodeResult,
+              _i4.SignInResult<_i4.AuthUserAttributeKey>,
+              _i4.SignInResult<_i4.AuthUserAttributeKey>,
+              _i4.SignOutResult,
+              _i4.UpdatePasswordResult,
+              _i4.ResetPasswordResult,
+              _i4.ResetPasswordResult,
+              _i4.AuthSession,
+              _i4.SignInResult<_i4.AuthUserAttributeKey>,
+              _i4.UpdateUserAttributeResult,
+              _i4.ConfirmUserAttributeResult,
+              _i4.ResendUserAttributeConfirmationCodeResult,
+              _i4.AuthPluginInterface<
+                  _i4.AuthUser<_i4.SignInDetails>,
+                  _i4.AuthUserAttributeKey,
+                  _i4.AuthUserAttribute<_i4.AuthUserAttributeKey>,
+                  _i4.AuthDevice,
+                  _i4.SignUpResult,
+                  _i4.SignUpResult,
+                  _i4.ResendSignUpCodeResult,
+                  _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                  _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                  _i4.SignOutResult,
+                  _i4.UpdatePasswordResult,
+                  _i4.ResetPasswordResult,
+                  _i4.ResetPasswordResult,
+                  _i4.AuthSession,
+                  _i4.SignInResult<_i4.AuthUserAttributeKey>,
+                  _i4.UpdateUserAttributeResult,
+                  _i4.ConfirmUserAttributeResult,
+                  _i4.ResendUserAttributeConfirmationCodeResult>>);
+  @override
+  _i4.AnalyticsCategory get Analytics => (super.noSuchMethod(
+        Invocation.getter(#Analytics),
+        returnValue: _FakeAnalyticsCategory_3(
+          this,
+          Invocation.getter(#Analytics),
+        ),
+      ) as _i4.AnalyticsCategory);
+  @override
+  _i4.StorageCategory<_i4.StorageListOperation<_i4.StorageListRequest, _i4.StorageListResult<_i4.StorageItem>>, _i4.StorageGetPropertiesOperation<_i4.StorageGetPropertiesRequest, _i4.StorageGetPropertiesResult<_i4.StorageItem>>, _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest, _i4.StorageGetUrlResult>, _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest, _i4.StorageUploadDataResult<_i4.StorageItem>>, _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest, _i4.StorageUploadFileResult<_i4.StorageItem>>, _i4.StorageDownloadDataOperation<_i4.StorageDownloadDataRequest, _i4.StorageDownloadDataResult<_i4.StorageItem>>, _i4.StorageDownloadFileOperation<_i4.StorageDownloadFileRequest, _i4.StorageDownloadFileResult<_i4.StorageItem>>, _i4.StorageCopyOperation<_i4.StorageCopyRequest<_i4.StorageItem>, _i4.StorageCopyResult<_i4.StorageItem>>, _i4.StorageMoveOperation<_i4.StorageMoveRequest<_i4.StorageItem>, _i4.StorageMoveResult<_i4.StorageItem>>, _i4.StorageRemoveOperation<_i4.StorageRemoveRequest, _i4.StorageRemoveResult<_i4.StorageItem>>, _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest, _i4.StorageRemoveManyResult<_i4.StorageItem>>, _i4.StorageItem, _i4.StorageTransferProgress, _i4.StoragePluginInterface<_i4.StorageListOperation<_i4.StorageListRequest, _i4.StorageListResult<_i4.StorageItem>>, _i4.StorageGetPropertiesOperation<_i4.StorageGetPropertiesRequest, _i4.StorageGetPropertiesResult<_i4.StorageItem>>, _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest, _i4.StorageGetUrlResult>, _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest, _i4.StorageUploadDataResult<_i4.StorageItem>>, _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest, _i4.StorageUploadFileResult<_i4.StorageItem>>, _i4.StorageDownloadDataOperation<_i4.StorageDownloadDataRequest, _i4.StorageDownloadDataResult<_i4.StorageItem>>, _i4.StorageDownloadFileOperation<_i4.StorageDownloadFileRequest, _i4.StorageDownloadFileResult<_i4.StorageItem>>, _i4.StorageCopyOperation<_i4.StorageCopyRequest<_i4.StorageItem>, _i4.StorageCopyResult<_i4.StorageItem>>, _i4.StorageMoveOperation<_i4.StorageMoveRequest<_i4.StorageItem>, _i4.StorageMoveResult<_i4.StorageItem>>, _i4.StorageRemoveOperation<_i4.StorageRemoveRequest, _i4.StorageRemoveResult<_i4.StorageItem>>, _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest, _i4.StorageRemoveManyResult<_i4.StorageItem>>, _i4.StorageItem, _i4.StorageTransferProgress>>
+      get Storage => (super.noSuchMethod(
+            Invocation.getter(#Storage),
+            returnValue: _FakeStorageCategory_4<
+                _i4.StorageListOperation<_i4.StorageListRequest,
+                    _i4.StorageListResult<_i4.StorageItem>>,
+                _i4.StorageGetPropertiesOperation<
+                    _i4.StorageGetPropertiesRequest,
+                    _i4.StorageGetPropertiesResult<_i4.StorageItem>>,
+                _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest,
+                    _i4.StorageGetUrlResult>,
+                _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest,
+                    _i4.StorageUploadDataResult<_i4.StorageItem>>,
+                _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest,
+                    _i4.StorageUploadFileResult<_i4.StorageItem>>,
+                _i4.StorageDownloadDataOperation<_i4.StorageDownloadDataRequest,
+                    _i4.StorageDownloadDataResult<_i4.StorageItem>>,
+                _i4.StorageDownloadFileOperation<_i4.StorageDownloadFileRequest,
+                    _i4.StorageDownloadFileResult<_i4.StorageItem>>,
+                _i4.StorageCopyOperation<
+                    _i4.StorageCopyRequest<_i4.StorageItem>,
+                    _i4.StorageCopyResult<_i4.StorageItem>>,
+                _i4.StorageMoveOperation<
+                    _i4.StorageMoveRequest<_i4.StorageItem>,
+                    _i4.StorageMoveResult<_i4.StorageItem>>,
+                _i4.StorageRemoveOperation<_i4.StorageRemoveRequest,
+                    _i4.StorageRemoveResult<_i4.StorageItem>>,
+                _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest,
+                    _i4.StorageRemoveManyResult<_i4.StorageItem>>,
+                _i4.StorageItem,
+                _i4.StorageTransferProgress,
+                _i4.StoragePluginInterface<
+                    _i4.StorageListOperation<_i4.StorageListRequest,
+                        _i4.StorageListResult<_i4.StorageItem>>,
+                    _i4.StorageGetPropertiesOperation<
+                        _i4.StorageGetPropertiesRequest,
+                        _i4.StorageGetPropertiesResult<_i4.StorageItem>>,
+                    _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest,
+                        _i4.StorageGetUrlResult>,
+                    _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest,
+                        _i4.StorageUploadDataResult<_i4.StorageItem>>,
+                    _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest,
+                        _i4.StorageUploadFileResult<_i4.StorageItem>>,
+                    _i4.StorageDownloadDataOperation<
+                        _i4.StorageDownloadDataRequest,
+                        _i4.StorageDownloadDataResult<_i4.StorageItem>>,
+                    _i4.StorageDownloadFileOperation<
+                        _i4.StorageDownloadFileRequest,
+                        _i4.StorageDownloadFileResult<_i4.StorageItem>>,
+                    _i4.StorageCopyOperation<
+                        _i4.StorageCopyRequest<_i4.StorageItem>,
+                        _i4.StorageCopyResult<_i4.StorageItem>>,
+                    _i4.StorageMoveOperation<
+                        _i4.StorageMoveRequest<_i4.StorageItem>,
+                        _i4.StorageMoveResult<_i4.StorageItem>>,
+                    _i4.StorageRemoveOperation<_i4.StorageRemoveRequest,
+                        _i4.StorageRemoveResult<_i4.StorageItem>>,
+                    _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest,
+                        _i4.StorageRemoveManyResult<_i4.StorageItem>>,
+                    _i4.StorageItem,
+                    _i4.StorageTransferProgress>>(
+              this,
+              Invocation.getter(#Storage),
+            ),
+          ) as _i4.StorageCategory<
+              _i4.StorageListOperation<_i4.StorageListRequest,
+                  _i4.StorageListResult<_i4.StorageItem>>,
+              _i4.StorageGetPropertiesOperation<_i4.StorageGetPropertiesRequest,
+                  _i4.StorageGetPropertiesResult<_i4.StorageItem>>,
+              _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest,
+                  _i4.StorageGetUrlResult>,
+              _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest,
+                  _i4.StorageUploadDataResult<_i4.StorageItem>>,
+              _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest,
+                  _i4.StorageUploadFileResult<_i4.StorageItem>>,
+              _i4.StorageDownloadDataOperation<_i4.StorageDownloadDataRequest,
+                  _i4.StorageDownloadDataResult<_i4.StorageItem>>,
+              _i4.StorageDownloadFileOperation<_i4.StorageDownloadFileRequest,
+                  _i4.StorageDownloadFileResult<_i4.StorageItem>>,
+              _i4.StorageCopyOperation<_i4.StorageCopyRequest<_i4.StorageItem>,
+                  _i4.StorageCopyResult<_i4.StorageItem>>,
+              _i4.StorageMoveOperation<_i4.StorageMoveRequest<_i4.StorageItem>,
+                  _i4.StorageMoveResult<_i4.StorageItem>>,
+              _i4.StorageRemoveOperation<_i4.StorageRemoveRequest,
+                  _i4.StorageRemoveResult<_i4.StorageItem>>,
+              _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest, _i4.StorageRemoveManyResult<_i4.StorageItem>>,
+              _i4.StorageItem,
+              _i4.StorageTransferProgress,
+              _i4.StoragePluginInterface<_i4.StorageListOperation<_i4.StorageListRequest, _i4.StorageListResult<_i4.StorageItem>>, _i4.StorageGetPropertiesOperation<_i4.StorageGetPropertiesRequest, _i4.StorageGetPropertiesResult<_i4.StorageItem>>, _i4.StorageGetUrlOperation<_i4.StorageGetUrlRequest, _i4.StorageGetUrlResult>, _i4.StorageUploadDataOperation<_i4.StorageUploadDataRequest, _i4.StorageUploadDataResult<_i4.StorageItem>>, _i4.StorageUploadFileOperation<_i4.StorageUploadFileRequest, _i4.StorageUploadFileResult<_i4.StorageItem>>, _i4.StorageDownloadDataOperation<_i4.StorageDownloadDataRequest, _i4.StorageDownloadDataResult<_i4.StorageItem>>, _i4.StorageDownloadFileOperation<_i4.StorageDownloadFileRequest, _i4.StorageDownloadFileResult<_i4.StorageItem>>, _i4.StorageCopyOperation<_i4.StorageCopyRequest<_i4.StorageItem>, _i4.StorageCopyResult<_i4.StorageItem>>, _i4.StorageMoveOperation<_i4.StorageMoveRequest<_i4.StorageItem>, _i4.StorageMoveResult<_i4.StorageItem>>, _i4.StorageRemoveOperation<_i4.StorageRemoveRequest, _i4.StorageRemoveResult<_i4.StorageItem>>, _i4.StorageRemoveManyOperation<_i4.StorageRemoveManyRequest, _i4.StorageRemoveManyResult<_i4.StorageItem>>, _i4.StorageItem, _i4.StorageTransferProgress>>);
+  @override
+  _i4.DataStoreCategory get DataStore => (super.noSuchMethod(
+        Invocation.getter(#DataStore),
+        returnValue: _FakeDataStoreCategory_5(
+          this,
+          Invocation.getter(#DataStore),
+        ),
+      ) as _i4.DataStoreCategory);
+  @override
+  _i4.APICategory get API => (super.noSuchMethod(
+        Invocation.getter(#API),
+        returnValue: _FakeAPICategory_6(
+          this,
+          Invocation.getter(#API),
+        ),
+      ) as _i4.APICategory);
+  @override
+  _i4.AmplifyHub get Hub => (super.noSuchMethod(
+        Invocation.getter(#Hub),
+        returnValue: _FakeAmplifyHub_7(
+          this,
+          Invocation.getter(#Hub),
+        ),
+      ) as _i4.AmplifyHub);
+  @override
+  _i4.NotificationsCategory get Notifications => (super.noSuchMethod(
+        Invocation.getter(#Notifications),
+        returnValue: _FakeNotificationsCategory_8(
+          this,
+          Invocation.getter(#Notifications),
+        ),
+      ) as _i4.NotificationsCategory);
+  @override
+  _i4.DependencyManager get dependencies => (super.noSuchMethod(
+        Invocation.getter(#dependencies),
+        returnValue: _FakeDependencyManager_9(
+          this,
+          Invocation.getter(#dependencies),
+        ),
+      ) as _i4.DependencyManager);
+  @override
+  bool get isConfigured => (super.noSuchMethod(
+        Invocation.getter(#isConfigured),
+        returnValue: false,
+      ) as bool);
+  @override
+  _i6.Future<_i4.AmplifyConfig> get asyncConfig => (super.noSuchMethod(
+        Invocation.getter(#asyncConfig),
+        returnValue: _i6.Future<_i4.AmplifyConfig>.value(_FakeAmplifyConfig_10(
+          this,
+          Invocation.getter(#asyncConfig),
+        )),
+      ) as _i6.Future<_i4.AmplifyConfig>);
+  @override
+  String get version => (super.noSuchMethod(
+        Invocation.getter(#version),
+        returnValue: '',
+      ) as String);
+  @override
+  _i6.Future<void> addPlugin(_i4.AmplifyPluginInterface? plugin) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addPlugin,
+          [plugin],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> addPlugins(List<_i4.AmplifyPluginInterface>? plugins) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addPlugins,
+          [plugins],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> configure(String? configuration) => (super.noSuchMethod(
+        Invocation.method(
+          #configure,
+          [configuration],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> configurePlatform(String? config) => (super.noSuchMethod(
+        Invocation.method(
+          #configurePlatform,
+          [config],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> reset() => (super.noSuchMethod(
+        Invocation.method(
+          #reset,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 }
