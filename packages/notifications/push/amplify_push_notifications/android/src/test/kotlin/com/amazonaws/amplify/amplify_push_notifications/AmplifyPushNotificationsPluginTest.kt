@@ -20,12 +20,14 @@ import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
 import org.robolectric.RobolectricTestRunner
+import kotlin.random.Random
 
 
 @InternalAmplifyApi
@@ -58,7 +60,6 @@ class AmplifyPushNotificationsPluginTest {
         mockkStatic(FirebaseMessaging::class)
         mockkStatic(NotificationPayload::toWritableMap)
         mockkStatic(PushNotificationPermission::class)
-        mockkStatic(Task::class)
         mockEventSink = mockk()
         mockkConstructor(EventSink::class)
         val mockFlutterBinding = mockk<FlutterPluginBinding>()
@@ -82,6 +83,17 @@ class AmplifyPushNotificationsPluginTest {
         mockkStatic(::refreshToken)
         every { refreshToken() } returns mockk()
         amplifyPushNotificationsPlugin.onAttachedToEngine(mockFlutterBinding)
+    }
+
+    @After
+    fun tearDown(){
+        StreamHandlers.deInit()
+        unmockkStatic(::refreshToken)
+        unmockkObject(NotificationPayload)
+        unmockkStatic(ActivityCompat::class)
+        unmockkStatic(FirebaseMessaging::class)
+        unmockkStatic(NotificationPayload::toWritableMap)
+        unmockkStatic(PushNotificationPermission::class)
     }
 
     @Test

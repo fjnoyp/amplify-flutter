@@ -4,10 +4,17 @@
 import 'dart:convert';
 import 'dart:io' show Platform;
 
-import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
+// Analytics Imports
+// ignore: implementation_imports
+import 'package:amplify_analytics_pinpoint/src/device_context_info_provider/flutter_device_context_info_provider.dart';
+// ignore: implementation_imports
+import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/analytics_client.dart';
+// ignore: implementation_imports
+import 'package:amplify_analytics_pinpoint_dart/src/sdk/src/pinpoint/model/channel_type.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:amplify_push_notifications_pinpoint/src/event_info_type.dart';
-import 'package:flutter/material.dart';
+import 'package:amplify_secure_storage/amplify_secure_storage.dart';
+import 'package:flutter/widgets.dart';
 
 final AmplifyLogger _logger = AmplifyLogger.category(Category.pushNotifications)
     .createChild('AmplifyPushNotification');
@@ -22,7 +29,7 @@ final AmplifyLogger _logger = AmplifyLogger.category(Category.pushNotifications)
 class PinpointProvider implements ServiceProviderClient {
   /// {@macro amplify_push_notifications_pinpoint.pinpoint_provider}
 
-  late FlutterAnalyticsClient _analyticsClient;
+  late AnalyticsClient _analyticsClient;
 
   static const _androidCampaignIdKey = 'pinpoint.campaign.campaign_id';
   static const _androidCampaignActivityIdKey =
@@ -35,7 +42,7 @@ class PinpointProvider implements ServiceProviderClient {
   Future<void> init({
     required NotificationsPinpointPluginConfig config,
     required AmplifyAuthProviderRepository authProviderRepo,
-    @visibleForTesting FlutterAnalyticsClient? mockAnalyticsClient,
+    @visibleForTesting AnalyticsClient? mockAnalyticsClient,
   }) async {
     try {
       if (!_isInitialized) {
@@ -43,18 +50,24 @@ class PinpointProvider implements ServiceProviderClient {
             .getAuthProvider(APIAuthorizationType.iam.authProviderToken);
 
         if (authProvider == null) {
-          throw const PushNotificationException(
+          throw ConfigurationError(
             'No AWSIamAmplifyAuthProvider available. Is Auth category added and configured?',
           );
         }
         final region = config.region;
         final appId = config.appId;
 
+        final secureStorageFactory = AmplifySecureStorage.factoryFrom();
+
+        final endpointStorage = secureStorageFactory(
+          AmplifySecureStorageScope.awsPinpointAnalyticsPlugin,
+        );
+
         _analyticsClient = mockAnalyticsClient ??
-            FlutterAnalyticsClient(
-              endpointInfoStoreManager: FlutterEndpointInfoStoreManager(
-                storageScope: EndpointStorageScope.pushNotifications,
-              ),
+            AnalyticsClient(
+              endpointStorage: endpointStorage,
+              deviceContextInfoProvider:
+                  const FlutterDeviceContextInfoProvider(),
             );
 
         await _analyticsClient.init(
@@ -78,7 +91,7 @@ class PinpointProvider implements ServiceProviderClient {
   @override
   Future<void> identifyUser({
     required String userId,
-    required AnalyticsUserProfile userProfile,
+    required UserProfile userProfile,
   }) async {
     try {
       if (!_isInitialized) {
@@ -157,7 +170,7 @@ class PinpointProvider implements ServiceProviderClient {
     required PushNotificationMessage notification,
   }) {
     final data = notification.data;
-    final analyticsProperties = AnalyticsProperties();
+    final analyticsProperties = CustomProperties();
     var source = PinpointEventSource.campaign.name;
     var campaign = <String, String>{};
     var journey = <String, String>{};

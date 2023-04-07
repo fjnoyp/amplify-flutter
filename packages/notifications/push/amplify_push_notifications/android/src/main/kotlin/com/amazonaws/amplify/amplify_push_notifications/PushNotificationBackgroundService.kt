@@ -108,10 +108,10 @@ class PushNotificationBackgroundService : JobIntentService(), MethodChannel.Meth
             PushNotificationPluginConstants.BACKGROUND_FUNCTION_KEY, 0
         )
         if (callbackHandle == 0L) {
-//            Log.w(
-//                TAG,
-//                "Warning: Background service could not start. Callback dispatcher not found."
-//            )
+            Log.w(
+                TAG,
+                "Warning: Background service could not start. Callback dispatcher not found."
+            )
             return
         }
         val callbackInfo =

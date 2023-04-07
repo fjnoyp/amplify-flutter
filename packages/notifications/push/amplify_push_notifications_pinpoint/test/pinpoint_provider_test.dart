@@ -1,7 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
+// ignore: implementation_imports
+import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/analytics_client.dart';
 import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/endpoint_client/endpoint_client.dart';
 import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/event_client/event_client.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -17,9 +18,8 @@ import 'test_data/fake_notification_messges.dart';
   [
     AmplifyAuthProviderRepository,
     AWSIamAmplifyAuthProvider,
-    FlutterEndpointInfoStoreManager,
-    AnalyticsUserProfile,
-    FlutterAnalyticsClient,
+    UserProfile,
+    AnalyticsClient,
     EndpointClient,
     EventClient,
   ],
@@ -33,7 +33,7 @@ void main() {
     region: 'REGION',
   );
   final awsIamAmplifyAuthProvider = MockAWSIamAmplifyAuthProvider();
-  final mockAnalyticsClient = MockFlutterAnalyticsClient();
+  final mockAnalyticsClient = MockAnalyticsClient();
   group('PinpointProvider', () {
     test('init fails when retreiving an Auth provider was not successfull', () {
       when(mockAmplifyAuthProviderRepository.getAuthProvider(any))
@@ -43,7 +43,13 @@ void main() {
           config: notificationsPinpointConfig,
           authProviderRepo: mockAmplifyAuthProviderRepository,
         ),
-        throwsA(isA<PushNotificationException>()),
+        throwsA(
+          isA<ConfigurationError>().having(
+            (e) => e.message,
+            'config error',
+            contains('No AWSIamAmplifyAuthProvider available'),
+          ),
+        ),
       );
     });
 
@@ -52,7 +58,7 @@ void main() {
       expect(
         () async => pinpointProvider.identifyUser(
           userId: 'userId',
-          userProfile: MockAnalyticsUserProfile(),
+          userProfile: MockUserProfile(),
         ),
         throwsA(
           isA<ConfigurationError>().having(
@@ -90,14 +96,16 @@ void main() {
   });
 
   group('Happy path test', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
     test('init should run successfully', () async {
       when(mockAmplifyAuthProviderRepository.getAuthProvider(any))
           .thenReturn(awsIamAmplifyAuthProvider);
       when(
         mockAnalyticsClient.init(
-          pinpointAppId: '',
-          region: '',
-          authProvider: awsIamAmplifyAuthProvider,
+          pinpointAppId: anyNamed('pinpointAppId'),
+          region: anyNamed('region'),
+          authProvider: anyNamed('authProvider'),
         ),
       ).thenAnswer((realInvocation) async {});
       await pinpointProvider.init(
@@ -112,9 +120,9 @@ void main() {
           .thenReturn(awsIamAmplifyAuthProvider);
       when(
         mockAnalyticsClient.init(
-          pinpointAppId: '',
-          region: '',
-          authProvider: awsIamAmplifyAuthProvider,
+          pinpointAppId: anyNamed('pinpointAppId'),
+          region: anyNamed('region'),
+          authProvider: anyNamed('authProvider'),
         ),
       ).thenAnswer((realInvocation) async {});
 
@@ -132,7 +140,7 @@ void main() {
 
       await pinpointProvider.identifyUser(
         userId: 'userId',
-        userProfile: MockAnalyticsUserProfile(),
+        userProfile: MockUserProfile(),
       );
       verify(mockEndpointClient.setUser(any, any));
     });
@@ -142,9 +150,9 @@ void main() {
           .thenReturn(awsIamAmplifyAuthProvider);
       when(
         mockAnalyticsClient.init(
-          pinpointAppId: '',
-          region: '',
-          authProvider: awsIamAmplifyAuthProvider,
+          pinpointAppId: anyNamed('pinpointAppId'),
+          region: anyNamed('region'),
+          authProvider: anyNamed('authProvider'),
         ),
       ).thenAnswer((realInvocation) async {});
 
@@ -171,9 +179,9 @@ void main() {
           .thenReturn(awsIamAmplifyAuthProvider);
       when(
         mockAnalyticsClient.init(
-          pinpointAppId: '',
-          region: '',
-          authProvider: awsIamAmplifyAuthProvider,
+          pinpointAppId: anyNamed('pinpointAppId'),
+          region: anyNamed('region'),
+          authProvider: anyNamed('authProvider'),
         ),
       ).thenAnswer((realInvocation) async {});
 

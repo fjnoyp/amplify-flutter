@@ -3,6 +3,7 @@ package com.amazonaws.amplify.amplify_push_notifications
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import androidx.test.core.app.ApplicationProvider
 import com.amazonaws.amplify.amplify_push_notifications.*
 import com.amplifyframework.annotations.InternalAmplifyApi
@@ -21,6 +22,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -87,6 +89,13 @@ class InternalPushNotificationUtilsTest {
         shadowOf(context.packageManager).apply {
             addActivityIfNotPresent(component)
         }
+    }
+
+    @After
+    fun tearDown(){
+        unmockkObject(Random)
+        unmockkStatic(Task::class)
+        unmockkStatic(FirebaseMessaging::class)
     }
 
     @Test

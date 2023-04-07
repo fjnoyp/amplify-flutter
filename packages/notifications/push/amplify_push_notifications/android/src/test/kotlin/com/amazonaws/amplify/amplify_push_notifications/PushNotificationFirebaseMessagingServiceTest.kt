@@ -16,7 +16,9 @@ import io.flutter.embedding.engine.loader.FlutterLoader
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink
+import io.flutter.view.FlutterCallbackInformation
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -63,6 +65,11 @@ class PushNotificationFirebaseMessagingServiceTest {
         every { any<Bundle>().getNotificationPayload() } returns testPayload
         controller = buildService(PushNotificationFirebaseMessagingService::class.java, Intent())
     }
+
+    @After
+    fun tearDown(){
+        unmockkStatic(Bundle::getNotificationPayload)
+        unmockkStatic(NotificationPayload::toWritableMap)    }
 
     @Test
     fun `sends token received event on new token`() {

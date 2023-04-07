@@ -98,6 +98,7 @@ fun refreshToken() {
     FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
         if (!task.isSuccessful) {
             if (task.exception == null) {
+                println("Error in refresh token")
                 io.flutter.Log.e(TAG, "UnknownError: fetching device token.")
             } else {
                 StreamHandlers.tokenReceived!!.sendError(task.exception!!)

@@ -3,27 +3,21 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
+import 'dart:async' as _i7;
 
-import 'package:amplify_analytics_pinpoint/src/flutter_analytics_client.dart'
-    as _i10;
-import 'package:amplify_analytics_pinpoint/src/flutter_endpoint_info_store_manager.dart'
-    as _i9;
-import 'package:amplify_analytics_pinpoint_dart/amplify_analytics_pinpoint_dart.dart'
-    as _i14;
+import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/analytics_client.dart'
+    as _i8;
 import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/endpoint_client/endpoint_client.dart'
-    as _i5;
-import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/endpoint_client/endpoint_global_fields_manager.dart'
     as _i4;
 import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/event_client/event_client.dart'
-    as _i6;
+    as _i5;
 import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/event_client/queued_item_store/dart_queued_item_store.dart'
-    as _i13;
-import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/event_client/queued_item_store/queued_item_store.dart'
-    as _i12;
-import 'package:amplify_analytics_pinpoint_dart/src/sdk/pinpoint.dart' as _i7;
-import 'package:amplify_analytics_pinpoint_dart/src/sdk/src/pinpoint/pinpoint_client.dart'
     as _i11;
+import 'package:amplify_analytics_pinpoint_dart/src/impl/analytics_client/event_client/queued_item_store/queued_item_store.dart'
+    as _i10;
+import 'package:amplify_analytics_pinpoint_dart/src/sdk/pinpoint.dart' as _i6;
+import 'package:amplify_analytics_pinpoint_dart/src/sdk/src/pinpoint/pinpoint_client.dart'
+    as _i9;
 import 'package:amplify_core/amplify_core.dart' as _i3;
 import 'package:aws_signature_v4/aws_signature_v4.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -61,9 +55,9 @@ class _FakeAWSCredentials_1 extends _i1.SmartFake
         );
 }
 
-class _FakeEndpointGlobalFieldsManager_2 extends _i1.SmartFake
-    implements _i4.EndpointGlobalFieldsManager {
-  _FakeEndpointGlobalFieldsManager_2(
+class _FakeEndpointClient_2 extends _i1.SmartFake
+    implements _i4.EndpointClient {
+  _FakeEndpointClient_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -72,9 +66,8 @@ class _FakeEndpointGlobalFieldsManager_2 extends _i1.SmartFake
         );
 }
 
-class _FakeEndpointClient_3 extends _i1.SmartFake
-    implements _i5.EndpointClient {
-  _FakeEndpointClient_3(
+class _FakeEventClient_3 extends _i1.SmartFake implements _i5.EventClient {
+  _FakeEventClient_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -83,19 +76,9 @@ class _FakeEndpointClient_3 extends _i1.SmartFake
         );
 }
 
-class _FakeEventClient_4 extends _i1.SmartFake implements _i6.EventClient {
-  _FakeEventClient_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakePublicEndpoint_5 extends _i1.SmartFake
-    implements _i7.PublicEndpoint {
-  _FakePublicEndpoint_5(
+class _FakePublicEndpoint_4 extends _i1.SmartFake
+    implements _i6.PublicEndpoint {
+  _FakePublicEndpoint_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -147,7 +130,7 @@ class MockAWSIamAmplifyAuthProvider extends _i1.Mock
   }
 
   @override
-  _i8.Future<_i2.AWSSignedRequest> authorizeRequest(
+  _i7.Future<_i2.AWSSignedRequest> authorizeRequest(
     _i3.AWSBaseHttpRequest? request, {
     _i3.AuthProviderOptions? options,
   }) =>
@@ -158,7 +141,7 @@ class MockAWSIamAmplifyAuthProvider extends _i1.Mock
           {#options: options},
         ),
         returnValue:
-            _i8.Future<_i2.AWSSignedRequest>.value(_FakeAWSSignedRequest_0(
+            _i7.Future<_i2.AWSSignedRequest>.value(_FakeAWSSignedRequest_0(
           this,
           Invocation.method(
             #authorizeRequest,
@@ -166,146 +149,50 @@ class MockAWSIamAmplifyAuthProvider extends _i1.Mock
             {#options: options},
           ),
         )),
-      ) as _i8.Future<_i2.AWSSignedRequest>);
+      ) as _i7.Future<_i2.AWSSignedRequest>);
   @override
-  _i8.FutureOr<_i3.AWSCredentials> retrieve() => (super.noSuchMethod(
+  _i7.FutureOr<_i3.AWSCredentials> retrieve() => (super.noSuchMethod(
         Invocation.method(
           #retrieve,
           [],
         ),
-        returnValue: _i8.Future<_i3.AWSCredentials>.value(_FakeAWSCredentials_1(
+        returnValue: _i7.Future<_i3.AWSCredentials>.value(_FakeAWSCredentials_1(
           this,
           Invocation.method(
             #retrieve,
             [],
           ),
         )),
-      ) as _i8.FutureOr<_i3.AWSCredentials>);
+      ) as _i7.FutureOr<_i3.AWSCredentials>);
 }
 
-/// A class which mocks [FlutterEndpointInfoStoreManager].
+/// A class which mocks [UserProfile].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFlutterEndpointInfoStoreManager extends _i1.Mock
-    implements _i9.FlutterEndpointInfoStoreManager {
-  MockFlutterEndpointInfoStoreManager() {
+class MockUserProfile extends _i1.Mock implements _i3.UserProfile {
+  MockUserProfile() {
+    _i1.throwOnMissingStub(this);
+  }
+}
+
+/// A class which mocks [AnalyticsClient].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnalyticsClient extends _i1.Mock implements _i8.AnalyticsClient {
+  MockAnalyticsClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.EndpointGlobalFieldsManager get endpointFields => (super.noSuchMethod(
-        Invocation.getter(#endpointFields),
-        returnValue: _FakeEndpointGlobalFieldsManager_2(
-          this,
-          Invocation.getter(#endpointFields),
-        ),
-      ) as _i4.EndpointGlobalFieldsManager);
-  @override
-  set endpointFields(_i4.EndpointGlobalFieldsManager? _endpointFields) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #endpointFields,
-          _endpointFields,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  String get endpointId => (super.noSuchMethod(
-        Invocation.getter(#endpointId),
-        returnValue: '',
-      ) as String);
-  @override
-  set endpointId(String? _endpointId) => super.noSuchMethod(
-        Invocation.setter(
-          #endpointId,
-          _endpointId,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i8.Future<void> init({required String? pinpointAppId}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #init,
-          [],
-          {#pinpointAppId: pinpointAppId},
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
-}
-
-/// A class which mocks [AnalyticsUserProfile].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockAnalyticsUserProfile extends _i1.Mock
-    implements _i3.AnalyticsUserProfile {
-  MockAnalyticsUserProfile() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  set name(String? _name) => super.noSuchMethod(
-        Invocation.setter(
-          #name,
-          _name,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set email(String? _email) => super.noSuchMethod(
-        Invocation.setter(
-          #email,
-          _email,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set plan(String? _plan) => super.noSuchMethod(
-        Invocation.setter(
-          #plan,
-          _plan,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set location(_i3.AnalyticsUserProfileLocation? _location) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #location,
-          _location,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set properties(_i3.AnalyticsProperties? _properties) => super.noSuchMethod(
-        Invocation.setter(
-          #properties,
-          _properties,
-        ),
-        returnValueForMissingStub: null,
-      );
-}
-
-/// A class which mocks [FlutterAnalyticsClient].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockFlutterAnalyticsClient extends _i1.Mock
-    implements _i10.FlutterAnalyticsClient {
-  MockFlutterAnalyticsClient() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i5.EndpointClient get endpointClient => (super.noSuchMethod(
+  _i4.EndpointClient get endpointClient => (super.noSuchMethod(
         Invocation.getter(#endpointClient),
-        returnValue: _FakeEndpointClient_3(
+        returnValue: _FakeEndpointClient_2(
           this,
           Invocation.getter(#endpointClient),
         ),
-      ) as _i5.EndpointClient);
+      ) as _i4.EndpointClient);
   @override
-  set endpointClient(_i5.EndpointClient? _endpointClient) => super.noSuchMethod(
+  set endpointClient(_i4.EndpointClient? _endpointClient) => super.noSuchMethod(
         Invocation.setter(
           #endpointClient,
           _endpointClient,
@@ -313,15 +200,15 @@ class MockFlutterAnalyticsClient extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i6.EventClient get eventClient => (super.noSuchMethod(
+  _i5.EventClient get eventClient => (super.noSuchMethod(
         Invocation.getter(#eventClient),
-        returnValue: _FakeEventClient_4(
+        returnValue: _FakeEventClient_3(
           this,
           Invocation.getter(#eventClient),
         ),
-      ) as _i6.EventClient);
+      ) as _i5.EventClient);
   @override
-  set eventClient(_i6.EventClient? _eventClient) => super.noSuchMethod(
+  set eventClient(_i5.EventClient? _eventClient) => super.noSuchMethod(
         Invocation.setter(
           #eventClient,
           _eventClient,
@@ -329,10 +216,10 @@ class MockFlutterAnalyticsClient extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> initWithClient({
+  _i7.Future<void> initWithClient({
     required String? pinpointAppId,
-    required _i11.PinpointClient? pinpointClient,
-    _i12.QueuedItemStore? eventStore,
+    required _i9.PinpointClient? pinpointClient,
+    _i10.QueuedItemStore? eventStore,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -344,15 +231,15 @@ class MockFlutterAnalyticsClient extends _i1.Mock
             #eventStore: eventStore,
           },
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> init({
+  _i7.Future<void> init({
     required String? pinpointAppId,
     required String? region,
     required _i3.AWSCredentialsProvider? authProvider,
-    _i13.DartQueuedItemStore? eventStore,
+    _i11.DartQueuedItemStore? eventStore,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -365,15 +252,15 @@ class MockFlutterAnalyticsClient extends _i1.Mock
             #eventStore: eventStore,
           },
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
 
 /// A class which mocks [EndpointClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
+class MockEndpointClient extends _i1.Mock implements _i4.EndpointClient {
   MockEndpointClient() {
     _i1.throwOnMissingStub(this);
   }
@@ -384,7 +271,7 @@ class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
         returnValue: '',
       ) as String);
   @override
-  set channelType(_i14.ChannelType? channelType) => super.noSuchMethod(
+  set channelType(_i6.ChannelType? channelType) => super.noSuchMethod(
         Invocation.setter(
           #channelType,
           channelType,
@@ -408,7 +295,7 @@ class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> addAttribute(
+  _i7.Future<void> addAttribute(
     String? name,
     String? value,
   ) =>
@@ -420,20 +307,20 @@ class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
             value,
           ],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> removeAttribute(String? name) => (super.noSuchMethod(
+  _i7.Future<void> removeAttribute(String? name) => (super.noSuchMethod(
         Invocation.method(
           #removeAttribute,
           [name],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> addMetric(
+  _i7.Future<void> addMetric(
     String? name,
     double? value,
   ) =>
@@ -445,22 +332,22 @@ class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
             value,
           ],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> removeMetric(String? name) => (super.noSuchMethod(
+  _i7.Future<void> removeMetric(String? name) => (super.noSuchMethod(
         Invocation.method(
           #removeMetric,
           [name],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> setUser(
+  _i7.Future<void> setUser(
     String? userId,
-    _i3.AnalyticsUserProfile? userProfile,
+    _i3.UserProfile? userProfile,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -470,47 +357,47 @@ class MockEndpointClient extends _i1.Mock implements _i5.EndpointClient {
             userProfile,
           ],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i7.PublicEndpoint getPublicEndpoint() => (super.noSuchMethod(
+  _i6.PublicEndpoint getPublicEndpoint() => (super.noSuchMethod(
         Invocation.method(
           #getPublicEndpoint,
           [],
         ),
-        returnValue: _FakePublicEndpoint_5(
+        returnValue: _FakePublicEndpoint_4(
           this,
           Invocation.method(
             #getPublicEndpoint,
             [],
           ),
         ),
-      ) as _i7.PublicEndpoint);
+      ) as _i6.PublicEndpoint);
   @override
-  _i8.Future<void> updateEndpoint() => (super.noSuchMethod(
+  _i7.Future<void> updateEndpoint() => (super.noSuchMethod(
         Invocation.method(
           #updateEndpoint,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
 
 /// A class which mocks [EventClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockEventClient extends _i1.Mock implements _i6.EventClient {
+class MockEventClient extends _i1.Mock implements _i5.EventClient {
   MockEventClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i8.Future<void> recordEvent({
+  _i7.Future<void> recordEvent({
     required String? eventType,
-    _i7.Session? session,
-    _i3.AnalyticsProperties? properties,
+    _i6.Session? session,
+    _i3.CustomProperties? properties,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -522,11 +409,11 @@ class MockEventClient extends _i1.Mock implements _i6.EventClient {
             #properties: properties,
           },
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  void registerGlobalProperties(_i3.AnalyticsProperties? globalProperties) =>
+  void registerGlobalProperties(_i3.CustomProperties? globalProperties) =>
       super.noSuchMethod(
         Invocation.method(
           #registerGlobalProperties,
@@ -544,21 +431,21 @@ class MockEventClient extends _i1.Mock implements _i6.EventClient {
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> flushEvents() => (super.noSuchMethod(
+  _i7.Future<void> flushEvents() => (super.noSuchMethod(
         Invocation.method(
           #flushEvents,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
   @override
-  _i8.Future<void> close() => (super.noSuchMethod(
+  _i7.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
