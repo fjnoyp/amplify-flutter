@@ -938,7 +938,7 @@ void main() {
           .result;
 
       // Needs time to propagate.
-      await Future<void>.delayed(const Duration(milliseconds: 10));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
 
       final policies = await client
           .listPolicies(
