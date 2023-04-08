@@ -179,6 +179,9 @@ class SmithyXmlPlugin implements SerializerPlugin {
       if (object is! String || !object.startsWith('<')) {
         return object;
       }
+      if (specifiedType == const FullType(String)) {
+        return object;
+      }
       try {
         object = XmlDocument.parse(object);
       } on XmlParserException {
