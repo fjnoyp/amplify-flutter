@@ -917,7 +917,7 @@ void main() {
     test('List policies', () async {
       final policyName = uuid();
 
-      await client
+      final response = await client
           .createPolicy(
             CreatePolicyRequest(
               policyName: policyName,
@@ -936,9 +936,10 @@ void main() {
             ),
           )
           .result;
+      expect(response.policy?.policyName, policyName);
 
-      // Needs time to propagate.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      // Wait for eventual consistency
+      await Future<void>.delayed(Duration(seconds: 1));
 
       final policies = await client
           .listPolicies(
@@ -947,7 +948,7 @@ void main() {
           .result;
 
       expect(
-        policies.items.map((policy) => policy.policyName),
+        policies.items.map((policy) => policy.policyName!),
         contains(policyName),
       );
     });
