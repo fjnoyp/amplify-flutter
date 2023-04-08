@@ -124,9 +124,10 @@ class GenerateSdkCommand extends AmplifyCommand {
 
     final outputPath = args['output'] as String;
     final outputDir = Directory(p.join('lib', outputPath));
-    if (!await outputDir.exists()) {
-      await outputDir.create(recursive: true);
+    if (await outputDir.exists()) {
+      await outputDir.delete(recursive: true);
     }
+    await outputDir.create(recursive: true);
 
     final smithyModel = SmithyAstBuilder();
 
