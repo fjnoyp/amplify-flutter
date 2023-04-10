@@ -3,20 +3,14 @@ package com.amazonaws.amplify.amplify_push_notifications
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Looper.getMainLooper
-import androidx.test.core.app.ApplicationProvider
 import com.amplifyframework.annotations.InternalAmplifyApi
 import com.amplifyframework.notifications.pushnotifications.NotificationContentProvider
 import com.amplifyframework.notifications.pushnotifications.NotificationPayload
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.FlutterEngineGroup
 import io.flutter.embedding.engine.loader.FlutterLoader
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink
-import io.flutter.view.FlutterCallbackInformation
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -51,7 +45,9 @@ class PushNotificationFirebaseMessagingServiceTest {
         context = RuntimeEnvironment.getApplication().baseContext
         val mockedBinaryMessenger = mockk<BinaryMessenger>()
         mockkConstructor(EventChannel::class)
-        every { anyConstructed<EventChannel>().setStreamHandler(any()) } returns StreamHandlers.initStreamHandlers(refresh = true)
+        every { anyConstructed<EventChannel>().setStreamHandler(any()) } returns StreamHandlers.initStreamHandlers(
+            refresh = true
+        )
         StreamHandlers.initEventChannels(mockedBinaryMessenger)
         mockEventSink = mockk()
         mockkConstructor(EventSink::class)
@@ -67,9 +63,10 @@ class PushNotificationFirebaseMessagingServiceTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         unmockkStatic(Bundle::getNotificationPayload)
-        unmockkStatic(NotificationPayload::toWritableMap)    }
+        unmockkStatic(NotificationPayload::toWritableMap)
+    }
 
     @Test
     fun `sends token received event on new token`() {

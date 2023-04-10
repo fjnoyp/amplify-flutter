@@ -3,7 +3,6 @@ package com.amazonaws.amplify.amplify_push_notifications
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
 import androidx.test.core.app.ApplicationProvider
 import com.amazonaws.amplify.amplify_push_notifications.*
 import com.amplifyframework.annotations.InternalAmplifyApi

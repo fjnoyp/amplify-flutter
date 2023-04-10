@@ -51,7 +51,7 @@ void main() {
       );
     });
 
-    test('should pass', () async {
+    test('should configure Amplify plugins', () async {
       log.clear();
       final mockStorage = MockAmplifySecureStorage();
       when(mockStorage.read(key: anyNamed('key')))
@@ -65,7 +65,7 @@ void main() {
           .thenAnswer((realInvocation) => Future(() => null));
       await amplifyBackgroundProcessing(
         amplifySecureStorage: mockStorage,
-        mockAmplify: mockAmplify,
+        amplify: mockAmplify,
       );
 
       expect(log, <Matcher>[
