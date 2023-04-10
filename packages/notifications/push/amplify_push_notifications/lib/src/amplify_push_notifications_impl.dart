@@ -11,6 +11,7 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:amplify_push_notifications/src/native_push_notifications_plugin.g.dart';
 import 'package:amplify_push_notifications/src/push_notifications_flutter_api.dart';
 import 'package:amplify_secure_storage/amplify_secure_storage.dart';
+import 'package:async/async.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:os_detect/os_detect.dart' as os;
@@ -26,10 +27,7 @@ const configSecureStorageKey = 'configSecureStorageKey';
 /// Made public for testing purposes.
 /// {@endtemplate}
 @visibleForTesting
-const internalTokenReceivedEventChannel = EventChannel(
-  'com.amazonaws.amplify/push_notification/event/INTERNAL_TOKEN_RECEIVED',
-);
-const _externalTokenReceivedEventChannel = EventChannel(
+const tokenReceivedEventChannel = EventChannel(
   'com.amazonaws.amplify/push_notification/event/TOKEN_RECEIVED',
 );
 const _notificationOpenedEventChannel = EventChannel(
@@ -87,20 +85,13 @@ abstract class AmplifyPushNotifications
       _dependencyManager = dependencyManager;
     }
 
-    _externalOnTokenReceived = _externalTokenReceivedEventChannel
+    _onTokenReceived = tokenReceivedEventChannel
         .receiveBroadcastStream()
         .cast<Map<Object?, Object?>>()
         .map((payload) {
       return payload['token'] as String;
     }).distinct();
-
-    _internalOnTokenReceived = internalTokenReceivedEventChannel
-        .receiveBroadcastStream()
-        .cast<Map<Object?, Object?>>()
-        .map((payload) {
-      return payload['token'] as String;
-    }).distinct();
-
+    _bufferedTokenStream = StreamQueue(_onTokenReceived);
     _onForegroundNotificationReceived = _foregroundNotificationEventChannel
         .receiveBroadcastStream()
         .cast<Map<Object?, Object?>>()
@@ -118,9 +109,8 @@ abstract class AmplifyPushNotifications
       _dependencyManager.expect();
   PushNotificationsHostApi get _hostApi => _dependencyManager.expect();
   AmplifySecureStorage get _amplifySecureStorage => _dependencyManager.expect();
-  late final Stream<String> _externalOnTokenReceived;
-  late final Stream<String> _internalOnTokenReceived;
-
+  late final Stream<String> _onTokenReceived;
+  late final StreamQueue<String> _bufferedTokenStream;
   late final Stream<PushNotificationMessage> _onForegroundNotificationReceived;
   late final Stream<PushNotificationMessage> _onNotificationOpened;
   var _isConfigured = false;
@@ -142,7 +132,7 @@ abstract class AmplifyPushNotifications
     if (!_isConfigured) {
       throw _needsConfigurationException;
     }
-    return _externalOnTokenReceived;
+    return _bufferedTokenStream.rest;
   }
 
   @override
@@ -247,7 +237,6 @@ abstract class AmplifyPushNotifications
       value: jsonEncode(config),
     );
     _isConfigured = true;
-    print('configured');
   }
 
   @override
@@ -327,7 +316,7 @@ abstract class AmplifyPushNotifications
   Future<void> _registerDeviceWhenConfigure() async {
     late String deviceToken;
     try {
-      deviceToken = await _internalOnTokenReceived.first;
+      deviceToken = await _onTokenReceived.first;
     } on PlatformException catch (error) {
       // the error mostly like is the App doesn't have corresponding
       // capability to request a push notification device token
@@ -377,9 +366,7 @@ abstract class AmplifyPushNotifications
 
   void _attachEventChannelListeners() {
     // Initialize listeners
-    _internalOnTokenReceived
-        .listen(_tokenReceivedListener)
-        .onError((Object error) {
+    _onTokenReceived.listen(_tokenReceivedListener).onError((Object error) {
       _logger.error(
         'Unexpected error $error received from onTokenReceived event channel.',
       );

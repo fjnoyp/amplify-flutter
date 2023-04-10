@@ -101,16 +101,10 @@ fun refreshToken() {
                 Log.e(TAG, "UnknownError: fetching device token.")
             } else {
                 StreamHandlers.tokenReceived!!.sendError(task.exception!!)
-                StreamHandlers.internalTokenReceived!!.sendError(task.exception!!)
             }
             return@addOnCompleteListener
         }
         StreamHandlers.tokenReceived!!.send(
-            mapOf(
-                "token" to task.result
-            )
-        )
-        StreamHandlers.internalTokenReceived!!.send(
             mapOf(
                 "token" to task.result
             )
