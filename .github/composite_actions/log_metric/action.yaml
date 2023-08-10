@@ -85,13 +85,13 @@ runs:
       shell: bash
       run: |
 
-        echo "github run id $github.run_id"
+        echo "github run id ${{ github.run_id }}"
 
-        echo "github job id $github.job"
+        echo "github job id ${{ github.job }}"
 
         jobs=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/aws-amplify/amplify-flutter/actions/runs/$github.run_id/jobs")
+          "https://api.github.com/repos/aws-amplify/amplify-flutter/actions/runs/${{ github.run_id }}/jobs")
         gh_job_id=$(echo "$jobs" | jq ".jobs[] | select(.name==\"${{ github.job }}\") | .id")
 
         echo "GH_JOB_ID=$gh_job_id" >> $GITHUB_ENV
