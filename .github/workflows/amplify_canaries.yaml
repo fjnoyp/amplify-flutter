@@ -57,7 +57,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GH_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.channel }},${{ matrix.flutter-version}}
+          job-identifier: ${{ matrix.channel }}, ${{ matrix.flutter-version}}
           testType: canary
           category: all
           workflowName: amplify_canaries/build
