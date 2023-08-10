@@ -53,6 +53,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GH_TOKEN }}    
+          isFailed: ${{ job.status == 'failure' }}
           testType: canary
           category: all
           workflowName: amplify_canaries/build

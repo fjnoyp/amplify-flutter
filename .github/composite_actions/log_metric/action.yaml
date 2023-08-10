@@ -20,6 +20,10 @@ inputs:
    # description: Value of the metric to track in Cloudwatch.
 #    required: true
 
+  isFailed: 
+    description: If the workflow failed or not
+    required: true 
+
   # Global Metric Dimensions 
   testType:
     description: canary, integration, unit testType.
@@ -76,15 +80,21 @@ runs:
         aws-region: ${{ inputs.aws-region }}
         role-duration-seconds: 900
 
-    - name: GitHub Actions job_id parser
-      uses: Tiryoh/gha-jobid-action@v0.1.2
-      id: jobs
-      with:
-        github_token: ${{ inputs.github-token }}
-        job_name: ${{ github.job }}
+    - name: Get job id 
+      if: ${{ inputs.isFailed }}
+      shell: bash
+      run: |
+        jobs=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/aws-amplify/amplify-flutter/actions/runs/$run_id/jobs")
+        gh_job_id=$(echo "$jobs" | jq ".jobs[] | select(.name==\"${{ github.job }}\") | .id")
+
+        echo "GH_JOB_ID=$gh_job_id" >> $GITHUB_ENV
+
+        echo "Debug the job id was: $gh_job_id"
 
     - name: Get Failing Step
-      if: env.didFail
+      if: ${{ inputs.isFailed }}
       shell: bash
       run: |
         response=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
