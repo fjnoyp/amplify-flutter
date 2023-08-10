@@ -95,6 +95,10 @@ runs:
 
         job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring)) | .id')
 
+        echo "substring is ${{ substring }}"
+        echo "job json is ${{ job_json }}""
+        echo "github run id is ${{ github.run_id}}"
+
         echo "Job ID for job containing $substring is $job_id"
         echo "job_id=$job_id" >> $GITHUB_ENV
       shell: bash
