@@ -51,7 +51,8 @@ jobs:
         uses: ./.github/composite_actions/log_metric
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}          
+          aws-region: ${{ secrets.AWS_REGION }}     
+          github-token: ${{ secrets.GH_TOKEN }}    
           testType: canary
           category: all
           workflowName: amplify_canaries/build

@@ -11,6 +11,9 @@ inputs:
   role-to-assume:
     required: true
     description: The role to assume in the STS session.
+  github-token:
+    required: true
+    description: Github token for requesting failing steps 
 
   #value:
     # Why we publish value 0 on success: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html#publishingZero
@@ -77,16 +80,16 @@ runs:
       uses: Tiryoh/gha-jobid-action@v0.1.2
       id: jobs
       with:
-        github_token: ${{ secrets.GH_TOKEN }}
+        github_token: ${{ inputs.github-token }}
         job_name: ${{ github.job }}
 
     - name: Get Failing Step
       if: env.didFail
       shell: bash
       run: |
-      response=$(curl -s -H "Authorization: token ${{ secrets.GH_TOKEN }} \
-        -H "Accept: application/vnd.github.v3+json" \
-        "https://api.github.com/repos/aws-amplify/amplify-flutter/actions/jobs/${{ steps.jobs.outputs.job_id }}")
+        response=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/aws-amplify/amplify-flutter/actions/jobs/${{ steps.jobs.outputs.job_id }}")
         failing_step_name=$(echo "$response" | jq -r '.steps[] | select(.conclusion == "failure") | .name')
 
         if [ "$conclusion" == "failure" ]; then
@@ -95,7 +98,7 @@ runs:
           echo "IS_FAILED=false" >> $GITHUB_ENV
         fi
 
-        echo "FAILING_STEP=$failing_step" >> $GITHUB_ENV
+        echo "FAILING_STEP=$failing_step_name" >> $GITHUB_ENV
 
     - name: Run Dart script
       # Run a Dart script to put metric data.
