@@ -39,7 +39,13 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # 3.5.3
         with:
-          persist-credentials: false          
+          persist-credentials: false         
+
+      - name: Install dependencies
+        uses: ./.github/composite_actions/install_dependencies
+        with:
+          channel: ${{ matrix.channel }}
+          flutter-version: ${{ matrix.flutter-version }}
 
       - name: Print steps
         shell: bash
