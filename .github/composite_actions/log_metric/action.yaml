@@ -87,7 +87,7 @@ runs:
 
     - name: Get Job ID
       run: |
-        substring="{{ inputs.job-identifier }}"
+        substring="${{ inputs.job-identifier }}"
 
         jobs_json=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
           -H "Accept: application/vnd.github.v3+json" \
