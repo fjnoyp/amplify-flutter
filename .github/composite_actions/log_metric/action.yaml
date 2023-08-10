@@ -85,19 +85,19 @@ runs:
         aws-region: ${{ inputs.aws-region }}
         role-duration-seconds: 900
 
-  - name: Get Job ID
-    run: |
-      substring="{{ inputs.job-identifier }}"
+    - name: Get Job ID
+      run: |
+        substring="{{ inputs.job-identifier }}"
 
-      jobs_json=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
-        -H "Accept: application/vnd.github.v3+json" \
-        "https://api.github.com/repos/fjnoyp/amplify-flutter/actions/runs/${{ github.run_id }}/jobs")
+        jobs_json=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/fjnoyp/amplify-flutter/actions/runs/${{ github.run_id }}/jobs")
 
-      job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring)) | .id')
+        job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring)) | .id')
 
-      echo "Job ID for job containing $substring is $job_id"
-      echo "job_id=$job_id" >> $GITHUB_ENV
-    shell: bash
+        echo "Job ID for job containing $substring is $job_id"
+        echo "job_id=$job_id" >> $GITHUB_ENV
+      shell: bash
 
     - name: Get Failing Step
       if: ${{ job.status == 'failure' }}
