@@ -40,12 +40,6 @@ jobs:
         with:
           persist-credentials: false          
 
-      - name: Install dependencies
-        uses: ./.github/composite_actions/install_dependencies
-        with:
-          channel: ${{ matrix.channel }}
-          flutter-version: ${{ matrix.flutter-version }}
-
       - name: Log success/failure
         if: always()
         uses: ./.github/composite_actions/log_metric
