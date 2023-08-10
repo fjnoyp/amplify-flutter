@@ -43,7 +43,11 @@ jobs:
 
       - name: Print steps
         shell: bash
-        run: echo "steps= $steps"
+        run: echo "steps= ${{ github.steps }}"
+
+      - name: Some failing step
+        shell: bash
+        run: exit(1) 
 
       - name: Log success/failure
         if: always()
@@ -52,12 +56,13 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GH_TOKEN }}    
-          isFailed: ${{ job.status == 'failure' }}
+          job-status: ${{ job.status }}
+          job-identifier: ${{ matrix.channel }},${{ matrix.flutter-version}}
           testType: canary
           category: all
           workflowName: amplify_canaries/build
           framework: flutter
           flutterDartChannel: ${{ matrix.channel }}
-          flutterVersion: $${{ matrix.flutter-version }}
+          flutterVersion: ${{ matrix.flutter-version }}
 
   
