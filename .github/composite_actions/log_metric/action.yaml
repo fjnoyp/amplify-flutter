@@ -112,19 +112,13 @@ runs:
           "https://api.github.com/repos/fjnoyp/amplify-flutter/actions/jobs/${{ env.job_id }}")
         failing_step_name=$(echo "$response" | jq -r '.steps[] | select(.conclusion == "failure") | .name')
 
-        if [ "$conclusion" == "failure" ]; then
-          echo "IS_FAILED=true" >> $GITHUB_ENV
-        else
-          echo "IS_FAILED=false" >> $GITHUB_ENV
-        fi
-
         echo "FAILING_STEP=$failing_step_name" >> $GITHUB_ENV
 
     - name: Run Dart script
       # Run a Dart script to put metric data.
       run: dart ./tool/send_metric_data.dart \
         github_metric_1.0 \
-        ${{ env.IS_FAILED }} \
+        ${{ job.status == 'failure' }} \
         ${{ inputs.testType }} \
         ${{ inputs.category }} \
         ${{ inputs.workflowName }} \

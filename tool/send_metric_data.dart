@@ -18,7 +18,7 @@ final platformTypes = ['web', 'android', 'ios', 'linux', 'windows'];
 
 void main(List<String> args) {
   final metricName = args[0].trim();
-  final isFailed = args[1] as bool;
+  final isFailed = args[1] == 'failed';
   final testType = args[2].trim();
   var category = args[3].trim();
   final workflowName = args[4].trim();
