@@ -40,6 +40,12 @@ jobs:
         with:
           persist-credentials: false          
 
+
+
+      - name: Print steps
+        shell: bash
+        run: echo "steps= $steps"
+
       - name: Log success/failure
         if: always()
         uses: ./.github/composite_actions/log_metric
