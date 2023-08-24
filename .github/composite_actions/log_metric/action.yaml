@@ -82,9 +82,9 @@ runs:
       run: |
         substring=“${{ inputs.job-identifier }}”
 
-        jobs_json=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs
+        jobs_json=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs)
 
-        job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring)) | .id')
+        job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring) | .id')
 
         echo “substring is $substring”
         echo “job json is $jobs_json”
