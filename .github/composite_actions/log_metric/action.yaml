@@ -78,13 +78,13 @@ runs:
         role-duration-seconds: 900
 
     - name: Get Job ID
-      if: env.SKIP != ‘true’
+      if: env.SKIP != 'true'
       run: |
         substring=“${{ inputs.job-identifier }}”
 
         jobs_json=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs
 
-        job_id=$(echo “$jobs_json” | jq --arg substring “$substring” ‘.[] | select(.name | contains($substring)) | .id’)
+        job_id=$(echo “$jobs_json” | jq --arg substring “$substring” '.[] | select(.name | contains($substring)) | .id')
 
         echo “substring is $substring”
         echo “job json is $jobs_json”
@@ -96,11 +96,11 @@ runs:
       shell: bash
 
     - name: Get Failing Step
-      if: env.SKIP != ‘true’ && ${{ job.status == ‘failure’ }}
+      if: env.SKIP != 'true' && ${{ job.status == 'failure' }}
       shell: bash
       run: |
-        response=$(gh api “/repos/${{ github.repository }}/actions/jobs/${{ env.JOB_ID }}” --jq ‘.steps’)
-        failing_step_name=$(echo “$response” | jq -r ‘.[] | select(.conclusion == “failure”) | .name’)
+        response=$(gh api “/repos/${{ github.repository }}/actions/jobs/${{ env.JOB_ID }}” --jq '.steps')
+        failing_step_name=$(echo “$response” | jq -r '.[] | select(.conclusion == “failure”) | .name')
         echo "the failing step text is: $failing_step_name"
         echo “FAILING_STEP=$failing_step_name” >> $GITHUB_ENV
 
