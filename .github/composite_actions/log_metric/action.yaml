@@ -78,34 +78,31 @@ runs:
         role-duration-seconds: 900
 
     - name: Get Job ID
-      if: env.SKIP != 'true'
+      if: env.SKIP != ‘true’
       run: |
-        substring="${{ inputs.job-identifier }}"
+        substring=“${{ inputs.job-identifier }}”
 
-        jobs_json=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs")
+        jobs_json=$(gh run --repo ${{ github.repository }} view ${{ github.run_id }} --json jobs
 
-        job_id=$(echo "$jobs_json" | jq --arg substring "$substring" '.jobs[] | select(.name | contains($substring)) | .id')
+        job_id=$(echo “$jobs_json” | jq --arg substring “$substring” ‘.[] | select(.name | contains($substring)) | .id’)
 
-        echo "substring is $substring"
-        echo "job json is $jobs_json"
-        echo "github run id is ${{ github.run_id}}"
+        echo “substring is $substring”
+        echo “job json is $jobs_json”
+        echo “github run id is ${{ github.run_id}}”
+        echo “Job ID for job containing $substring is $job_id”
 
-        echo "Job ID for job containing $substring is $job_id"
-        echo "JOB_ID=$job_id" >> $GITHUB_OUTPUT
+        
+        echo “JOB_ID=$job_id” >> $GITHUB_ENV      
       shell: bash
 
     - name: Get Failing Step
-      if: env.SKIP != 'true' && ${{ job.status == 'failure' }}
+      if: env.SKIP != ‘true’ && ${{ job.status == ‘failure’ }}
       shell: bash
       run: |
-        response=$(curl -s -H "Authorization: token ${{ inputs.github-token }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "${{ github.server_url }}/${{ github.repository }}/actions/jobs/${{ env.JOB_ID }}")
-        failing_step_name=$(echo "$response" | jq -r '.steps[] | select(.conclusion == "failure") | .name')
-
-        echo "FAILING_STEP=$failing_step_name" >> $GITHUB_OUTPUT
+        response=$(gh api “/repos/${{ github.repository }}/actions/jobs/${{ env.JOB_ID }}” --jq ‘.steps’)
+        failing_step_name=$(echo “$response” | jq -r ‘.[] | select(.conclusion == “failure”) | .name’)
+        echo "the failing step text is: $failing_step_name"
+        echo “FAILING_STEP=$failing_step_name” >> $GITHUB_ENV
 
     - name: Change to Dart script directory
       if: env.SKIP != 'true'
