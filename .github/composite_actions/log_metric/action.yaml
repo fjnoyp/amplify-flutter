@@ -94,6 +94,8 @@ runs:
         
         echo “JOB_ID=$job_id” >> $GITHUB_ENV      
       shell: bash
+      env: 
+        GITHUB_TOKEN: ${{ inputs.github-token }}
 
     - name: Get Failing Step
       if: env.SKIP != 'true' && ${{ job.status == 'failure' }}
@@ -103,6 +105,8 @@ runs:
         failing_step_name=$(echo "$response" | jq -r '.steps[] | select(.conclusion == "failure") | .name')
         echo "the failing step text is: $failing_step_name"
         echo “FAILING_STEP=$failing_step_name” >> $GITHUB_ENV
+      env: 
+        GITHUB_TOKEN: ${{ inputs.github-token }}
 
     - name: Change to Dart script directory
       if: env.SKIP != 'true'
