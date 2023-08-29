@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'dart:io';
-import 'package:args/args.dart';
 
+import 'package:args/args.dart';
 
 final testTypes = [
   'canary',
@@ -22,17 +22,17 @@ void main(List<String> args) {
   final parser = ArgParser()
     ..addOption('metric-name')
     ..addOption('is-failed')
-    ..addOption('testType')
+    ..addOption('test-type')
     ..addOption('category')
-    ..addOption('workflowName')
+    ..addOption('workflow-name')
     ..addOption('framework')
-    ..addOption('flutterDartChannel')
-    ..addOption('dartVersion')
-    ..addOption('flutterVersion')
-    ..addOption('dartCompiler')
+    ..addOption('flutter-dart-channel')
+    ..addOption('dart-version')
+    ..addOption('flutter-version')
+    ..addOption('dart-vompiler')
     ..addOption('platform')
-    ..addOption('platformVersion')
-    ..addOption('failingStep');
+    ..addOption('platform-version')
+    ..addOption('failing-step');
 
   final results = parser.parse(args);
 
@@ -61,7 +61,7 @@ void main(List<String> args) {
     print('Must provide testType dimension');
     exit(1);
   } else if (!testTypes.contains(testType)) {
-    print('TestType is not valid: ${testType}');
+    print('TestType is not valid: $testType');
     exit(1);
   }
 
@@ -82,12 +82,12 @@ void main(List<String> args) {
   }
 
   if (framework.isNotEmpty && !frameworkTypes.contains(framework)) {
-    print('Framework is not valid: ${framework}');
+    print('Framework is not valid: $framework');
     exit(1);
   }
 
   if (platform.isNotEmpty && !platformTypes.contains(platform)) {
-    print('Platform is not valid: ${platform}');
+    print('Platform is not valid: $platform');
     exit(1);
   }
 
