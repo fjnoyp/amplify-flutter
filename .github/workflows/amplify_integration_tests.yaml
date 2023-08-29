@@ -90,7 +90,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.scope }}, ${{ matrix.api-level}}, ${{ matrix.target }}
+          job-identifier: android (${{ matrix.scope }}, ${{ matrix.api-level}}, ${{ matrix.target }})
           testType: integration
           category: ${{ matrix.scope }}
           workflowName: ${{ matrix.scope }}/amplify_integration_tests
@@ -151,7 +151,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.scope }}
+          job-identifier: ios (${{ matrix.scope }})
           testType: integration
           category: ${{ matrix.scope }}
           workflowName: ${{ matrix.scope }}/amplify_integration_tests
@@ -212,7 +212,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.scope }}
+          job-identifier: web (${{ matrix.scope }})
           testType: integration
           category: ${{ matrix.scope }}
           workflowName: ${{ matrix.scope }}/amplify_integration_tests
@@ -315,7 +315,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.scope }}
+          job-identifier: linux (${{ matrix.scope }})
           testType: integration
           category: ${{ matrix.scope }}
           workflowName: ${{ matrix.scope }}/amplify_integration_tests
@@ -376,7 +376,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.scope }}
+          job-identifier: windows (${{ matrix.scope }})
           testType: integration
           category: ${{ matrix.scope }}
           workflowName: ${{ matrix.scope }}/amplify_integration_tests

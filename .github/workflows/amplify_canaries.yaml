@@ -70,7 +70,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.channel }}, ${{ matrix.flutter-version}}
+          job-identifier: build (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           testType: canary
           category: all
           workflowName: amplify_canaries/build
@@ -141,7 +141,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.channel }}, ${{ matrix.flutter-version}}
+          job-identifier: e2e-android (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           testType: canary
           category: all
           workflowName: amplify_canaries/e2e-android
@@ -217,7 +217,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}     
           github-token: ${{ secrets.GITHUB_TOKEN }}    
           job-status: ${{ job.status }}
-          job-identifier: ${{ matrix.channel }}, ${{ matrix.flutter-version}}
+          job-identifier: e2e-ios (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           testType: canary
           category: all
           workflowName: amplify_canaries/e2e-ios

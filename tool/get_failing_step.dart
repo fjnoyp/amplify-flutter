@@ -51,10 +51,10 @@ void main(List<String> args) async {
     final failingStep = steps.firstWhere(
         (element) => element['conclusion'] == 'failure',
         orElse: () => null);
-
     print(failingStep['name']);
   } on Exception catch (_) {
-    // Return empty string if no job found or no failing step found
+    // Return empty string if no job found or
     print("");
+    exit(0);
   }
 }

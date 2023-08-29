@@ -88,7 +88,7 @@ runs:
       shell: bash
 
     - name: Get Failing Step
-      if: env.SKIP != 'true' && ${{ job.status == 'failure' }}
+      if: env.SKIP != 'true' && ${{ inputs.job.status == 'failure' }}
       run: |
         failing_step=$( \
           dart ./tool/get_failing_step.dart \
@@ -106,7 +106,7 @@ runs:
       run: |
         dart ./tool/send_metric_data.dart \
           --metric-name="github_metric_1.0" \
-          --job-status="${{ job.status == 'failure' }}" \
+          --job-status="${{ inputs.job.status == 'failure' }}" \
           --test-type="${{ inputs.testType }}" \
           --category="${{ inputs.category }}" \
           --workflow-name="${{ inputs.workflowName }}" \
