@@ -91,7 +91,7 @@ runs:
       if: env.SKIP != 'true' && ${{ job.status == 'failure' }}
       run: |
         failing_step=$( \
-          dart ./get_failing_step.dart \
+          dart ./tool/get_failing_step.dart \
             --substring "${{ inputs.job-identifier }}" \
             --github-token "${{ inputs.github-token }}" \
             --repo "${{ github.repository }}" \
