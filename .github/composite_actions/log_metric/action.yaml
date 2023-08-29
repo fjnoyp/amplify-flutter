@@ -96,11 +96,11 @@ runs:
             --github-token "${{ inputs.github-token }}" \
             --repo "${{ github.repository }}" \
             --run-id "${{ github.run_id }}") \
-        echo "FAILING_STEP=$failing_step" >> $GITHUB_ENV
-        echo "Failing Step was $failing_step"
-        echo "Failing Step was ${{ env.FAILING_STEP }}"
-        echo "Job Status was ${{ inputs.job-status }}"
-        echo "Job Status check was ${{ inputs.job-status == 'failure' }}"
+        echo FAILING_STEP=$failing_step >> $GITHUB_ENV
+        echo Failing Step was $failing_step
+        echo Failing Step was ${{ env.FAILING_STEP }}
+        echo Job Status was ${{ inputs.job-status }}
+        echo Job Status check was ${{ inputs.job-status == 'failure' }}
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
