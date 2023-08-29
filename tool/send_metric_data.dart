@@ -38,30 +38,30 @@ void main(List<String> args) {
 
   final metricName = results['metric-name']?.trim();
   final isFailed = results['is-failed'] == 'true';
-  final testType = results['testType']?.trim();
+  final testType = results['test-type']?.trim();
   var category = results['category']?.trim();
-  final workflowName = results['workflowName']?.trim();
+  final workflowName = results['workflow-name']?.trim();
   final framework = results['framework']?.trim();
-  final flutterDartChannel = results['flutterDartChannel']?.trim();
-  final dartVersion = results['dartVersion']?.trim();
-  final flutterVersion = results['flutterVersion']?.trim();
-  final dartCompiler = results['dartCompiler']?.trim();
+  final flutterDartChannel = results['flutter-dart-channel']?.trim();
+  final dartVersion = results['dart-version']?.trim();
+  final flutterVersion = results['flutter-version']?.trim();
+  final dartCompiler = results['dart-compiler']?.trim();
   final platform = results['platform']?.trim();
-  final platformVersion = results['platformVersion']?.trim();
-  final failingStep = results['failingStep']?.trim();
+  final platformVersion = results['platform-version']?.trim();
+  final failingStep = results['failing-step']?.trim();
 
   if (metricName.isEmpty) {
-    print('Must provide metricName');
+    print('Must provide metric-name');
     exit(1);
   }
 
   final value = isFailed ? '1' : '0';
 
   if (testType.isEmpty) {
-    print('Must provide testType dimension');
+    print('Must provide test-type dimension');
     exit(1);
   } else if (!testTypes.contains(testType)) {
-    print('TestType is not valid: $testType');
+    print('test-type is not valid: $testType');
     exit(1);
   }
 
@@ -77,7 +77,7 @@ void main(List<String> args) {
   }
 
   if (workflowName.isEmpty) {
-    print('Must provide workflowName dimension');
+    print('Must provide workflow-name dimension');
     exit(1);
   }
 
