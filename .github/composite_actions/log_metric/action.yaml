@@ -106,7 +106,7 @@ runs:
       run: |
         dart ./tool/send_metric_data.dart \
           --metric-name="github_metric_1.0" \
-          --job-status="${{ inputs.job.status == 'failure' }}" \
+          --is-failed="${{ inputs.job-status == 'failure' }}" \
           --test-type="${{ inputs.testType }}" \
           --category="${{ inputs.category }}" \
           --workflow-name="${{ inputs.workflowName }}" \
