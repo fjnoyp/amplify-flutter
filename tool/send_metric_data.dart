@@ -29,7 +29,7 @@ void main(List<String> args) {
     ..addOption('flutter-dart-channel')
     ..addOption('dart-version')
     ..addOption('flutter-version')
-    ..addOption('dart-vompiler')
+    ..addOption('dart-compiler')
     ..addOption('platform')
     ..addOption('platform-version')
     ..addOption('failing-step');
