@@ -96,7 +96,7 @@ runs:
             --github-token "${{ inputs.github-token }}" \
             --repo "${{ github.repository }}" \
             --run-id "${{ github.run_id }}") \
-        echo "FAILING_STEP=$failing_step" >> $FAILING_STEP
+        echo "FAILING_STEP=$failing_step" >> $GITHUB_ENV
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
