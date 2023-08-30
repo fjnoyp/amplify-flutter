@@ -88,7 +88,7 @@ runs:
       shell: bash
 
     - name: Get Failing Step
-      if: env.SKIP != 'true' && ${{ inputs.job.status == 'failure' }}
+      if: env.SKIP != 'true' && ($inputs.job.status == 'failure')
       run: |
         failing_step=$( \
           dart ./tool/get_failing_step.dart \
