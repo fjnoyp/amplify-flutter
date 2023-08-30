@@ -9,12 +9,21 @@ import 'package:http/http.dart' as http;
 
 void main(List<String> args) async {
   final parser = ArgParser()
+    ..addOption('job-status')
     ..addOption('substring')
     ..addOption('github-token')
     ..addOption('repo')
     ..addOption('run-id');
 
   final results = parser.parse(args);
+
+  final jobStatus = results['job-status'];
+
+  if (jobStatus != 'failure') {
+    print('Job status is not failure. Exiting.');
+    exit(0);
+  }
+
   final substring = results['substring']?.trim();
   final githubToken = results['github-token'];
   final repo = results['repo'];
