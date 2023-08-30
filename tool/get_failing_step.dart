@@ -76,7 +76,7 @@ void main(List<String> args) async {
     print(failingStep['name']);
   } on Exception catch (_) {
     // Return empty string if no job found or
-    print('=== IN EXCEPTION BLOCK ===');
+    print(' === IN EXCEPTION BLOCK ===');
     print("");
     exit(0);
   }
