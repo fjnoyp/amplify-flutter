@@ -44,16 +44,30 @@ void main(List<String> args) async {
   final jobsJson = json.decode(response.body) as Map<String, dynamic>;
   final jobList = jobsJson['jobs'] as List<dynamic>;
 
+  print('=== JOBS LIST ===');
+  print(jobList);
+
+  print('\n');
+  print('\n');
+  print('\n');
+
   try {
     final jobJson =
         jobList.firstWhere((element) => element['name'].contains(substring));
     final steps = jobJson['steps'] as List<dynamic>;
+
+    print('=== STEPS LIST ===');
+    print(steps);
+
     final failingStep = steps.firstWhere(
         (element) => element['conclusion'] == 'failure',
         orElse: () => null);
+
+    print('=== FAILING STEP ===');
     print(failingStep['name']);
   } on Exception catch (_) {
     // Return empty string if no job found or
+    print('=== IN EXCEPTION BLOCK ===');
     print("");
     exit(0);
   }
