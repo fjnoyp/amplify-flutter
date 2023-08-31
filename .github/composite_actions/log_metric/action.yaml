@@ -95,7 +95,7 @@ runs:
             --substring "${{ inputs.job-identifier }}" \
             --github-token "${{ inputs.github-token }}" \
             --repo "${{ github.repository }}" \
-            --run-id "${{ github.run_id }}") \
+            --run-id "${{ github.run_id }}" \
         failing_step=$( \
           dart ./tool/get_failing_step.dart \
             --job-status "${{ inputs.job-status }}" \
