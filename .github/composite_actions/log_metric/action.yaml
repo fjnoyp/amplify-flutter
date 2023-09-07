@@ -94,13 +94,11 @@ runs:
         dart ./tool/get_failing_step.dart \
           --job-status "failure" \
           --substring "e2e-android (stable, any)" \
-          --github-token ${{ secrets.GITHUB_TOKEN }} \
+          --github-token ${{ inputs.github-token }} \
           --repo "fjnoyp/amplify-flutter" \
           --run-id "6038852014" > dart_output.txt
         echo FAILING_STEP=$(cat dart_output.txt) >> $GITHUB_ENV
       shell: bash
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Run Dart script
       if: env.SKIP != 'true'
