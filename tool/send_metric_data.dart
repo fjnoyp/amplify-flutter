@@ -36,6 +36,24 @@ void main(List<String> args) {
 
   final results = parser.parse(args);
 
+  // Print out all results together as one string with line breaks
+  print('''{
+    metricName: ${results['metric-name']},
+    isFailed: ${results['is-failed']},
+    testType: ${results['test-type']},
+    category: ${results['category']},
+    workflowName: ${results['workflow-name']},
+    framework: ${results['framework']},
+    flutterDartChannel: ${results['flutter-dart-channel']},
+    dartVersion: ${results['dart-version']},
+    flutterVersion: ${results['flutter-version']},
+    dartCompiler: ${results['dart-compiler']},
+    platform: ${results['platform']},
+    platformVersion: ${results['platform-version']},
+    failingStep: ${results['failing-step']},
+    failingStep: ${results['failing-step'] as String?},
+  }''');
+
   final metricName = results['metric-name'];
   final isFailed = results['is-failed'] == 'true';
   final testType = results['test-type'];
