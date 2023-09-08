@@ -52,13 +52,13 @@ jobs:
         if: env.SKIP != 'true'
         run: |
           dart ./tool/send_metric_data.dart \
-            --metric-name="github_metric_1.0" \
-            --is-failed="${{ 'failure' == 'failure' }}" \
-            --test-type="${{ 'unit test' }}" \
-            --category="${{ 'storage' }}" \
-            --workflow-name="${{ 'amplify_storage_s3_example/flutter_vm' }}" \
-            --framework="${{ 'dart' }}" \
-            --flutter-dart-channel="${{ 'dart'}}" \ 
-            --platform="${{ 'android' }}" \         
-            --failing-step="${{ env.FAILING_STEP }}"
+            --metric-name "github_metric_1.0" \
+            --is-failed "${{ 'failure' == 'failure' }}" \
+            --test-type "unit test" \
+            --category "storage" \
+            --workflow-name "amplify_storage_s3_example/flutter_vm" \
+            --framework "dart" \
+            --flutter-dart-channel "dart" \ 
+            --platform ${{ "android" }} \         
+            --failing-step "${{ env.FAILING_STEP }}"
         shell: bash
