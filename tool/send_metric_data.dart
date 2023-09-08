@@ -50,6 +50,23 @@ void main(List<String> args) {
   final platformVersion = results['platform-version']?.trim();
   final failingStep = results['failing-step']?.trim();
 
+  // Print out all of these nullable values together as one string with line breaks
+  print('''{
+    metricName: $metricName,
+    isFailed: $isFailed,
+    testType: $testType,
+    category: $category,
+    workflowName: $workflowName,
+    framework: $framework,
+    flutterDartChannel: $flutterDartChannel,
+    dartVersion: $dartVersion,
+    flutterVersion: $flutterVersion,
+    dartCompiler: $dartCompiler,
+    platform: $platform,
+    platformVersion: $platformVersion,
+    failingStep: $failingStep,
+  }''');
+
   if (metricName == null || metricName?.isEmpty) {
     print('Must provide metric-name');
     exit(1);
