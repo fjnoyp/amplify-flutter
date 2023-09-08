@@ -82,13 +82,13 @@ void main(List<String> args) {
   }
 
   if (framework == null ||
-      framework.isNotEmpty && !frameworkTypes.contains(framework)) {
+      (framework.isNotEmpty && !frameworkTypes.contains(framework))) {
     print('Framework is not valid: $framework');
     exit(1);
   }
 
   if (platform == null ||
-      platform.isNotEmpty && !platformTypes.contains(platform)) {
+      (platform.isNotEmpty && !platformTypes.contains(platform))) {
     print('Platform is not valid: $platform');
     exit(1);
   }
