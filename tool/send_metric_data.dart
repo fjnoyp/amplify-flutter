@@ -36,19 +36,19 @@ void main(List<String> args) {
 
   final results = parser.parse(args);
 
-  final metricName = results['metric-name']?.trim();
+  final metricName = results['metric-name'];
   final isFailed = results['is-failed'] == 'true';
-  final testType = results['test-type']?.trim();
-  var category = results['category']?.trim();
-  final workflowName = results['workflow-name']?.trim();
-  final framework = results['framework']?.trim();
-  final flutterDartChannel = results['flutter-dart-channel']?.trim();
-  final dartVersion = results['dart-version']?.trim();
-  final flutterVersion = results['flutter-version']?.trim();
-  final dartCompiler = results['dart-compiler']?.trim();
-  final platform = results['platform']?.trim();
-  final platformVersion = results['platform-version']?.trim();
-  final failingStep = results['failing-step']?.trim();
+  final testType = results['test-type'];
+  var category = results['category'];
+  final workflowName = results['workflow-name'];
+  final framework = results['framework'];
+  final flutterDartChannel = results['flutter-dart-channel'];
+  final dartVersion = results['dart-version'];
+  final flutterVersion = results['flutter-version'];
+  final dartCompiler = results['dart-compiler'];
+  final platform = results['platform'];
+  final platformVersion = results['platform-version'];
+  final failingStep = results['failing-step'];
 
   // Print out all of these nullable values together as one string with line breaks
   print('''{

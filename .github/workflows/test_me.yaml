@@ -66,5 +66,5 @@ jobs:
             --framework "dart" \
             --flutter-dart-channel "dart" \ 
             --platform ${{ matrix.platform }} \         
-            --failing-step "${{ env.FAILING_STEP }}"
+            --failing-step ${{ env.FAILING_STEP }}
         shell: bash
