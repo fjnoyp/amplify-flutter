@@ -3,11 +3,6 @@ on: push
 jobs: 
   test: 
     runs-on: macos-latest
-    # To avoid 'Credentials could not be loaded' calling workflows must include:
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,9 +12,6 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/composite_actions/install_dependencies
-        with:
-          channel: ${{ matrix.channel }}
-          flutter-version: ${{ matrix.flutter-version }}
 
       - name: Configure AWS credentials
         if: env.SKIP != 'true'
@@ -52,12 +44,18 @@ jobs:
             --run-id "6038852014" > dart_output.txt
           echo FAILING_STEP=$(cat dart_output.txt) >> $GITHUB_ENV
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print Dart Output 2 final 
-        run: |
-          echo Dart output: ${{ env.DART_OUTPUT }}
-          echo Failing Step output: ${{ env.FAILING_STEP }}
-          echo "$FAILING_STEP"
+      - name: Run Dart script
+      if: env.SKIP != 'true'
+      run: |
+        dart ./tool/send_metric_data.dart \
+          --metric-name="github_metric_1.0" \
+          --is-failed="${{ 'failure' == 'failure' }}" \
+          --test-type="${{ 'unit test' }}" \
+          --category="${{ 'storage' }}" \
+          --workflow-name="${{ 'amplify_storage_s3_example/flutter_vm' }}" \
+          --framework="${{ 'dart' }}" \
+          --flutter-dart-channel="${{ 'dart'}}" \          
+          --failing-step="${{ env.FAILING_STEP }}"
+      shell: bash
 
