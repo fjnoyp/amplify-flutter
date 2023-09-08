@@ -50,14 +50,14 @@ void main(List<String> args) {
   final platformVersion = results['platform-version']?.trim();
   final failingStep = results['failing-step']?.trim();
 
-  if (metricName.isEmpty) {
+  if (metricName == null || metricName?.isEmpty) {
     print('Must provide metric-name');
     exit(1);
   }
 
   final value = isFailed ? '1' : '0';
 
-  if (testType.isEmpty) {
+  if (testType == null || testType?.isEmpty) {
     print('Must provide test-type dimension');
     exit(1);
   } else if (!testTypes.contains(testType)) {
@@ -65,7 +65,7 @@ void main(List<String> args) {
     exit(1);
   }
 
-  if (category.isEmpty) {
+  if (category == null || category.isEmpty) {
     print('Must provide category dimension');
     exit(1);
   } else if (category.contains('/')) {
@@ -76,17 +76,19 @@ void main(List<String> args) {
     category = category.split('_')[1];
   }
 
-  if (workflowName.isEmpty) {
+  if (workflowName == null || workflowName.isEmpty) {
     print('Must provide workflow-name dimension');
     exit(1);
   }
 
-  if (framework.isNotEmpty && !frameworkTypes.contains(framework)) {
+  if (framework == null ||
+      framework.isNotEmpty && !frameworkTypes.contains(framework)) {
     print('Framework is not valid: $framework');
     exit(1);
   }
 
-  if (platform.isNotEmpty && !platformTypes.contains(platform)) {
+  if (platform == null ||
+      platform.isNotEmpty && !platformTypes.contains(platform)) {
     print('Platform is not valid: $platform');
     exit(1);
   }

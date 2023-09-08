@@ -58,6 +58,7 @@ jobs:
             --category="${{ 'storage' }}" \
             --workflow-name="${{ 'amplify_storage_s3_example/flutter_vm' }}" \
             --framework="${{ 'dart' }}" \
-            --flutter-dart-channel="${{ 'dart'}}" \          
+            --flutter-dart-channel="${{ 'dart'}}" \ 
+            --platform="${{ 'android' }}" \         
             --failing-step="${{ env.FAILING_STEP }}"
         shell: bash
