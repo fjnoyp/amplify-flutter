@@ -6,6 +6,12 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - "android"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -59,6 +65,6 @@ jobs:
             --workflow-name "amplify_storage_s3_example/flutter_vm" \
             --framework "dart" \
             --flutter-dart-channel "dart" \ 
-            --platform ${{ "android" }} \         
+            --platform ${{ matrix.platform }} \         
             --failing-step "${{ env.FAILING_STEP }}"
         shell: bash
