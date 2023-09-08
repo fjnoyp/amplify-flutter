@@ -1,8 +1,11 @@
-name: Test ME 
+name: Test ME
 on: push
-jobs: 
-  test: 
+jobs:
+  test:
     runs-on: macos-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,10 +35,10 @@ jobs:
         run: dart pub get
         shell: bash
 
-# THIS IS WORKING 
-# ACCESSIBLE VIA "$FAILING_STEP" or ${{ env.FAILING_STEP }}
-      - name: Get Failing Step      
-        run: |          
+      # THIS IS WORKING
+      # ACCESSIBLE VIA "$FAILING_STEP" or ${{ env.FAILING_STEP }}
+      - name: Get Failing Step
+        run: |
           dart ./tool/get_failing_step.dart \
             --job-status "failure" \
             --substring "e2e-android (stable, any)" \
@@ -46,16 +49,15 @@ jobs:
         shell: bash
 
       - name: Run Dart script
-      if: env.SKIP != 'true'
-      run: |
-        dart ./tool/send_metric_data.dart \
-          --metric-name="github_metric_1.0" \
-          --is-failed="${{ 'failure' == 'failure' }}" \
-          --test-type="${{ 'unit test' }}" \
-          --category="${{ 'storage' }}" \
-          --workflow-name="${{ 'amplify_storage_s3_example/flutter_vm' }}" \
-          --framework="${{ 'dart' }}" \
-          --flutter-dart-channel="${{ 'dart'}}" \          
-          --failing-step="${{ env.FAILING_STEP }}"
-      shell: bash
-
+        if: env.SKIP != 'true'
+        run: |
+          dart ./tool/send_metric_data.dart \
+            --metric-name="github_metric_1.0" \
+            --is-failed="${{ 'failure' == 'failure' }}" \
+            --test-type="${{ 'unit test' }}" \
+            --category="${{ 'storage' }}" \
+            --workflow-name="${{ 'amplify_storage_s3_example/flutter_vm' }}" \
+            --framework="${{ 'dart' }}" \
+            --flutter-dart-channel="${{ 'dart'}}" \          
+            --failing-step="${{ env.FAILING_STEP }}"
+        shell: bash
