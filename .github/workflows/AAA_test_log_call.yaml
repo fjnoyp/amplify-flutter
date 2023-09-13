@@ -1,0 +1,48 @@
+name: Amplify Canaries
+on: push
+jobs:
+  testLogMetric:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
+        with:
+          persist-credentials: false
+          submodules: true
+
+      - name: Test Wrapper Call
+        if: always()
+        uses: ./.github/composite_actions/log_metric_wrapper
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+          job-status: ${{ job.status }}
+          job-identifier: build (${{ matrix.channel }}, ${{ matrix.flutter-version}})
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          testType: canary
+          category: all
+          workflowName: amplify_canaries/build
+          framework: flutter
+          flutterDartChannel: beta
+          flutterVersion: stable
+
+      - name: Test Direct Call of Failing Run
+        if: always()
+        uses: ./.github/composite_actions/log_cw_metric
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+          job-status: failure
+          job-identifier: build (stable, 3.10.1)
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repo: "fjnoyp/amplify-flutter"
+          run-id: 6058512442
+
+          testType: canary
+          category: all
+          workflowName: amplify_canaries/build
+          framework: flutter
+          flutterDartChannel: beta
+          flutterVersion: stable
