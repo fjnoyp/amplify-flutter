@@ -19,10 +19,10 @@ inputs:
     description: Github Action Run Id
 
   # Global Metric Dimensions
-  metricName:
+  metric-name:
     description: Name of the metric to track in Cloudwatch.
     required: true
-  testType:
+  test-type:
     description: canary, integration, unit testType.
     required: true
   category:
@@ -39,7 +39,7 @@ inputs:
   flutter-dart-channel:
     description: beta, stable.
     required: false
-  dartVersion:
+  dart-version:
     description: 3, 2.19, 2.18, etc.
     required: false
   flutter-version:
