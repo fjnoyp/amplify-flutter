@@ -26,13 +26,13 @@ inputs:
     description: Github Action Run Id
 
   # Global Metric Dimensions
-  testType:
+  test-type:
     description: canary, integration, unit testType.
     required: true
   category:
     description: analytics, api, authenticator, etc.
     required: true
-  workflowName:
+  workflow-name:
     description: The Github Action workflow.yaml file name.  ie "AmplifyCanaries".
     required: true
 
@@ -40,16 +40,16 @@ inputs:
   framework:
     description: flutter, dart.
     required: false
-  flutterDartChannel:
+  flutter-dart-channel:
     description: beta, stable.
     required: false
-  dartVersion:
+  dart-version:
     description: 3, 2.19, 2.18, etc.
     required: false
-  flutterVersion:
+  flutter-version:
     description: 3.10.6, 3.10.5, etc.
     required: false
-  dartCompiler:
+  dart-compiler:
     description: dart2js, ddc, dart, dart2wasm.
     required: false
 
@@ -57,7 +57,7 @@ inputs:
   platform:
     description: android, ios, web, linux, windows.
     required: false
-  platformVersion:
+  platform-version:
     description: ios-14.5, ios-16, android-25-x86, etc.
     required: false
 runs:
@@ -94,14 +94,14 @@ runs:
         github-token: ${{ inputs.github-token }}
         repo: $${{ github.repository }}
         run-id: ${{ github.run_id }}
-        metricName: github_metric_1.0
-        testType: ${{ inputs.testType }}
+        metric-name: github_metric_1.0
+        test-type: ${{ inputs.test-type }}
         category: ${{ inputs.category }}
-        workflowName: ${{ inputs.workflowName }}
+        workflow-name: ${{ inputs.workflow-name }}
         framework: ${{ inputs.framework }}
-        flutterDartChannel: ${{ inputs.flutterDartChannel }}
-        dartVersion: ${{ inputs.dartVersion }}
-        flutterVersion: ${{ inputs.flutterVersion }}
-        dartCompiler: ${{ inputs.dartCompiler }}
+        flutter-dart-channel: ${{ inputs.flutter-dart-channel }}
+        dart-version: ${{ inputs.dart-version }}
+        flutter-version: ${{ inputs.flutter-version }}
+        dart-compiler: ${{ inputs.dart-compiler }}
         platform: ${{ inputs.platform }}
-        platformVersion: ${{ inputs.platformVersion }}
+        platform-version: ${{ inputs.platform-version }}
