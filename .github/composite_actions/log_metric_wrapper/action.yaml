@@ -94,7 +94,7 @@ runs:
         github-token: ${{ inputs.github-token }}
         repo: $${{ github.repository }}
         run-id: ${{ github.run_id }}
-        metric-name: github_metric_1.0
+        metric-name: "github_metric_1.0"
         test-type: ${{ inputs.test-type }}
         category: ${{ inputs.category }}
         workflow-name: ${{ inputs.workflow-name }}
