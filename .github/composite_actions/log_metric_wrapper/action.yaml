@@ -79,9 +79,6 @@ runs:
         persist-credentials: false
         submodules: true
 
-    - name: Install dependencies
-      uses: ./.github/composite_actions/install_dependencies
-
     - name: Configure AWS credentials
       #if: env.SKIP != 'true'
       uses: aws-actions/configure-aws-credentials@04b98b3f9e85f563fb061be8751a0352327246b0 # 3.0.1

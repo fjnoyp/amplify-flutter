@@ -1,8 +1,14 @@
-name: Amplify Canaries
+name: Test Log Calls
 on: push
 jobs:
   testLogMetric:
     runs-on: macos-latest
+
+    # MUST HAVE THIS (check other calls)
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
         with:
