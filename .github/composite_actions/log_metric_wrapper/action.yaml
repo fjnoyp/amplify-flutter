@@ -1,5 +1,7 @@
 name: Log CW Metric Wrapper
 description: Test to log a CW metric
+
+# Wraps log metric by configuring AWS credentials and adding github repo + run id inputs.
 inputs:
   role-to-assume:
     description: AWS role to assume for CW pushing
@@ -18,12 +20,6 @@ inputs:
   github-token:
     required: true
     description: Github token for requesting failing steps.
-  repo:
-    required: true
-    description: Github repo
-  run-id:
-    required: true
-    description: Github Action Run Id
 
   # Global Metric Dimensions
   test-type:
