@@ -7634,7 +7634,7 @@
     launch() {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$returnValue, value, t3, cloudArgs, t1, t2, jobStatus, jobIdentifier, githubToken, repo, runId, isFailed, failingStep, metricName, testType, category, workflowName, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion;
+        $async$returnValue, t3, cloudArgs, t1, t2, jobStatus, jobIdentifier, githubToken, repo, runId, isFailed, failingStep, metricName, testType, category, workflowName, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value;
       var $async$launch = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return A._asyncRethrow($async$result, $async$completer);
@@ -7678,7 +7678,6 @@
               dartCompiler = A.Core_getInput(t2._as(t1.core), "dart-compiler");
               platform = A.Core_getInput(t2._as(t1.core), "platform");
               platformVersion = A.Core_getInput(t2._as(t1.core), "platform-version");
-              A.print("{\n    metricName: " + metricName + ",\n    isFailed: " + isFailed + ",\n    testType: " + testType + ",\n    category: " + category + ",\n    workflowName: " + workflowName + ",\n    framework: " + framework + ",\n    flutterDartChannel: " + flutterDartChannel + ",\n    dartVersion: " + dartVersion + ",\n    flutterVersion: " + flutterVersion + ",\n    dartCompiler: " + dartCompiler + ",\n    platform: " + platform + ",\n    platformVersion: " + platformVersion + ",\n    failingStep: " + failingStep + ",\n  }");
               value = isFailed ? "1" : "0";
               if (B.JSString_methods.contains$1(category, "/")) {
                 t1 = category.split("/");
@@ -7729,6 +7728,7 @@
               return A._asyncAwait(t1.run$1(t3), $async$launch);
             case 7:
               // returning from await.
+              A.print("sent the process call with args: " + A.S(cloudArgs));
             case 1:
               // return
               return A._asyncReturn($async$returnValue, $async$completer);

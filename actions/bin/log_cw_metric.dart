@@ -35,6 +35,7 @@ Future<void> launch() async {
   final platform = core.getInput('platform');
   final platformVersion = core.getInput('platform-version');
 
+/*
   print('''{
     metricName: $metricName,
     isFailed: $isFailed,
@@ -50,6 +51,7 @@ Future<void> launch() async {
     platformVersion: $platformVersion,
     failingStep: $failingStep,
   }''');
+  */
 
   final value = isFailed ? '1' : '0';
 
@@ -95,6 +97,8 @@ Future<void> launch() async {
   await processManager.run(
     <String>['aws', ...cloudArgs],
   );
+
+  print('sent the process call with args: $cloudArgs');
 }
 
 Future<String> getFailingStep(
