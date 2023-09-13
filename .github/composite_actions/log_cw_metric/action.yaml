@@ -28,7 +28,7 @@ inputs:
   category:
     description: analytics, api, authenticator, etc.
     required: true
-  workflowName:
+  workflow-name:
     description: The Github Action workflow.yaml file name.  ie "AmplifyCanaries".
     required: true
 
@@ -36,16 +36,16 @@ inputs:
   framework:
     description: flutter, dart.
     required: false
-  flutterDartChannel:
+  flutter-dart-channel:
     description: beta, stable.
     required: false
   dartVersion:
     description: 3, 2.19, 2.18, etc.
     required: false
-  flutterVersion:
+  flutter-version:
     description: 3.10.6, 3.10.5, etc.
     required: false
-  dartCompiler:
+  dart-compiler:
     description: dart2js, ddc, dart, dart2wasm.
     required: false
 
@@ -53,7 +53,7 @@ inputs:
   platform:
     description: android, ios, web, linux, windows.
     required: false
-  platformVersion:
+  platform-version:
     description: ios-14.5, ios-16, android-25-x86, etc.
     required: false
 runs:
