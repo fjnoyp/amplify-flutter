@@ -21,17 +21,15 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
-
           job-status: ${{ job.status }}
           job-identifier: build (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-          testType: canary
+          test-type: canary
           category: all
-          workflowName: amplify_canaries/build
+          workflow-name: amplify_canaries/build
           framework: flutter
-          flutterDartChannel: beta
-          flutterVersion: stable
+          flutter-dart-channel: beta
+          flutter-version: stable
 
       # Adding to check if solves issue with dart:html  / dart:io missing
       - name: Install dependencies
@@ -43,16 +41,14 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
-
           job-status: failure
           job-identifier: build (stable, 3.10.1)
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repo: "fjnoyp/amplify-flutter"
           run-id: 6058512442
-
-          testType: canary
+          test-type: canary
           category: all
-          workflowName: amplify_canaries/build
+          workflow-name: amplify_canaries/build
           framework: flutter
-          flutterDartChannel: beta
-          flutterVersion: stable
+          flutter-dart-channel: beta
+          flutter-version: stable
