@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:actions/actions.dart';
 import 'package:http/http.dart' as http;
+import 'package:io/io.dart';
 
 Future<void> main(List<String> args) => wrapMain(launch);
 
@@ -91,7 +91,8 @@ Future<void> launch() async {
     dimensionString,
   ];
 
-  Process.runSync('aws', cloudArgs);
+  final manager = ProcessManager();
+  await manager.spawn('aws', cloudArgs);
 }
 
 Future<String> getFailingStep(
