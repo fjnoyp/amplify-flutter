@@ -62,17 +62,18 @@ Future<void> launch() async {
   }
 
   final dimensions = {
-    'testType': testType,
+    'test-type': testType,
     'category': category,
-    'workflowName': workflowName,
+    'workflow-name': workflowName,
     if (framework.isNotEmpty) 'framework': framework,
-    if (flutterDartChannel.isNotEmpty) 'flutterDartChannel': flutterDartChannel,
-    if (dartVersion.isNotEmpty) 'dartVersion': dartVersion,
-    if (flutterVersion.isNotEmpty) 'flutterVersion': flutterVersion,
-    if (dartCompiler.isNotEmpty) 'dartCompiler': dartCompiler,
+    if (flutterDartChannel.isNotEmpty)
+      'flutter-dart-chanel': flutterDartChannel,
+    if (dartVersion.isNotEmpty) 'dart-version': dartVersion,
+    if (flutterVersion.isNotEmpty) 'flutter-version': flutterVersion,
+    if (dartCompiler.isNotEmpty) 'dart-compiler': dartCompiler,
     if (platform.isNotEmpty) 'platform': platform,
-    if (platformVersion.isNotEmpty) 'platformVersion': platformVersion,
-    if (failingStep.isNotEmpty) 'failingStep': failingStep,
+    if (platformVersion.isNotEmpty) 'platform-version': platformVersion,
+    if (failingStep.isNotEmpty) 'failing-step': failingStep,
   };
 
   final dimensionString =

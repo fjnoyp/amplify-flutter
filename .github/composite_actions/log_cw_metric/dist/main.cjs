@@ -7701,25 +7701,25 @@
               }
               t1 = type$.String;
               t2 = A.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
-              t2.$indexSet(0, "testType", testType);
+              t2.$indexSet(0, "test-type", testType);
               t2.$indexSet(0, "category", category);
-              t2.$indexSet(0, "workflowName", workflowName);
+              t2.$indexSet(0, "workflow-name", workflowName);
               if (framework.length !== 0)
                 t2.$indexSet(0, "framework", framework);
               if (flutterDartChannel.length !== 0)
-                t2.$indexSet(0, "flutterDartChannel", flutterDartChannel);
+                t2.$indexSet(0, "flutter-dart-chanel", flutterDartChannel);
               if (dartVersion.length !== 0)
-                t2.$indexSet(0, "dartVersion", dartVersion);
+                t2.$indexSet(0, "dart-version", dartVersion);
               if (flutterVersion.length !== 0)
-                t2.$indexSet(0, "flutterVersion", flutterVersion);
+                t2.$indexSet(0, "flutter-version", flutterVersion);
               if (dartCompiler.length !== 0)
-                t2.$indexSet(0, "dartCompiler", dartCompiler);
+                t2.$indexSet(0, "dart-compiler", dartCompiler);
               if (platform.length !== 0)
                 t2.$indexSet(0, "platform", platform);
               if (platformVersion.length !== 0)
-                t2.$indexSet(0, "platformVersion", platformVersion);
+                t2.$indexSet(0, "platform-version", platformVersion);
               if (failingStep.length !== 0)
-                t2.$indexSet(0, "failingStep", failingStep);
+                t2.$indexSet(0, "failing-step", failingStep);
               t3 = type$.JSArray_String;
               cloudArgs = A._setArrayType(["cloudwatch", "put-metric-data", "--metric-name", metricName, "--namespace", "GithubCanaryApps", "--value", value, "--dimension", t2.get$entries().map$1$1(0, new A.launch_closure(), t1).join$1(0, ",")], t3);
               t1 = $.$get$processManager();

@@ -30,25 +30,5 @@ jobs:
           framework: flutter
           flutter-dart-channel: beta
           flutter-version: stable
-
-      # Adding to check if solves issue with dart:html  / dart:io missing
-      - name: Install dependencies
-        uses: ./.github/composite_actions/install_dependencies
-
-      - name: Test Direct Call of Failing Run
-        if: always()
-        uses: ./.github/composite_actions/log_cw_metric
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          job-status: failure
-          job-identifier: build (stable, 3.10.1)
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repo: "fjnoyp/amplify-flutter"
-          run-id: 6058512442
-          test-type: canary
-          category: all
-          workflow-name: amplify_canaries/build
-          framework: flutter
-          flutter-dart-channel: beta
-          flutter-version: stable
+          platform: android
+          platform-version: 14.5
