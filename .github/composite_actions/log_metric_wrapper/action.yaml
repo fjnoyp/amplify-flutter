@@ -26,9 +26,6 @@ inputs:
     description: Github Action Run Id
 
   # Global Metric Dimensions
-  metricName:
-    description: Name of the metric to track in Cloudwatch.
-    required: true
   testType:
     description: canary, integration, unit testType.
     required: true
