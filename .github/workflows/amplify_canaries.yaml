@@ -60,12 +60,12 @@ jobs:
           job-identifier: build (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          testType: canary
+          test-type: canary
           category: all
-          workflowName: amplify_canaries/build
+          workflow-name: amplify_canaries/build
           framework: flutter
-          flutterDartChannel: ${{ matrix.channel }}
-          flutterVersion: ${{ matrix.flutter-version }}
+          flutter-dart-channel: ${{ matrix.channel }}
+          flutter-version: ${{ matrix.flutter-version }}
 
   e2e-android:
     runs-on:
@@ -134,14 +134,14 @@ jobs:
           job-identifier: e2e-android (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          testType: canary
+          test-type: canary
           category: all
-          workflowName: amplify_canaries/e2e-android
+          workflow-name: amplify_canaries/e2e-android
           framework: flutter
-          flutterDartChannel: ${{ matrix.channel }}
-          flutterVersion: ${{ matrix.flutter-version }}
+          flutter-dart-channel: ${{ matrix.channel }}
+          flutter-version: ${{ matrix.flutter-version }}
           platform: android
-          platformVersion: ${{ matrix.ios-version }}
+          platform-version: ${{ matrix.ios-version }}
 
   e2e-ios:
     runs-on: macos-latest-xl
@@ -213,11 +213,11 @@ jobs:
           job-identifier: e2e-ios (${{ matrix.channel }}, ${{ matrix.flutter-version}})
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          testType: canary
+          test-type: canary
           category: all
-          workflowName: amplify_canaries/e2e-ios
+          workflow-name: amplify_canaries/e2e-ios
           framework: flutter
-          flutterDartChannel: ${{ matrix.channel }}
-          flutterVersion: ${{ matrix.flutter-version }}
+          flutter-dart-channel: ${{ matrix.channel }}
+          flutter-version: ${{ matrix.flutter-version }}
           platform: ios
-          platformVersion: ${{ matrix.ios-version }}
+          platform-version: ${{ matrix.ios-version }}
