@@ -1,75 +1,6 @@
 # Generated with aft. To update, run: `aft generate workflows`
 name: amplify_analytics_pinpoint_dart
-on:
-  push:
-    branches:
-      - main
-      - stable
-    paths:
-      - '.github/composite_actions/setup_firefox/action.yaml'
-      - '.github/workflows/amplify_analytics_pinpoint_dart.yaml'
-      - '.github/workflows/dart_dart2js.yaml'
-      - '.github/workflows/dart_ddc.yaml'
-      - '.github/workflows/dart_native.yaml'
-      - '.github/workflows/dart_vm.yaml'
-      - 'packages/amplify_core/lib/**/*.dart'
-      - 'packages/amplify_core/pubspec.yaml'
-      - 'packages/amplify_lints/lib/**/*.yaml'
-      - 'packages/amplify_lints/pubspec.yaml'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/**/*.dart'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/**/*.yaml'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/lib/**/*'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/test/**/*'
-      - 'packages/aws_common/lib/**/*.dart'
-      - 'packages/aws_common/pubspec.yaml'
-      - 'packages/aws_signature_v4/lib/**/*.dart'
-      - 'packages/aws_signature_v4/pubspec.yaml'
-      - 'packages/common/amplify_db_common_dart/lib/**/*.dart'
-      - 'packages/common/amplify_db_common_dart/pubspec.yaml'
-      - 'packages/secure_storage/amplify_secure_storage_dart/lib/**/*.dart'
-      - 'packages/secure_storage/amplify_secure_storage_dart/pubspec.yaml'
-      - 'packages/smithy/smithy/lib/**/*.dart'
-      - 'packages/smithy/smithy/pubspec.yaml'
-      - 'packages/smithy/smithy_aws/lib/**/*.dart'
-      - 'packages/smithy/smithy_aws/pubspec.yaml'
-      - 'packages/worker_bee/worker_bee/lib/**/*.dart'
-      - 'packages/worker_bee/worker_bee/pubspec.yaml'
-      - 'packages/worker_bee/worker_bee_builder/lib/**/*.dart'
-      - 'packages/worker_bee/worker_bee_builder/pubspec.yaml'
-  pull_request:
-    paths:
-      - '.github/composite_actions/setup_firefox/action.yaml'
-      - '.github/workflows/amplify_analytics_pinpoint_dart.yaml'
-      - '.github/workflows/dart_dart2js.yaml'
-      - '.github/workflows/dart_ddc.yaml'
-      - '.github/workflows/dart_native.yaml'
-      - '.github/workflows/dart_vm.yaml'
-      - 'packages/amplify_core/lib/**/*.dart'
-      - 'packages/amplify_core/pubspec.yaml'
-      - 'packages/amplify_lints/lib/**/*.yaml'
-      - 'packages/amplify_lints/pubspec.yaml'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/**/*.dart'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/**/*.yaml'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/lib/**/*'
-      - 'packages/analytics/amplify_analytics_pinpoint_dart/test/**/*'
-      - 'packages/aws_common/lib/**/*.dart'
-      - 'packages/aws_common/pubspec.yaml'
-      - 'packages/aws_signature_v4/lib/**/*.dart'
-      - 'packages/aws_signature_v4/pubspec.yaml'
-      - 'packages/common/amplify_db_common_dart/lib/**/*.dart'
-      - 'packages/common/amplify_db_common_dart/pubspec.yaml'
-      - 'packages/secure_storage/amplify_secure_storage_dart/lib/**/*.dart'
-      - 'packages/secure_storage/amplify_secure_storage_dart/pubspec.yaml'
-      - 'packages/smithy/smithy/lib/**/*.dart'
-      - 'packages/smithy/smithy/pubspec.yaml'
-      - 'packages/smithy/smithy_aws/lib/**/*.dart'
-      - 'packages/smithy/smithy_aws/pubspec.yaml'
-      - 'packages/worker_bee/worker_bee/lib/**/*.dart'
-      - 'packages/worker_bee/worker_bee/pubspec.yaml'
-      - 'packages/worker_bee/worker_bee_builder/lib/**/*.dart'
-      - 'packages/worker_bee/worker_bee_builder/pubspec.yaml'
-  schedule:
-    - cron: "0 6,12 * * *" # Every day at 06:00 and 12:00
+on: push
 defaults:
   run:
     shell: bash
@@ -85,25 +16,52 @@ concurrency:
 jobs:
   test:
     uses: ./.github/workflows/dart_vm.yaml
+    permissions:
+      id-token: write
+      contents: read
     with:
       package-name: amplify_analytics_pinpoint_dart
       working-directory: packages/analytics/amplify_analytics_pinpoint_dart
-      has-goldens: false
+    secrets:
+      role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      aws-region: ${{ secrets.AWS_REGION }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
   native_test:
     needs: test
     uses: ./.github/workflows/dart_native.yaml
+    permissions:
+      id-token: write
+      contents: read
     with:
       package-name: amplify_analytics_pinpoint_dart
       working-directory: packages/analytics/amplify_analytics_pinpoint_dart
+    secrets:
+      role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      aws-region: ${{ secrets.AWS_REGION }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
   ddc_test:
     needs: test
     uses: ./.github/workflows/dart_ddc.yaml
+    permissions:
+      id-token: write
+      contents: read
     with:
       package-name: amplify_analytics_pinpoint_dart
       working-directory: packages/analytics/amplify_analytics_pinpoint_dart
+    secrets:
+      role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      aws-region: ${{ secrets.AWS_REGION }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
   dart2js_test:
     needs: test
     uses: ./.github/workflows/dart_dart2js.yaml
+    permissions:
+      id-token: write
+      contents: read
     with:
       package-name: amplify_analytics_pinpoint_dart
       working-directory: packages/analytics/amplify_analytics_pinpoint_dart
+    secrets:
+      role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      aws-region: ${{ secrets.AWS_REGION }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}

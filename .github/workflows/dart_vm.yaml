@@ -10,6 +10,16 @@ on:
         description: The working directory relative to the repo root
         required: true
         type: string
+    secrets:
+      role-to-assume:
+        description: The role to assume when logging to CloudWatch
+        required: true
+      aws-region:
+        description: The AWS region to log to CloudWatch
+        required: true
+      github-token:
+        description: The GitHub token to use when logging to CloudWatch
+        required: true
 
 jobs:
   test:
@@ -26,6 +36,15 @@ jobs:
           - stable
           - beta
     steps:
+      - name: Configure AWS credentials
+        #if: env.SKIP != 'true'
+        uses: aws-actions/configure-aws-credentials@04b98b3f9e85f563fb061be8751a0352327246b0 # 3.0.1
+        with:
+          unset-current-credentials: true
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+          role-duration-seconds: 900
+
       - name: Cache Pub dependencies
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # 3.3.2
         with:
@@ -114,3 +133,20 @@ jobs:
         if: "always() && steps.bootstrap.conclusion == 'success' && steps.testCheck.outputs.hasTests == 'true' && matrix.sdk != 'stable'"
         run: dart test --exclude-tags=build
         working-directory: ${{ inputs.working-directory }}
+
+      - name: Log success/failure
+        if: always()
+        uses: ./.github/composite_actions/log_cw_metric_wrapper
+        with:
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+
+          job-status: ${{ job.status }}
+          github-token: ${{ secrets.github-token }}
+
+          test-type: unit
+          package-name: ${{ inputs.package-name }}
+
+          framework: dart
+          flutter-dart-channel: ${{ matrix.sdk }}
+          dart-compiler: vm

@@ -10,6 +10,16 @@ on:
         description: The working directory relative to the repo root
         required: true
         type: string
+    secrets:
+      role-to-assume:
+        description: The role to assume when logging to CloudWatch
+        required: true
+      aws-region:
+        description: The AWS region to log to CloudWatch
+        required: true
+      github-token:
+        description: The GitHub token to use when logging to CloudWatch
+        required: true
 
 jobs:
   test:
@@ -82,3 +92,23 @@ jobs:
         if: "always() && steps.bootstrap.conclusion == 'success'"
         run: dart run build_runner test --delete-conflicting-outputs -- -p ${{ matrix.browser }}
         working-directory: ${{ inputs.working-directory }}
+
+      - name: Log success/failure
+        if: always()
+        uses: ./.github/composite_actions/log_cw_metric_wrapper
+        with:
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+
+          job-status: ${{ job.status }}
+          github-token: ${{ secrets.github-token }}
+
+          test-type: unit
+          package-name: ${{ inputs.package-name }}
+
+          workflow-name: dart_ddc
+          framework: dart
+          flutter-dart-channel: ${{ matrix.sdk }}
+          dart-compiler: ddc
+          platform: web
+          platform-version: ${{ matrix.browser }}
