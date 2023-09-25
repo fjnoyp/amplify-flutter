@@ -1,0 +1,47 @@
+name: test inner workflow
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: The name of the package being tested
+        required: true
+        type: string
+      working-directory:
+        description: The working directory relative to the repo root
+        required: true
+        type: string
+    secrets:
+      role-to-assume:
+        description: The role to assume when logging to CloudWatch
+        required: true
+      aws-region:
+        description: The AWS region to log to CloudWatch
+        required: true
+      github-token:
+        description: The GitHub token to use when logging to CloudWatch
+        required: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Configure AWS credentials
+        #if: env.SKIP != 'true'
+        uses: aws-actions/configure-aws-credentials@04b98b3f9e85f563fb061be8751a0352327246b0 # 3.0.1
+        with:
+          unset-current-credentials: true
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+          role-duration-seconds: 900
+
+      - name: Git Checkout
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
+
+      - name: Call custom action
+        uses: ./.github/composite_actions/a_test_action
+        with:
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+          github-token: ${{ secrets.github-token }}

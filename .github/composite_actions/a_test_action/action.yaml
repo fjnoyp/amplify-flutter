@@ -1,0 +1,30 @@
+name: Test Action
+description: Test Action
+
+inputs:
+  role-to-assume:
+    description: AWS role to assume for CW pushing
+    required: true
+  aws-region:
+    description: AWS region
+    required: true
+  github-token:
+    required: true
+    description: Github token for requesting failing steps.
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
+      with:
+        persist-credentials: false
+        submodules: true
+
+    - name: Configure AWS credentials
+      #if: env.SKIP != 'true'
+      uses: aws-actions/configure-aws-credentials@04b98b3f9e85f563fb061be8751a0352327246b0 # 3.0.1
+      with:
+        unset-current-credentials: true
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+        role-duration-seconds: 900
