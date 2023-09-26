@@ -173,7 +173,7 @@ Future<String> getFailingStep(
 
     final failingStep = dartify(steps.firstWhere(
       (element) => element['conclusion'] == 'failure',
-    )) as Map<String, dynamic>;
+    )) as Map;
 
     core.info('faililngSTep $failingStep');
 
