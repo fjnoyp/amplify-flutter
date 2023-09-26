@@ -134,6 +134,23 @@ Future<String> getFailingStep(
       'https://api.github.com/repos/$repo/actions/runs/$runId/jobs',
       headers: headers,
     );
+
+    core.info('entering first map');
+    // Map the response
+    final responseMap = dartify(response) as Map<String, dynamic>;
+
+    core.info('exiting first map: $responseMap');
+
+    // Map the jobs
+    final jobMap = responseMap['jobs'] as List<dynamic>;
+
+    core.info('exiting job map: ${jobMap.toString()}');
+
+    // Map the steps
+    final stepsMap = jobMap[0]['steps'] as List<dynamic>;
+
+    core.info('exiting step map: ${stepsMap.toString()}');
+
     final jobsList =
         GithubJobsList.fromJson(dartify(response) as Map<String, dynamic>);
 

@@ -8136,7 +8136,7 @@
     getFailingStep$body(jobIdentifier, githubToken, repo, runId) {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.String),
-        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, jobsList, job, failingStep, e, t1, exception, $async$exception;
+        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, responseMap, jobMap, stepsMap, jobsList, job, failingStep, e, t1, t2, t3, t4, exception, $async$exception;
       var $async$getFailingStep = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$currentError = $async$result;
@@ -8149,16 +8149,27 @@
               $async$handler = 4;
               t1 = type$.String;
               headers = A.LinkedHashMap_LinkedHashMap$_literal(["Authorization", "token " + githubToken, "Accept", "application/vnd.github.v3+json", "user-agent", "amplify-flutter"], t1, t1);
+              t1 = self;
+              t2 = type$.JSObject;
               $async$goto = 7;
-              return A._asyncAwait(A.HttpClient_getJson(type$.JSObject._as(new self.HttpClient()), "https://api.github.com/repos/" + repo + "/actions/runs/" + runId + "/jobs", headers), $async$getFailingStep);
+              return A._asyncAwait(A.HttpClient_getJson(t2._as(new t1.HttpClient()), "https://api.github.com/repos/" + repo + "/actions/runs/" + runId + "/jobs", headers), $async$getFailingStep);
             case 7:
               // returning from await.
               response = $async$result;
-              jobsList = A.GithubJobsList$fromJson(response);
+              t2._as(t1.core).info("entering first map");
+              t3 = type$.Map_String_dynamic;
+              responseMap = t3._as(A.dartify(response));
+              t2._as(t1.core).info("exiting first map: " + A.S(responseMap));
+              t4 = type$.List_dynamic;
+              jobMap = t4._as(J.$index$asx(responseMap, "jobs"));
+              t2._as(t1.core).info("exiting job map: " + J.toString$0$(jobMap));
+              stepsMap = t4._as(J.$index$asx(J.$index$asx(jobMap, 0), "steps"));
+              t2._as(t1.core).info("exiting step map: " + J.toString$0$(stepsMap));
+              jobsList = A.GithubJobsList$fromJson(t3._as(A.dartify(response)));
               job = B.JSArray_methods.firstWhere$1(jobsList.jobs, new A.getFailingStep_closure(jobIdentifier));
               failingStep = B.JSArray_methods.firstWhere$1(job.steps, new A.getFailingStep_closure0());
-              t1 = failingStep.name;
-              $async$returnValue = t1;
+              t3 = failingStep.name;
+              $async$returnValue = t3;
               // goto return
               $async$goto = 1;
               break;
@@ -8720,6 +8731,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
+      A._asInt(index);
       if (!(index >= 0 && index < receiver.length))
         throw A.wrapException(A.diagnoseIndexError(receiver, index));
       return receiver[index];
@@ -9085,6 +9097,12 @@
     get$length(receiver) {
       return receiver.length;
     },
+    $index(receiver, index) {
+      A._asInt(index);
+      if (!(index >= 0 && index < receiver.length))
+        throw A.wrapException(A.diagnoseIndexError(receiver, index));
+      return receiver[index];
+    },
     $isJSIndexable: 1,
     $isTrustedGetRuntimeType: 1,
     $isPattern: 1,
@@ -9132,7 +9150,7 @@
   A._EfficientLengthCastIterable.prototype = {$isEfficientLengthIterable: 1};
   A._CastListBase.prototype = {
     $index(_, index) {
-      return this.$ti._rest[1]._as(J.$index$asx(this._source, index));
+      return this.$ti._rest[1]._as(J.$index$asx(this._source, A._asInt(index)));
     },
     $indexSet(_, index, value) {
       var t1 = this.$ti;
@@ -9206,7 +9224,9 @@
       return this._string.length;
     },
     $index(_, i) {
-      var t1 = this._string;
+      var t1;
+      A._asInt(i);
+      t1 = this._string;
       if (!(i >= 0 && i < t1.length))
         return A.ioore(t1, i);
       return t1.charCodeAt(i);
@@ -10262,7 +10282,9 @@
       return t1.index + t1[0].length;
     },
     $index(_, index) {
-      var t1 = this._match;
+      var t1;
+      A._asInt(index);
+      t1 = this._match;
       if (!(index < t1.length))
         return A.ioore(t1, index);
       return t1[index];
@@ -10328,6 +10350,7 @@
       return this.start + this.pattern.length;
     },
     $index(_, g) {
+      A._asInt(g);
       if (g !== 0)
         A.throwExpression(A.RangeError$value(g, null));
       return this.pattern;
@@ -10404,6 +10427,7 @@
   };
   A.NativeTypedArrayOfDouble.prototype = {
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10445,6 +10469,7 @@
       return B.Type_Int16List_uXf;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10456,6 +10481,7 @@
       return B.Type_Int32List_O50;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10467,6 +10493,7 @@
       return B.Type_Int8List_ekJ;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10478,6 +10505,7 @@
       return B.Type_Uint16List_2bx;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10489,6 +10517,7 @@
       return B.Type_Uint32List_2bx;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10503,6 +10532,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10517,6 +10547,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
+      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -14936,6 +14967,12 @@
   };
   A._DataUri.prototype = {};
   A.Expando.prototype = {
+    $index(_, object) {
+      type$.Object._as(object);
+      if (A._isBool(object) || typeof object == "number" || typeof object == "string" || false)
+        A.Expando__badExpandoKey(object);
+      return this._jsWeakMap.get(object);
+    },
     $indexSet(_, object, value) {
       type$.Object._as(object);
       this.$ti._eval$1("1?")._as(value);
