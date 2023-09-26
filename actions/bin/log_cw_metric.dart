@@ -16,18 +16,21 @@ Future<void> logMetric() async {
   final jobStatus = core.getRequiredInput('job-status');
 
   // Create job identifier from matrix values
-  final matrixRawInput = core.getRequiredInput('matrix');
+  final matrixRawInput = core.getInput('matrix', defaultValue: '');
 
-  // Parse the matrix string (input is raw json string with " and \n)
-  final matrixCleanedInput = matrixRawInput
-      .replaceAll('\n', '')
-      .replaceAll(r'\', '')
-      .replaceAll(' ', '');
-  final matrix = json.decode(matrixCleanedInput) as Map<String, dynamic>;
+  var jobIdentifier = github.context.job;
+  if (matrixRawInput.isNotEmpty) {
+    // Parse the matrix string (input is raw json string with " and \n)
+    final matrixCleanedInput = matrixRawInput
+        .replaceAll('\n', '')
+        .replaceAll(r'\', '')
+        .replaceAll(' ', '');
+    final matrix = json.decode(matrixCleanedInput) as Map<String, dynamic>;
 
-  final matrixValues = matrix.values.map((e) => e).join(', ');
-  final jobIdentifier =
-      '${github.context.job} ${matrixValues.isEmpty ? '' : '($matrixValues)'}';
+    final matrixValues = matrix.values.map((e) => e).join(', ');
+    jobIdentifier =
+        '${github.context.job} ${matrixValues.isEmpty ? '' : '($matrixValues)'}';
+  }
 
   core.info('Job identifier: $jobIdentifier');
 

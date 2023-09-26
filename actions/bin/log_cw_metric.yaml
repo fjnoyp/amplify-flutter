@@ -16,7 +16,6 @@ inputs:
     required: true
   matrix:
     description: The matrix of the workflow
-    required: true
 
   # Global Metric Dimensions
   metric-name:
