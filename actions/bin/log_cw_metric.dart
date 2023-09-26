@@ -149,6 +149,8 @@ Future<String> getFailingStep(
     // Map the steps
     final stepsMap = jobMap[0]['steps'] as List<dynamic>;
 
+    core.info('job name: ${jobMap[0]['name']}');
+
     core.info('exiting step map $stepsMap');
     stepsMap.forEach((element) {
       core.info('element: $element');
@@ -174,7 +176,7 @@ Future<String> getFailingStep(
 
 class GithubJobsList {
   GithubJobsList.fromJson(Map<String, dynamic> json)
-      : jobs = (json['jobs'] as List)
+      : jobs = (json['jobs'] as List<dynamic>)
             .map(
               (job) => GithubJob.fromJson(job as Map<String, dynamic>),
             )
