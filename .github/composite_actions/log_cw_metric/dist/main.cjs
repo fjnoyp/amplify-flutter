@@ -7807,7 +7807,7 @@
     getFailingStep$body(jobIdentifier, githubToken, repo, runId) {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.String),
-        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, responseMap, jobsMap, job, steps, failingStep, e, t1, t2, exception, $async$exception;
+        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, responseMap, jobsMap, job, steps, failingStep, e, t1, t2, t3, t4, exception, $async$exception;
       var $async$getFailingStep = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$currentError = $async$result;
@@ -7820,18 +7820,24 @@
               $async$handler = 4;
               t1 = type$.String;
               headers = A.LinkedHashMap_LinkedHashMap$_literal(["Authorization", "token " + githubToken, "Accept", "application/vnd.github.v3+json", "user-agent", "amplify-flutter"], t1, t1);
+              t1 = self;
+              t2 = type$.JSObject;
               $async$goto = 7;
-              return A._asyncAwait(A.HttpClient_getJson(type$.JSObject._as(new self.HttpClient()), "https://api.github.com/repos/" + repo + "/actions/runs/" + runId + "/jobs", headers), $async$getFailingStep);
+              return A._asyncAwait(A.HttpClient_getJson(t2._as(new t1.HttpClient()), "https://api.github.com/repos/" + repo + "/actions/runs/" + runId + "/jobs", headers), $async$getFailingStep);
             case 7:
               // returning from await.
               response = $async$result;
-              t1 = type$.Map_String_dynamic;
-              responseMap = t1._as(A.dartify(response));
-              t2 = type$.List_dynamic;
-              jobsMap = t2._as(A.dartify(J.$index$asx(responseMap, "jobs")));
+              t3 = type$.Map_String_dynamic;
+              responseMap = t3._as(A.dartify(response));
+              t4 = type$.List_dynamic;
+              jobsMap = t4._as(A.dartify(J.$index$asx(responseMap, "jobs")));
+              t2._as(t1.core).info("jobsMap " + A.S(jobsMap));
               job = J.firstWhere$1$ax(jobsMap, new A.getFailingStep_closure(jobIdentifier));
-              steps = t2._as(A.dartify(J.$index$asx(job, "steps")));
-              failingStep = t1._as(A.dartify(J.firstWhere$1$ax(steps, new A.getFailingStep_closure0())));
+              t2._as(t1.core).info("jobs " + A.S(job));
+              steps = t4._as(A.dartify(J.$index$asx(job, "steps")));
+              t2._as(t1.core).info("steps " + A.S(steps));
+              failingStep = t3._as(A.dartify(J.firstWhere$1$ax(steps, new A.getFailingStep_closure0())));
+              t2._as(t1.core).info("faililngSTep " + A.S(failingStep));
               t1 = A._asString(J.$index$asx(failingStep, "name"));
               $async$returnValue = t1;
               // goto return

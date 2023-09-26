@@ -137,10 +137,16 @@ Future<String> getFailingStep(
 
     final responseMap = dartify(response) as Map<String, dynamic>;
     final jobsMap = dartify(responseMap['jobs']) as List<dynamic>;
+
+    core.info('jobsMap $jobsMap');
     final job = jobsMap.firstWhere(
       (element) => element['name'] == jobIdentifier,
     );
+
+    core.info('jobs $job');
     final steps = dartify(job['steps']) as List<dynamic>;
+
+    core.info('steps $steps');
 
     /*
     jobsMap.forEach((element) {
@@ -168,6 +174,8 @@ Future<String> getFailingStep(
     final failingStep = dartify(steps.firstWhere(
       (element) => element['conclusion'] == 'failure',
     )) as Map<String, dynamic>;
+
+    core.info('faililngSTep $failingStep');
 
     return failingStep['name'] as String;
   } on Exception catch (e) {
