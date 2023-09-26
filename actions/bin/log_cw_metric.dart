@@ -135,39 +135,41 @@ Future<String> getFailingStep(
       headers: headers,
     );
 
-    core.info('entering first map');
-    // Map the response
     final responseMap = dartify(response) as Map<String, dynamic>;
+    final jobsMap = responseMap['jobs'] as List<Map<String, dynamic>>;
+    final job = jobsMap.firstWhere(
+      (element) => element['name'] == jobIdentifier,
+    );
+    final steps = job['steps'] as List<Map<String, dynamic>>;
 
-    core.info('exiting first map');
+    /*
+    jobsMap.forEach((element) {
+      core.info(element['name']);
+    });
+    final firstJobMap = jobsMap[0] as Map<String, dynamic>;
 
-    // Map the jobs
-    final jobMap = responseMap['jobs'] as List<dynamic>;
-
-    core.info('exiting job map');
-
-    // Map the steps
     final stepsMap = jobMap[0]['steps'] as List<dynamic>;
-
-    core.info('job name: ${jobMap[0]['name']}');
 
     core.info('exiting step map $stepsMap');
     stepsMap.forEach((element) {
       core.info('element: $element');
     });
+    
 
     final jobsList =
         GithubJobsList.fromJson(dartify(response) as Map<String, dynamic>);
 
+
     final job = jobsList.jobs.firstWhere(
       (element) => element.name == jobIdentifier,
     );
+    */
 
-    final failingStep = job.steps.firstWhere(
-      (element) => element.conclusion == 'failure',
-    );
+    final failingStep = steps.firstWhere(
+      (element) => element['conclusion'] == 'failure',
+    ) as Map<String, dynamic>;
 
-    return failingStep.name;
+    return failingStep['name'] as String;
   } on Exception catch (e) {
     core.error('Error fetching data from GitHub API: $e');
     return '';
