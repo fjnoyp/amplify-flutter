@@ -152,11 +152,13 @@ Future<String> getFailingStep(
 }
 
 class GithubJobsList {
-  final List<GithubJob> jobs;
   GithubJobsList.fromJson(Map<String, dynamic> json)
       : jobs = (dartify(json['jobs'] ?? []) as List)
-            .map((job) => GithubJob.fromJson(job as Map<String, dynamic>))
-            .toList(); // Initializer list to set the final field.
+            .map(
+              (job) => GithubJob.fromJson(dartify(job) as Map<String, dynamic>),
+            )
+            .toList();
+  final List<GithubJob> jobs; // Initializer list to set the final field.
 }
 
 /*
@@ -173,7 +175,7 @@ class GithubJobsList {
 class GithubJob {
   GithubJob.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String,
-        steps = (json['steps'] as List<Map<String, dynamic>>)
+        steps = (dartify(json['steps'] ?? []) as List<Map<String, dynamic>>)
             .map(GithubStep.fromJson)
             .toList();
 

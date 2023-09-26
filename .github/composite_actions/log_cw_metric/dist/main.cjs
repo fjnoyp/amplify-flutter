@@ -17891,11 +17891,11 @@
   A.GithubJobsList.prototype = {};
   A.GithubJobsList$fromJson_closure.prototype = {
     call$1(job) {
-      var t1, t2;
-      type$.Map_String_dynamic._as(job);
-      t1 = A._asString(job.$index(0, "name"));
-      t2 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(job.$index(0, "steps")), A.log_cw_metric_GithubStep___fromJson_tearOff$closure(), type$.GithubStep);
-      return new A.GithubJob(t1, A.List_List$of(t2, true, A._instanceType(t2)._eval$1("ListIterable.E")));
+      var t1 = type$.Map_String_dynamic._as(A.dartify(job)),
+        t2 = A._asString(t1.$index(0, "name"));
+      t1 = t1.$index(0, "steps");
+      t1 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(A.dartify(t1 == null ? [] : t1)), A.log_cw_metric_GithubStep___fromJson_tearOff$closure(), type$.GithubStep);
+      return new A.GithubJob(t2, A.List_List$of(t1, true, A._instanceType(t1)._eval$1("ListIterable.E")));
     },
     $signature: 67
   };
