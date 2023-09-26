@@ -147,9 +147,12 @@ Future<String> getFailingStep(
     core.info('exiting job map');
 
     // Map the steps
-    final stepsMap = jobMap[0]['steps'] as Map<String, dynamic>;
+    final stepsMap = jobMap[0]['steps'] as List<dynamic>;
 
     core.info('exiting step map $stepsMap');
+    stepsMap.forEach((element) {
+      core.info('element: $element');
+    });
 
     final jobsList =
         GithubJobsList.fromJson(dartify(response) as Map<String, dynamic>);
