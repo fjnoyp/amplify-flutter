@@ -26,15 +26,6 @@ jobs:
           - stable
           - beta
     steps:
-      - name: Configure AWS credentials
-        #if: env.SKIP != 'true'
-        uses: aws-actions/configure-aws-credentials@04b98b3f9e85f563fb061be8751a0352327246b0 # 3.0.1
-        with:
-          unset-current-credentials: true
-          role-to-assume: ${{ secrets.role-to-assume }}
-          aws-region: ${{ secrets.aws-region }}
-          role-duration-seconds: 900
-
       - name: Cache Pub dependencies
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # 3.3.2
         with:
