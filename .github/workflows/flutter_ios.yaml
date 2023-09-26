@@ -63,3 +63,21 @@ jobs:
               -scheme Runner \
               -destination "$XCODEBUILD_DESTINATION" | xcpretty
         working-directory: ${{ inputs.example-directory }}/ios
+
+      - name: Log success/failure
+        if: always()
+        uses: ./.github/composite_actions/log_cw_metric_wrapper
+        with:
+          role-to-assume: ${{ secrets.role-to-assume }}
+          aws-region: ${{ secrets.aws-region }}
+
+          job-status: ${{ job.status }}
+          github-token: ${{ secrets.github-token }}
+
+          test-type: unit
+          working-directory: ${{ inputs.working-directory }}
+
+          framework: flutter
+          flutter-dart-channel: ${{ matrix.channel }}
+
+          platform: ios
