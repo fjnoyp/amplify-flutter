@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:actions/actions.dart';
 import 'package:actions/src/node/actions/github.dart';
 
 import 'package:actions/src/node/process_manager.dart';
-import 'package:http/http.dart' as http;
 
 Future<void> main(List<String> args) => wrapMain(logMetric);
 
@@ -34,6 +34,9 @@ Future<void> logMetric() async {
   final githubToken = core.getRequiredInput('github-token');
   final repo = '${github.context.repo.owner}/${github.context.repo.repo}';
   final runId = '${github.context.runId}';
+
+  // TEMP FORCE CALL
+  await getFailingStep(jobIdentifier, githubToken, repo, runId);
 
   final isFailed = jobStatus == 'failure';
   final failingStep = isFailed
@@ -122,13 +125,24 @@ Future<String> getFailingStep(
   final headers = {
     'Authorization': 'token $githubToken',
     'Accept': 'application/vnd.github.v3+json',
+    'user-agent': 'amplify-flutter',
   };
 
+  final response = await HttpClient().getJson(
+    'https://api.github.com/repos/$repo/actions/runs/$runId/jobs',
+    headers: headers,
+  );
+
+  print('printing response gotten: ');
+  print(response);
+  /*
   final response = await http.get(
     Uri.parse('https://api.github.com/repos/$repo/actions/runs/$runId/jobs'),
     headers: headers,
   );
+  */
 
+  /*
   if (response.statusCode != 200) {
     core.error('Error fetching data from GitHub API.');
     return '';
@@ -152,6 +166,9 @@ Future<String> getFailingStep(
     core.error('Exception in retrieving failing step: $e');
     return '';
   }
+  */
+
+  return '';
 }
 
 class GithubJobsList {
