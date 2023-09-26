@@ -8154,8 +8154,7 @@
             case 7:
               // returning from await.
               response = $async$result;
-              t1 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(response.$index(0, "jobs")), A.log_cw_metric_GithubJob___fromJson_tearOff$closure(), type$.GithubJob);
-              jobsList = new A.GithubJobsList(A.List_List$of(t1, true, A._instanceType(t1)._eval$1("ListIterable.E")));
+              jobsList = A.GithubJobsList$fromJson(response);
               job = B.JSArray_methods.firstWhere$1(jobsList.jobs, new A.getFailingStep_closure(jobIdentifier));
               failingStep = B.JSArray_methods.firstWhere$1(job.steps, new A.getFailingStep_closure0());
               t1 = failingStep.name;
@@ -8201,12 +8200,10 @@
       });
       return A._asyncStartSync($async$getFailingStep, $async$completer);
     },
-    GithubJob___fromJson_tearOff(json) {
-      var t1, t2;
-      type$.Map_String_dynamic._as(json);
-      t1 = A._asString(json.$index(0, "name"));
-      t2 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(json.$index(0, "steps")), A.log_cw_metric_GithubStep___fromJson_tearOff$closure(), type$.GithubStep);
-      return new A.GithubJob(t1, A.List_List$of(t2, true, A._instanceType(t2)._eval$1("ListIterable.E")));
+    GithubJobsList$fromJson(json) {
+      var t1 = json.$index(0, "jobs");
+      t1 = J.map$1$1$ax(type$.List_dynamic._as(A.dartify(t1 == null ? [] : t1)), new A.GithubJobsList$fromJson_closure(), type$.GithubJob);
+      return new A.GithubJobsList(A.List_List$of(t1, true, A._instanceType(t1)._eval$1("ListIterable.E")));
     },
     GithubStep___fromJson_tearOff(json) {
       type$.Map_String_dynamic._as(json);
@@ -8223,6 +8220,8 @@
     },
     GithubJobsList: function GithubJobsList(t0) {
       this.jobs = t0;
+    },
+    GithubJobsList$fromJson_closure: function GithubJobsList$fromJson_closure() {
     },
     GithubJob: function GithubJob(t0, t1) {
       this.name = t0;
@@ -10659,7 +10658,7 @@
     call$2(errorCode, result) {
       this.$protected(A._asInt(errorCode), result);
     },
-    $signature: 67
+    $signature: 68
   };
   A.AsyncError.prototype = {
     toString$0(_) {
@@ -12647,7 +12646,7 @@
     call$2(k, v) {
       this.result.$indexSet(0, this.K._as(k), this.V._as(v));
     },
-    $signature: 80
+    $signature: 81
   };
   A.ListBase.prototype = {
     get$iterator(receiver) {
@@ -12788,7 +12787,7 @@
       t1._contents = t2 + ": ";
       t1._contents += A.S(v);
     },
-    $signature: 79
+    $signature: 80
   };
   A._MapBaseValueIterable.prototype = {
     get$length(_) {
@@ -17890,6 +17889,16 @@
     $signature: 66
   };
   A.GithubJobsList.prototype = {};
+  A.GithubJobsList$fromJson_closure.prototype = {
+    call$1(job) {
+      var t1, t2;
+      type$.Map_String_dynamic._as(job);
+      t1 = A._asString(job.$index(0, "name"));
+      t2 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(job.$index(0, "steps")), A.log_cw_metric_GithubStep___fromJson_tearOff$closure(), type$.GithubStep);
+      return new A.GithubJob(t1, A.List_List$of(t2, true, A._instanceType(t2)._eval$1("ListIterable.E")));
+    },
+    $signature: 67
+  };
   A.GithubJob.prototype = {};
   A.GithubStep.prototype = {};
   (function aliases() {
@@ -17926,25 +17935,25 @@
       return A.Future___value_tearOff(null, type$.dynamic);
     }, function($T) {
       return A.Future___value_tearOff(null, $T);
-    }], 68, 1);
+    }], 69, 1);
     _static(A, "async__FutureExtensions__ignore$closure", 1, function() {
       return [null];
     }, ["call$2", "call$1"], ["FutureExtensions__ignore", function(_) {
       return A.FutureExtensions__ignore(_, null);
-    }], 69, 0);
+    }], 70, 0);
     _static_0(A, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
     _static_2(A, "async___nullErrorHandler$closure", "_nullErrorHandler", 2);
     _static_0(A, "async___nullDoneHandler$closure", "_nullDoneHandler", 0);
-    _static(A, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 70, 0);
+    _static(A, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 71, 0);
     _static(A, "async___rootRun$closure", 4, null, ["call$1$4", "call$4"], ["_rootRun", function($self, $parent, zone, f) {
       return A._rootRun($self, $parent, zone, f, type$.dynamic);
-    }], 71, 1);
+    }], 72, 1);
     _static(A, "async___rootRunUnary$closure", 5, null, ["call$2$5", "call$5"], ["_rootRunUnary", function($self, $parent, zone, f, arg) {
       return A._rootRunUnary($self, $parent, zone, f, arg, type$.dynamic, type$.dynamic);
-    }], 72, 1);
+    }], 73, 1);
     _static(A, "async___rootRunBinary$closure", 6, null, ["call$3$6", "call$6"], ["_rootRunBinary", function($self, $parent, zone, f, arg1, arg2) {
       return A._rootRunBinary($self, $parent, zone, f, arg1, arg2, type$.dynamic, type$.dynamic, type$.dynamic);
-    }], 73, 1);
+    }], 74, 1);
     _static(A, "async___rootRegisterCallback$closure", 4, null, ["call$1$4", "call$4"], ["_rootRegisterCallback", function($self, $parent, zone, f) {
       return A._rootRegisterCallback($self, $parent, zone, f, type$.dynamic);
     }], 22, 0);
@@ -17955,11 +17964,11 @@
       return A._rootRegisterBinaryCallback($self, $parent, zone, f, type$.dynamic, type$.dynamic, type$.dynamic);
     }], 20, 0);
     _static(A, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 19, 0);
-    _static(A, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 74, 0);
-    _static(A, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 75, 0);
-    _static(A, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 76, 0);
-    _static(A, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 77, 0);
-    _static(A, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 78, 0);
+    _static(A, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 75, 0);
+    _static(A, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 76, 0);
+    _static(A, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 77, 0);
+    _static(A, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 78, 0);
+    _static(A, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 79, 0);
     _instance_2_u(A._Future.prototype, "get$_completeError", "_completeError$2", 2);
     var _;
     _instance_1_u(_ = A._StreamController.prototype, "get$_add", "_add$1", 15);
@@ -17992,7 +18001,6 @@
     _static_1(A, "trace_Trace___parseVM_tearOff$closure", "Trace___parseVM_tearOff", 18);
     _static_1(A, "trace_Trace___parseFriendly_tearOff$closure", "Trace___parseFriendly_tearOff", 18);
     _static_0(A, "log_cw_metric__logMetric$closure", "logMetric", 8);
-    _static_1(A, "log_cw_metric_GithubJob___fromJson_tearOff$closure", "GithubJob___fromJson_tearOff", 81);
     _static_1(A, "log_cw_metric_GithubStep___fromJson_tearOff$closure", "GithubStep___fromJson_tearOff", 82);
     _static(A, "math__max$closure", 2, null, ["call$1$2", "call$2"], ["max", function(a, b) {
       return A.max(a, b, type$.num);
@@ -18015,7 +18023,7 @@
     _inherit(A._CastListBase, A.__CastListBase__CastIterableBase_ListMixin);
     _inherit(A.CastList, A._CastListBase);
     _inheritMany(A.MapBase, [A.CastMap, A.JsLinkedHashMap, A._HashMap, A._JsonMap]);
-    _inheritMany(A.Closure, [A.Closure2Args, A.Closure0Args, A.Instantiation, A.TearOffClosure, A.JsLinkedHashMap_values_closure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A.Future_wait_closure, A.Future_any_onValue, A._Future__chainForeignFuture_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._CustomZone_bindUnaryCallback_closure, A._RootZone_bindUnaryCallback_closure, A._HashMap_values_closure, A.MapBase_entries_closure, A._JsonMap_values_closure, A.Converter_bind_closure, A.LineSplitter_bind_closure, A._Uri__makePath_closure, A._createTables_setChars, A._createTables_setRange, A._StreamSinkImpl__controller_closure, A.jsify__convert, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.dartify_convert, A.ChildProcess_spawn_closure, A.NodeReadableStream_get_stream_onData, A.NodeReadableStream_get_stream_onError, A.NodeReadableStream_get_stream_onDone, A.EventEmitter_once_closure, A.NodeProcessManager_run_closure, A.NodeProcessManager_run_closure0, A.NodeProcess__init_closure, A.NodeProcess__init_closure0, A.StreamForward_forward_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.WindowsStyle_absolutePathToUri_closure, A.mapStackTrace_closure, A.mapStackTrace_closure0, A._prettifyMember_closure, A._prettifyMember_closure0, A.SingleMapping__findLine_closure, A.SingleMapping__findColumn_closure, A.Chain_Chain$parse_closure, A.Chain_toTrace_closure, A.Chain_toString_closure0, A.Chain_toString__closure0, A.Chain_toString_closure, A.Chain_toString__closure, A.StackZoneSpecification__registerUnaryCallback_closure, A.Trace__parseVM_closure, A.Trace$parseV8_closure, A.Trace$parseJSCore_closure, A.Trace$parseFirefox_closure, A.Trace$parseFriendly_closure, A.Trace_toString_closure0, A.Trace_toString_closure, A.logMetric_closure, A.logMetric_closure0, A.getFailingStep_closure, A.getFailingStep_closure0]);
+    _inheritMany(A.Closure, [A.Closure2Args, A.Closure0Args, A.Instantiation, A.TearOffClosure, A.JsLinkedHashMap_values_closure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A.Future_wait_closure, A.Future_any_onValue, A._Future__chainForeignFuture_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._CustomZone_bindUnaryCallback_closure, A._RootZone_bindUnaryCallback_closure, A._HashMap_values_closure, A.MapBase_entries_closure, A._JsonMap_values_closure, A.Converter_bind_closure, A.LineSplitter_bind_closure, A._Uri__makePath_closure, A._createTables_setChars, A._createTables_setRange, A._StreamSinkImpl__controller_closure, A.jsify__convert, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.dartify_convert, A.ChildProcess_spawn_closure, A.NodeReadableStream_get_stream_onData, A.NodeReadableStream_get_stream_onError, A.NodeReadableStream_get_stream_onDone, A.EventEmitter_once_closure, A.NodeProcessManager_run_closure, A.NodeProcessManager_run_closure0, A.NodeProcess__init_closure, A.NodeProcess__init_closure0, A.StreamForward_forward_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.WindowsStyle_absolutePathToUri_closure, A.mapStackTrace_closure, A.mapStackTrace_closure0, A._prettifyMember_closure, A._prettifyMember_closure0, A.SingleMapping__findLine_closure, A.SingleMapping__findColumn_closure, A.Chain_Chain$parse_closure, A.Chain_toTrace_closure, A.Chain_toString_closure0, A.Chain_toString__closure0, A.Chain_toString_closure, A.Chain_toString__closure, A.StackZoneSpecification__registerUnaryCallback_closure, A.Trace__parseVM_closure, A.Trace$parseV8_closure, A.Trace$parseJSCore_closure, A.Trace$parseFirefox_closure, A.Trace$parseFriendly_closure, A.Trace_toString_closure0, A.Trace_toString_closure, A.logMetric_closure, A.logMetric_closure0, A.getFailingStep_closure, A.getFailingStep_closure0, A.GithubJobsList$fromJson_closure]);
     _inheritMany(A.Closure2Args, [A.CastMap_forEach_closure, A.Primitives_functionNoSuchMethod_closure, A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A.Future_wait_handleError, A.Future_any_onError, A._Future__chainForeignFuture_closure0, A.HashMap_HashMap$from_closure, A.MapBase_mapToString_closure, A.NoSuchMethodError_toString_closure, A.Uri__parseIPv4Address_error, A.Uri_parseIPv6Address_error, A.Uri_parseIPv6Address_parseHex, A._createTables_build, A._StreamSinkImpl__controller_closure0, A.wrapMain_closure0, A.StreamForward_forward_closure1, A.SingleMapping$fromJson_closure, A.Frame_Frame$parseV8_closure_parseLocation, A.StackZoneSpecification__registerBinaryCallback_closure]);
     _inheritMany(A.Error, [A.LateError, A.TypeError, A.JsNoSuchMethodError, A.UnknownJsTypeError, A._CyclicInitializationError, A.RuntimeError, A.AssertionError, A._Error, A.ArgumentError, A.NoSuchMethodError, A.UnsupportedError, A.UnimplementedError, A.StateError, A.ConcurrentModificationError, A._UnreachableError]);
     _inherit(A.UnmodifiableListBase, A.ListBase);
@@ -18088,7 +18096,7 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "String(String)", "~(~())", "String(Frame)", "Null(Object,StackTrace)", "~(Uint8List,String,int)", "~(Object?)", "@()", "~(String,@)", "Trace(String)", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "int(Frame)", "@(String)", "String(Match)", "~(String)", "@(@)", "Object?(Object?)", "Null(@,@)", "~(@,StackTrace?)", "Future<0&>()", "Future<Null>()", "Future<~>(Object,Chain)", "~(Uint8List)", "~(JSObject)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "Uint8List(@,@)", "~(List<int>)", "_Future<@>(@)", "@(@,String)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "Null(~())", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "int(int,int)", "List<Frame>(Trace)", "int(Trace)", "~(String,int?)", "String(Trace)", "0^(0^,0^)<num>", "Null(@,StackTrace)", "Frame(String,String)", "~(String,int)", "~(Symbol0,@)", "_LineSplitterEventSink(EventSink<String>)", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "Chain()", "String(MapEntry<String,String>)", "bool(GithubJob)", "bool(GithubStep)", "~(int,@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(Object?,Object?)", "~(@,@)", "GithubJob(Map<String,@>)", "GithubStep(Map<String,@>)", "0&(JSObject)"],
+    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "String(String)", "~(~())", "String(Frame)", "Null(Object,StackTrace)", "~(Uint8List,String,int)", "~(Object?)", "@()", "~(String,@)", "Trace(String)", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "int(Frame)", "@(String)", "String(Match)", "~(String)", "@(@)", "Object?(Object?)", "Null(@,@)", "~(@,StackTrace?)", "Future<0&>()", "Future<Null>()", "Future<~>(Object,Chain)", "~(Uint8List)", "~(JSObject)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "Uint8List(@,@)", "~(List<int>)", "_Future<@>(@)", "@(@,String)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "Null(~())", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "int(int,int)", "List<Frame>(Trace)", "int(Trace)", "~(String,int?)", "String(Trace)", "0^(0^,0^)<num>", "Null(@,StackTrace)", "Frame(String,String)", "~(String,int)", "~(Symbol0,@)", "_LineSplitterEventSink(EventSink<String>)", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "Chain()", "String(MapEntry<String,String>)", "bool(GithubJob)", "bool(GithubStep)", "GithubJob(@)", "~(int,@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(Object?,Object?)", "~(@,@)", "GithubStep(Map<String,@>)", "0&(JSObject)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")

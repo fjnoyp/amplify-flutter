@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js_util';
 
 import 'package:actions/actions.dart';
 import 'package:actions/src/node/actions/github.dart';
@@ -151,6 +152,15 @@ Future<String> getFailingStep(
 }
 
 class GithubJobsList {
+  final List<GithubJob> jobs;
+  GithubJobsList.fromJson(Map<String, dynamic> json)
+      : jobs = (dartify(json['jobs'] ?? []) as List)
+            .map((job) => GithubJob.fromJson(job as Map<String, dynamic>))
+            .toList(); // Initializer list to set the final field.
+}
+
+/*
+class GithubJobsList {
   GithubJobsList.fromJson(Map<String, dynamic> json)
       : jobs = (json['jobs'] as List<Map<String, dynamic>>)
             .map(GithubJob.fromJson)
@@ -158,6 +168,7 @@ class GithubJobsList {
 
   final List<GithubJob> jobs;
 }
+*/
 
 class GithubJob {
   GithubJob.fromJson(Map<String, dynamic> json)
