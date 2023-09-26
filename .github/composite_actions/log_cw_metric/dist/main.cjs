@@ -8039,7 +8039,7 @@
     logMetric() {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$returnValue, t4, matrixValues, jobIdentifier, githubToken, isFailed, failingStep, metricName, testType, packageName, category, t5, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value, t6, t7, cloudArgs, t1, t2, jobStatus, matrixRawInput, t3;
+        $async$returnValue, matrixRawInput, t3, t4, matrixValues, jobIdentifier, failingStep, metricName, testType, packageName, category, t5, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, t6, t7, cloudArgs, t1, t2;
       var $async$logMetric = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return A._asyncRethrow($async$result, $async$completer);
@@ -8049,7 +8049,7 @@
               // Function start
               t1 = self;
               t2 = type$.JSObject;
-              jobStatus = A.Core_getRequiredInput(t2._as(t1.core), "job-status");
+              A.Core_getRequiredInput(t2._as(t1.core), "job-status");
               matrixRawInput = A.Core_getRequiredInput(t2._as(t1.core), "matrix");
               t3 = A.stringReplaceAllUnchecked(matrixRawInput, "\n", "");
               t3 = A.stringReplaceAllUnchecked(t3, "\\", "");
@@ -8060,27 +8060,12 @@
               t3 = matrixValues.length === 0 ? "" : "(" + matrixValues + ")";
               jobIdentifier = t4 + " " + t3;
               t2._as(t1.core).info("Job identifier: " + jobIdentifier);
-              githubToken = A.Core_getRequiredInput(t2._as(t1.core), "github-token");
-              t3 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).owner);
-              t4 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).repo);
-              isFailed = jobStatus === "failure";
-              $async$goto = isFailed ? 3 : 5;
-              break;
+              $async$goto = 3;
+              return A._asyncAwait(A.getFailingStep(jobIdentifier, A.Core_getRequiredInput(t2._as(t1.core), "github-token"), A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).owner) + "/" + A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).repo), "5809487600"), $async$logMetric);
             case 3:
-              // then
-              $async$goto = 6;
-              return A._asyncAwait(A.getFailingStep(jobIdentifier, githubToken, t3 + "/" + t4, "5809487600"), $async$logMetric);
-            case 6:
               // returning from await.
-              // goto join
-              $async$goto = 4;
-              break;
-            case 5:
-              // else
-              $async$result = "";
-            case 4:
-              // join
               failingStep = $async$result;
+              t2._as(t1.core).info("Failing step was: " + failingStep);
               metricName = A.Core_getRequiredInput(t2._as(t1.core), "metric-name");
               testType = A.Core_getRequiredInput(t2._as(t1.core), "test-type");
               t3 = type$.JSArray_String;
@@ -8108,7 +8093,6 @@
               dartCompiler = A.Core_getInput(t2._as(t1.core), "dart-compiler");
               platform = A.Core_getInput(t2._as(t1.core), "platform");
               platformVersion = A.Core_getInput(t2._as(t1.core), "platform-version");
-              value = isFailed ? "1" : "0";
               t6 = type$.String;
               t7 = A.LinkedHashMap_LinkedHashMap$_empty(t6, t6);
               t7.$indexSet(0, "test-type", testType);
@@ -8130,13 +8114,13 @@
                 t7.$indexSet(0, "platform-version", platformVersion);
               if (failingStep.length !== 0)
                 t7.$indexSet(0, "failing-step", failingStep);
-              cloudArgs = A._setArrayType(["cloudwatch", "put-metric-data", "--metric-name", metricName, "--namespace", "GithubCanaryApps", "--value", value, "--dimension", t7.get$entries().map$1$1(0, new A.logMetric_closure0(), t6).join$1(0, ",")], t3);
+              cloudArgs = A._setArrayType(["cloudwatch", "put-metric-data", "--metric-name", metricName, "--namespace", "GithubCanaryApps", "--value", "1", "--dimension", t7.get$entries().map$1$1(0, new A.logMetric_closure0(), t6).join$1(0, ",")], t3);
               t4 = $.$get$processManager();
               t3 = A._setArrayType(["aws"], t3);
               B.JSArray_methods.addAll$1(t3, cloudArgs);
-              $async$goto = 7;
+              $async$goto = 4;
               return A._asyncAwait(t4.run$1(t3), $async$logMetric);
-            case 7:
+            case 4:
               // returning from await.
               t2._as(t1.core).info("Sent cloudwatch metric with args: " + A.S(cloudArgs));
             case 1:

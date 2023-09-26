@@ -35,10 +35,13 @@ Future<void> logMetric() async {
   final repo = '${github.context.repo.owner}/${github.context.repo.repo}';
   final runId = '5809487600'; //'${github.context.runId}';
 
-  final isFailed = jobStatus == 'failure';
+  final isFailed = true;
+  //jobStatus == 'failure';
   final failingStep = isFailed
       ? await getFailingStep(jobIdentifier, githubToken, repo, runId)
       : '';
+
+  core.info('Failing step was: $failingStep');
 
   // Inputs for Metric
   final metricName = core.getRequiredInput('metric-name');
