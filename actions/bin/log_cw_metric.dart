@@ -134,7 +134,8 @@ Future<String> getFailingStep(
       'https://api.github.com/repos/$repo/actions/runs/$runId/jobs',
       headers: headers,
     );
-    final jobsList = GithubJobsList.fromJson(response);
+    final jobsList =
+        GithubJobsList.fromJson(dartify(response) as Map<String, dynamic>);
 
     final job = jobsList.jobs.firstWhere(
       (element) => element.name == jobIdentifier,
