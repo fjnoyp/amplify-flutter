@@ -19,11 +19,8 @@ concurrency:
 jobs:
   test:
     uses: ./.github/workflows/flutter_vm.yaml
+    secrets: inherit
     with:
       package-name: amplify_analytics_pinpoint
       working-directory: packages/analytics/amplify_analytics_pinpoint
-    secrets:
-      role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
-      aws-region: ${{secrets.AWS_REGION}}
-      github-token: ${{secrets.GITHUB_TOKEN}}
       has-goldens: false
