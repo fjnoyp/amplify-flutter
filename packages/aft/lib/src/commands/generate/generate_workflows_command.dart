@@ -275,13 +275,36 @@ ${dependabotGroups.join('\n')}
 
     workflowPaths.sort();
 
+    const readAllWriteIdTokenPermission = '''
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  deployments: read
+  id-token: write
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  pull-requests: read
+  repository-projects: read
+  security-events: read
+  statuses: read
+''';
+
+    const passSecrets = r'''
+    secrets:
+      role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
+      aws-region: ${{secrets.AWS_REGION}}
+      github-token: ${{secrets.GITHUB_TOKEN}}''';
+
     final permissionsBlock = needsE2ETest
         ? '''
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
   contents: read'''
-        : 'permissions: read-all';
+        : readAllWriteIdTokenPermission;
     final workflowContents = StringBuffer(
       '''
 # Generated with aft. To update, run: `aft generate workflows`
@@ -316,6 +339,7 @@ jobs:
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
+$passSecrets
 ''',
     );
     if (!isDartPackage) {
@@ -335,6 +359,7 @@ jobs:
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
+$passSecrets
 ''',
       );
 
@@ -347,12 +372,14 @@ jobs:
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
+$passSecrets
   dart2js_test:
     needs: test
     uses: ./.github/workflows/$dart2JsWorkflow
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
+$passSecrets
 ''',
         );
       }

@@ -11,8 +11,8 @@ inputs:
   github-token:
     required: true
     description: Github token for requesting failing steps.
-  package-name:
-    description: The name of the package being tested
+  working-directory:
+    description: The working directory relative to the repo root.
     required: true
   matrix:
     description: The matrix of the workflow
@@ -24,12 +24,6 @@ inputs:
     required: true
   test-type:
     description: canary, integration, unit testType.
-    required: true
-  category:
-    description: analytics, api, authenticator, etc.
-    required: true
-  workflow-name:
-    description: The Github Action workflow.yaml file name.  ie "AmplifyCanaries".
     required: true
 
   # FlutterDart Workflows Metric Dimensions

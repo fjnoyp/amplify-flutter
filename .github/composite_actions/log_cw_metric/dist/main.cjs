@@ -7648,7 +7648,7 @@
     logMetric() {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$returnValue, t4, matrixValues, jobIdentifier, githubToken, t5, isFailed, failingStep, metricName, testType, packageName, category, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value, t6, t7, cloudArgs, t1, t2, jobStatus, matrixRawInput, t3;
+        t4, matrixValues, jobIdentifier, githubToken, t5, isFailed, failingStep, metricName, testType, workingDirectory, categories, category, _i, cat, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value, t6, t7, cloudArgs, t1, t2, jobStatus, matrixRawInput, t3;
       var $async$logMetric = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return A._asyncRethrow($async$result, $async$completer);
@@ -7674,21 +7674,21 @@
               t4 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).repo);
               t5 = A._asInt(t2._as(t2._as(t1.github).context).runId);
               isFailed = jobStatus === "failure";
-              $async$goto = isFailed ? 3 : 5;
+              $async$goto = isFailed ? 2 : 4;
               break;
-            case 3:
+            case 2:
               // then
-              $async$goto = 6;
+              $async$goto = 5;
               return A._asyncAwait(A.getFailingStep(jobIdentifier, githubToken, t3 + "/" + t4, "" + t5), $async$logMetric);
-            case 6:
+            case 5:
               // returning from await.
               // goto join
-              $async$goto = 4;
+              $async$goto = 3;
               break;
-            case 5:
+            case 4:
               // else
               $async$result = "";
-            case 4:
+            case 3:
               // join
               failingStep = $async$result;
               metricName = A.Core_getRequiredInput(t2._as(t1.core), "metric-name");
@@ -7696,17 +7696,23 @@
               t3 = type$.JSArray_String;
               if (!B.JSArray_methods.contains$1(A._setArrayType(["canary", "e2e", "unit"], t3), testType))
                 throw A.wrapException(A.Exception_Exception("test-type input of " + testType + " must be one of: canary, e2e, unit"));
-              packageName = A.Core_getRequiredInput(t2._as(t1.core), "package-name");
-              t4 = packageName.split("_");
-              if (1 >= t4.length) {
-                $async$returnValue = A.ioore(t4, 1);
-                // goto return
-                $async$goto = 1;
-                break;
+              workingDirectory = A.Core_getRequiredInput(t2._as(t1.core), "working-directory");
+              categories = ["canaries", "analytics", "api", "auth", "authenticator", "core", "datastore", "db_common", "push", "secure_storage", "storage", "aws_common", "aws_signature_v4", "smithy", "worker_bee", "amplify_flutter", "amplify_lints", "amplify_native_legacy_wrapper"];
+              _i = 0;
+              while (true) {
+                if (!(_i < 18)) {
+                  category = "";
+                  break;
+                }
+                cat = categories[_i];
+                if (B.JSString_methods.contains$1(workingDirectory, cat)) {
+                  category = cat;
+                  break;
+                }
+                ++_i;
               }
-              category = t4[1];
-              if (!B.JSArray_methods.contains$1(A._setArrayType(["canaries", "analytics", "api", "auth", "datastore", "push", "storage"], t3), category))
-                throw A.wrapException(A.Exception_Exception("packageName input of " + packageName + " must contain a valid category of: canaries, analytics, api, auth, datastore, push, storage"));
+              if (category.length === 0)
+                throw A.wrapException(A.Exception_Exception("WorkingDirectory input of " + workingDirectory + " must contain a valid category."));
               t4 = A._asString(t2._as(t2._as(t1.github).context).workflow);
               t5 = A._asString(t2._as(t2._as(t1.github).context).job);
               framework = A.Core_getInput(t2._as(t1.core), "framework");
@@ -7744,14 +7750,13 @@
               t4 = $.$get$processManager();
               t3 = A._setArrayType(["aws"], t3);
               B.JSArray_methods.addAll$1(t3, cloudArgs);
-              $async$goto = 7;
+              $async$goto = 6;
               return A._asyncAwait(t4.run$1(t3), $async$logMetric);
-            case 7:
+            case 6:
               // returning from await.
               t2._as(t1.core).info("Sent cloudwatch metric with args: " + A.S(cloudArgs));
-            case 1:
-              // return
-              return A._asyncReturn($async$returnValue, $async$completer);
+              // implicit return
+              return A._asyncReturn(null, $async$completer);
           }
       });
       return A._asyncStartSync($async$logMetric, $async$completer);

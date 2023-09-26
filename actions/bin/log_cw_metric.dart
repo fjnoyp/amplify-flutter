@@ -49,12 +49,40 @@ Future<void> logMetric() async {
     );
   }
 
-  final packageName = core.getRequiredInput('package-name');
-  final category = packageName.split('_')[1];
-  if (!['canaries', 'analytics', 'api', 'auth', 'datastore', 'push', 'storage']
-      .contains(category)) {
+  final workingDirectory = core.getRequiredInput('working-directory');
+
+  final categories = [
+    'canaries',
+    'analytics',
+    'api',
+    'auth',
+    'authenticator',
+    'core',
+    'datastore',
+    'db_common',
+    'push',
+    'secure_storage',
+    'storage',
+    'aws_common',
+    'aws_signature_v4',
+    'smithy',
+    'worker_bee',
+    'amplify_flutter',
+    'amplify_lints',
+    'amplify_native_legacy_wrapper',
+  ];
+
+  var category = '';
+  for (final cat in categories) {
+    if (workingDirectory.contains(cat)) {
+      category = cat;
+      break;
+    }
+  }
+
+  if (category.isEmpty) {
     throw Exception(
-      'packageName input of $packageName must contain a valid category of: canaries, analytics, api, auth, datastore, push, storage',
+      'WorkingDirectory input of $workingDirectory must contain a valid category.',
     );
   }
 
