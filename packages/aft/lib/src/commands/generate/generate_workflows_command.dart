@@ -275,36 +275,6 @@ ${dependabotGroups.join('\n')}
 
     workflowPaths.sort();
 
-    const readAllWriteIdTokenPermission = '''
-permissions:
-  actions: read
-  checks: read
-  contents: read
-  deployments: read
-  id-token: write
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  pull-requests: read
-  repository-projects: read
-  security-events: read
-  statuses: read
-''';
-
-    const passSecrets = r'''
-    secrets:
-      role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
-      aws-region: ${{secrets.AWS_REGION}}
-      github-token: ${{secrets.GITHUB_TOKEN}}''';
-
-    final permissionsBlock = needsE2ETest
-        ? '''
-# These permissions are needed to interact with GitHub's OIDC Token endpoint.
-permissions:
-  id-token: write
-  contents: read'''
-        : readAllWriteIdTokenPermission;
     final workflowContents = StringBuffer(
       '''
 # Generated with aft. To update, run: `aft generate workflows`
@@ -523,7 +493,7 @@ ${androidWorkflowPaths.map((path) => "      - '$path'").join('\n')}
 defaults:
   run:
     shell: bash
-permissions: read-all
+$permissionsBlock
 
 # Cancels in-progress job when there is another push to same ref.
 # https://docs.github.com/en/actions/using-jobs/using-concurrency#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
@@ -538,6 +508,7 @@ jobs:
       example-directory: $repoRelativePath/example
       package-name: ${package.name}
       has-native-tests: $hasAndroidTests
+$passSecrets
 ''';
 
     writeWorkflowFile(androidWorkflowFile, androidWorkflowContents);
@@ -593,7 +564,7 @@ ${iosWorkflowPaths.map((path) => "      - '$path'").join('\n')}
 defaults:
   run:
     shell: bash
-permissions: read-all
+$permissionsBlock
 
 # Cancels in-progress job when there is another push to same ref.
 # https://docs.github.com/en/actions/using-jobs/using-concurrency#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
@@ -608,6 +579,7 @@ jobs:
       example-directory: $repoRelativePath/example
       package-name: ${package.name}
       has-native-tests: $hasIosTests
+$passSecrets
 ''';
 
     writeWorkflowFile(iosWorkflowFile, iosWorkflowContents);
@@ -620,3 +592,16 @@ jobs:
     workflowFile.writeAsStringSync(content);
   }
 }
+
+const passSecrets = r'''
+    secrets:
+      role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
+      aws-region: ${{secrets.AWS_REGION}}
+      github-token: ${{secrets.GITHUB_TOKEN}}''';
+
+const permissionsBlock = '''
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+''';
