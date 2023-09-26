@@ -55,8 +55,9 @@ runs:
   steps:
     - name: Exit if not scheduled
       shell: bash
+      # TEMP STOP SCHEDULE CHECK
       run: |
-        if [ "${{ github.event_name }}" != "schedule" ]; then
+        if [ "${{ github.event_name }}" == "schedule" ]; then
           echo "This was not triggered by a schedule, skipping."
           echo "SKIP=true" >> $GITHUB_ENV
         fi
