@@ -165,9 +165,9 @@ Future<String> getFailingStep(
     );
     */
 
-    final failingStep = steps.firstWhere(
+    final failingStep = dartify(steps.firstWhere(
       (element) => element['conclusion'] == 'failure',
-    ) as Map<String, dynamic>;
+    )) as Map<String, dynamic>;
 
     return failingStep['name'] as String;
   } on Exception catch (e) {

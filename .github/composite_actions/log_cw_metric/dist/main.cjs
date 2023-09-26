@@ -7831,7 +7831,7 @@
               jobsMap = t2._as(A.dartify(J.$index$asx(responseMap, "jobs")));
               job = J.firstWhere$1$ax(jobsMap, new A.getFailingStep_closure(jobIdentifier));
               steps = t2._as(A.dartify(J.$index$asx(job, "steps")));
-              failingStep = t1._as(J.firstWhere$1$ax(steps, new A.getFailingStep_closure0()));
+              failingStep = t1._as(A.dartify(J.firstWhere$1$ax(steps, new A.getFailingStep_closure0())));
               t1 = A._asString(J.$index$asx(failingStep, "name"));
               $async$returnValue = t1;
               // goto return
