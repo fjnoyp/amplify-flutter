@@ -176,7 +176,8 @@ class GithubJob {
   GithubJob.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String,
         steps = (dartify(json['steps'] ?? []) as List<Map<String, dynamic>>)
-            .map(GithubStep.fromJson)
+            .map((step) =>
+                GithubStep.fromJson(dartify(step) as Map<String, dynamic>))
             .toList();
 
   final String name;

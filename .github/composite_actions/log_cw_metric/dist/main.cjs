@@ -8205,9 +8205,11 @@
       t1 = J.map$1$1$ax(type$.List_dynamic._as(A.dartify(t1 == null ? [] : t1)), new A.GithubJobsList$fromJson_closure(), type$.GithubJob);
       return new A.GithubJobsList(A.List_List$of(t1, true, A._instanceType(t1)._eval$1("ListIterable.E")));
     },
-    GithubStep___fromJson_tearOff(json) {
-      type$.Map_String_dynamic._as(json);
-      return new A.GithubStep(A._asString(json.$index(0, "name")), A._asString(json.$index(0, "conclusion")));
+    GithubJob$fromJson(json) {
+      var t1 = A._asString(json.$index(0, "name")),
+        t2 = json.$index(0, "steps");
+      t2 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(A.dartify(t2 == null ? [] : t2)), new A.GithubJob$fromJson_closure(), type$.GithubStep);
+      return new A.GithubJob(t1, A.List_List$of(t2, true, A._instanceType(t2)._eval$1("ListIterable.E")));
     },
     logMetric_closure: function logMetric_closure() {
     },
@@ -8226,6 +8228,8 @@
     GithubJob: function GithubJob(t0, t1) {
       this.name = t0;
       this.steps = t1;
+    },
+    GithubJob$fromJson_closure: function GithubJob$fromJson_closure() {
     },
     GithubStep: function GithubStep(t0, t1) {
       this.name = t0;
@@ -9212,7 +9216,7 @@
     call$0() {
       return A.Future_Future$value(null, type$.Null);
     },
-    $signature: 32
+    $signature: 39
   };
   A.SentinelValue.prototype = {};
   A.EfficientLengthIterable.prototype = {};
@@ -9831,7 +9835,7 @@
       B.JSArray_methods.add$1(this.$arguments, argument);
       ++t1.argumentCount;
     },
-    $signature: 17
+    $signature: 25
   };
   A.TypeErrorDecoder.prototype = {
     matchTypeError$1(message) {
@@ -10166,13 +10170,13 @@
     call$1(o) {
       return this.getTag(o);
     },
-    $signature: 27
+    $signature: 16
   };
   A.initHooks_closure0.prototype = {
     call$2(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 42
+    $signature: 32
   };
   A.initHooks_closure1.prototype = {
     call$1(tag) {
@@ -10564,7 +10568,7 @@
       t2 = this.span;
       t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
     },
-    $signature: 46
+    $signature: 82
   };
   A._AsyncRun__scheduleImmediateJsOverride_internalCallback.prototype = {
     call$0() {
@@ -10652,13 +10656,13 @@
     call$2(error, stackTrace) {
       this.bodyFunction.call$2(1, new A.ExceptionAndStackTrace(error, type$.StackTrace._as(stackTrace)));
     },
-    $signature: 56
+    $signature: 50
   };
   A._wrapJsFunctionForAsync_closure.prototype = {
     call$2(errorCode, result) {
       this.$protected(A._asInt(errorCode), result);
     },
-    $signature: 68
+    $signature: 56
   };
   A.AsyncError.prototype = {
     toString$0(_) {
@@ -11095,7 +11099,7 @@
     call$1(_) {
       return this.originalSource;
     },
-    $signature: 41
+    $signature: 69
   };
   A._Future__propagateToListeners_handleValueCallback.prototype = {
     call$0() {
@@ -12787,7 +12791,7 @@
       t1._contents = t2 + ": ";
       t1._contents += A.S(v);
     },
-    $signature: 80
+    $signature: 62
   };
   A._MapBaseValueIterable.prototype = {
     get$length(_) {
@@ -12991,7 +12995,7 @@
       }
       return null;
     },
-    $signature: 16
+    $signature: 15
   };
   A.Utf8Decoder__decoderNonfatal_closure.prototype = {
     call$0() {
@@ -13003,7 +13007,7 @@
       }
       return null;
     },
-    $signature: 16
+    $signature: 15
   };
   A.AsciiCodec.prototype = {
     encode$1(source) {
@@ -13277,7 +13281,7 @@
     call$1(sink) {
       return new A._ConverterStreamEventSink(sink, this.$this.startChunkedConversion$1(sink), type$._ConverterStreamEventSink_dynamic_dynamic);
     },
-    $signature: 62
+    $signature: 60
   };
   A.Encoding.prototype = {};
   A.JsonCodec.prototype = {
@@ -13307,7 +13311,7 @@
       type$.EventSink_String._as(sink);
       return new A._LineSplitterEventSink(sink, new A._StringAdapterSink(sink));
     },
-    $signature: 60
+    $signature: 59
   };
   A._LineSplitterSink.prototype = {
     addSlice$4(chunk, start, end, isLast) {
@@ -13882,7 +13886,7 @@
       t1._contents += A.Error_safeToString(value);
       t2.comma = ", ";
     },
-    $signature: 59
+    $signature: 58
   };
   A.DateTime.prototype = {
     $eq(_, other) {
@@ -14284,13 +14288,13 @@
     call$2(msg, position) {
       throw A.wrapException(A.FormatException$("Illegal IPv4 address, " + msg, this.host, position));
     },
-    $signature: 58
+    $signature: 53
   };
   A.Uri_parseIPv6Address_error.prototype = {
     call$2(msg, position) {
       throw A.wrapException(A.FormatException$("Illegal IPv6 address, " + msg, this.host, position));
     },
-    $signature: 53
+    $signature: 46
   };
   A.Uri_parseIPv6Address_parseHex.prototype = {
     call$2(start, end) {
@@ -14302,7 +14306,7 @@
         this.error.call$2("each part must be in the range of `0x0..0xFFFF`", start);
       return value;
     },
-    $signature: 50
+    $signature: 42
   };
   A._Uri.prototype = {
     get$_text() {
@@ -14600,7 +14604,7 @@
     call$1(s) {
       return A._Uri__uriEncode(B.List_XRg0, A._asString(s), B.Utf8Codec_false, false);
     },
-    $signature: 10
+    $signature: 11
   };
   A.UriData.prototype = {
     get$uri() {
@@ -14641,7 +14645,7 @@
       B.NativeUint8List_methods.fillRange$3(t1, 0, 96, defaultTransition);
       return t1;
     },
-    $signature: 39
+    $signature: 41
   };
   A._createTables_setChars.prototype = {
     call$3(target, chars, transition) {
@@ -14653,7 +14657,7 @@
         target[t2] = transition;
       }
     },
-    $signature: 14
+    $signature: 26
   };
   A._createTables_setRange.prototype = {
     call$3(target, range, transition) {
@@ -14672,7 +14676,7 @@
         target[t1] = transition;
       }
     },
-    $signature: 14
+    $signature: 26
   };
   A._SimpleUri.prototype = {
     get$hasAuthority() {
@@ -15269,7 +15273,7 @@
     call$1(arg) {
       return A._asString(arg);
     },
-    $signature: 10
+    $signature: 11
   };
   A.NodeReadableStream_get_stream_onData.prototype = {
     call$1(chunk) {
@@ -15506,14 +15510,14 @@
       A._asString(line);
       this.stdout._contents += line + "\n";
     },
-    $signature: 26
+    $signature: 27
   };
   A.NodeProcessManager_run_closure0.prototype = {
     call$1(line) {
       A._asString(line);
       this.stderr._contents += line + "\n";
     },
-    $signature: 26
+    $signature: 27
   };
   A.NodeProcess.prototype = {
     _init$0() {
@@ -16685,7 +16689,7 @@
     call$1(match) {
       return B.JSString_methods.$mul(".<fn>", match.$index(0, 1).length);
     },
-    $signature: 25
+    $signature: 23
   };
   A._prettifyMember_closure0.prototype = {
     call$1(match) {
@@ -16693,7 +16697,7 @@
       t1.toString;
       return t1 + ".";
     },
-    $signature: 25
+    $signature: 23
   };
   A.Mapping.prototype = {};
   A.MultiSectionMapping.prototype = {
@@ -16972,7 +16976,7 @@
       if (B.JSString_methods.startsWith$1($name, "x_"))
         this.$this.extensions.$indexSet(0, $name, value);
     },
-    $signature: 17
+    $signature: 25
   };
   A.SingleMapping__findLine_closure.prototype = {
     call$1(e) {
@@ -17234,7 +17238,7 @@
     call$1(frame) {
       return type$.Frame._as(frame).get$location().length;
     },
-    $signature: 23
+    $signature: 22
   };
   A.Chain_toString_closure.prototype = {
     call$1(trace) {
@@ -17831,7 +17835,7 @@
     call$1(frame) {
       return type$.Frame._as(frame).get$location().length;
     },
-    $signature: 23
+    $signature: 22
   };
   A.Trace_toString_closure.prototype = {
     call$1(frame) {
@@ -17867,7 +17871,7 @@
     call$1(e) {
       return e;
     },
-    $signature: 27
+    $signature: 16
   };
   A.logMetric_closure0.prototype = {
     call$1(e) {
@@ -17891,15 +17895,19 @@
   A.GithubJobsList.prototype = {};
   A.GithubJobsList$fromJson_closure.prototype = {
     call$1(job) {
-      var t1 = type$.Map_String_dynamic._as(A.dartify(job)),
-        t2 = A._asString(t1.$index(0, "name"));
-      t1 = t1.$index(0, "steps");
-      t1 = J.map$1$1$ax(type$.List_Map_String_dynamic._as(A.dartify(t1 == null ? [] : t1)), A.log_cw_metric_GithubStep___fromJson_tearOff$closure(), type$.GithubStep);
-      return new A.GithubJob(t2, A.List_List$of(t1, true, A._instanceType(t1)._eval$1("ListIterable.E")));
+      return A.GithubJob$fromJson(type$.Map_String_dynamic._as(A.dartify(job)));
     },
     $signature: 67
   };
   A.GithubJob.prototype = {};
+  A.GithubJob$fromJson_closure.prototype = {
+    call$1(step) {
+      var t1 = type$.Map_String_dynamic;
+      t1 = t1._as(A.dartify(t1._as(step)));
+      return new A.GithubStep(A._asString(t1.$index(0, "name")), A._asString(t1.$index(0, "conclusion")));
+    },
+    $signature: 68
+  };
   A.GithubStep.prototype = {};
   (function aliases() {
     var _ = J.LegacyJavaScriptObject.prototype;
@@ -17924,9 +17932,9 @@
       _instance_1_u = hunkHelpers._instance_1u,
       _instance_0_u = hunkHelpers._instance_0u,
       _instance = hunkHelpers.installInstanceTearOff;
-    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 11);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 11);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 11);
+    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 10);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 10);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 10);
     _static(A, "async_Future___value_tearOff$closure", 0, function() {
       return [null];
     }, ["call$1$1", "call$1", "call$0", "call$1$0"], ["Future___value_tearOff", function(value) {
@@ -17935,43 +17943,43 @@
       return A.Future___value_tearOff(null, type$.dynamic);
     }, function($T) {
       return A.Future___value_tearOff(null, $T);
-    }], 69, 1);
+    }], 70, 1);
     _static(A, "async__FutureExtensions__ignore$closure", 1, function() {
       return [null];
     }, ["call$2", "call$1"], ["FutureExtensions__ignore", function(_) {
       return A.FutureExtensions__ignore(_, null);
-    }], 70, 0);
+    }], 71, 0);
     _static_0(A, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
     _static_2(A, "async___nullErrorHandler$closure", "_nullErrorHandler", 2);
     _static_0(A, "async___nullDoneHandler$closure", "_nullDoneHandler", 0);
-    _static(A, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 71, 0);
+    _static(A, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 72, 0);
     _static(A, "async___rootRun$closure", 4, null, ["call$1$4", "call$4"], ["_rootRun", function($self, $parent, zone, f) {
       return A._rootRun($self, $parent, zone, f, type$.dynamic);
-    }], 72, 1);
+    }], 73, 1);
     _static(A, "async___rootRunUnary$closure", 5, null, ["call$2$5", "call$5"], ["_rootRunUnary", function($self, $parent, zone, f, arg) {
       return A._rootRunUnary($self, $parent, zone, f, arg, type$.dynamic, type$.dynamic);
-    }], 73, 1);
+    }], 74, 1);
     _static(A, "async___rootRunBinary$closure", 6, null, ["call$3$6", "call$6"], ["_rootRunBinary", function($self, $parent, zone, f, arg1, arg2) {
       return A._rootRunBinary($self, $parent, zone, f, arg1, arg2, type$.dynamic, type$.dynamic, type$.dynamic);
-    }], 74, 1);
+    }], 75, 1);
     _static(A, "async___rootRegisterCallback$closure", 4, null, ["call$1$4", "call$4"], ["_rootRegisterCallback", function($self, $parent, zone, f) {
       return A._rootRegisterCallback($self, $parent, zone, f, type$.dynamic);
-    }], 22, 0);
+    }], 21, 0);
     _static(A, "async___rootRegisterUnaryCallback$closure", 4, null, ["call$2$4", "call$4"], ["_rootRegisterUnaryCallback", function($self, $parent, zone, f) {
       return A._rootRegisterUnaryCallback($self, $parent, zone, f, type$.dynamic, type$.dynamic);
-    }], 21, 0);
+    }], 20, 0);
     _static(A, "async___rootRegisterBinaryCallback$closure", 4, null, ["call$3$4", "call$4"], ["_rootRegisterBinaryCallback", function($self, $parent, zone, f) {
       return A._rootRegisterBinaryCallback($self, $parent, zone, f, type$.dynamic, type$.dynamic, type$.dynamic);
-    }], 20, 0);
-    _static(A, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 19, 0);
-    _static(A, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 75, 0);
-    _static(A, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 76, 0);
-    _static(A, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 77, 0);
-    _static(A, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 78, 0);
-    _static(A, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 79, 0);
+    }], 19, 0);
+    _static(A, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 17, 0);
+    _static(A, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 76, 0);
+    _static(A, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 77, 0);
+    _static(A, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 78, 0);
+    _static(A, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 79, 0);
+    _static(A, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 80, 0);
     _instance_2_u(A._Future.prototype, "get$_completeError", "_completeError$2", 2);
     var _;
-    _instance_1_u(_ = A._StreamController.prototype, "get$_add", "_add$1", 15);
+    _instance_1_u(_ = A._StreamController.prototype, "get$_add", "_add$1", 14);
     _instance_2_u(_, "get$_addError", "_addError$2", 2);
     _instance_0_u(_, "get$_close", "_close$0", 0);
     _instance_0_u(_ = A._ControllerSubscription.prototype, "get$_onPause", "_onPause$0", 0);
@@ -17980,10 +17988,10 @@
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
     _instance_0_u(_ = A._SinkTransformerStreamSubscription.prototype, "get$_onPause", "_onPause$0", 0);
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
-    _instance_1_u(_, "get$_handleData", "_handleData$1", 15);
+    _instance_1_u(_, "get$_handleData", "_handleData$1", 14);
     _instance_2_u(_, "get$_handleError", "_handleError$2", 2);
     _instance_0_u(_, "get$_handleDone", "_handleDone$0", 0);
-    _static_1(A, "core_Uri_decodeComponent$closure", "Uri_decodeComponent", 10);
+    _static_1(A, "core_Uri_decodeComponent$closure", "Uri_decodeComponent", 11);
     _instance_1_u(_ = A._StreamSinkImpl.prototype, "get$_completeDoneValue", "_completeDoneValue$1", 7);
     _instance_2_u(_, "get$_completeDoneError", "_completeDoneError$2", 30);
     _instance_0_u(A.NodeProcessManager.prototype, "get$close", "close$0", 8);
@@ -17993,15 +18001,14 @@
     _static_1(A, "frame_Frame___parseFirefox_tearOff$closure", "Frame___parseFirefox_tearOff", 5);
     _static_1(A, "frame_Frame___parseFriendly_tearOff$closure", "Frame___parseFriendly_tearOff", 5);
     _instance_0_u(A.LazyChain.prototype, "get$toTrace", "toTrace$0", 3);
-    _instance(_ = A.StackZoneSpecification.prototype, "get$_registerCallback", 0, 4, null, ["call$1$4", "call$4"], ["_registerCallback$1$4", "_registerCallback$4"], 22, 0, 0);
-    _instance(_, "get$_registerUnaryCallback", 0, 4, null, ["call$2$4", "call$4"], ["_registerUnaryCallback$2$4", "_registerUnaryCallback$4"], 21, 0, 0);
-    _instance(_, "get$_registerBinaryCallback", 0, 4, null, ["call$3$4", "call$4"], ["_registerBinaryCallback$3$4", "_registerBinaryCallback$4"], 20, 0, 0);
+    _instance(_ = A.StackZoneSpecification.prototype, "get$_registerCallback", 0, 4, null, ["call$1$4", "call$4"], ["_registerCallback$1$4", "_registerCallback$4"], 21, 0, 0);
+    _instance(_, "get$_registerUnaryCallback", 0, 4, null, ["call$2$4", "call$4"], ["_registerUnaryCallback$2$4", "_registerUnaryCallback$4"], 20, 0, 0);
+    _instance(_, "get$_registerBinaryCallback", 0, 4, null, ["call$3$4", "call$4"], ["_registerBinaryCallback$3$4", "_registerBinaryCallback$4"], 19, 0, 0);
     _instance(_, "get$_handleUncaughtError", 0, 5, null, ["call$5"], ["_handleUncaughtError$5"], 61, 0, 0);
-    _instance(_, "get$_errorCallback", 0, 5, null, ["call$5"], ["_errorCallback$5"], 19, 0, 0);
+    _instance(_, "get$_errorCallback", 0, 5, null, ["call$5"], ["_errorCallback$5"], 17, 0, 0);
     _static_1(A, "trace_Trace___parseVM_tearOff$closure", "Trace___parseVM_tearOff", 18);
     _static_1(A, "trace_Trace___parseFriendly_tearOff$closure", "Trace___parseFriendly_tearOff", 18);
     _static_0(A, "log_cw_metric__logMetric$closure", "logMetric", 8);
-    _static_1(A, "log_cw_metric_GithubStep___fromJson_tearOff$closure", "GithubStep___fromJson_tearOff", 82);
     _static(A, "math__max$closure", 2, null, ["call$1$2", "call$2"], ["max", function(a, b) {
       return A.max(a, b, type$.num);
     }], 55, 1);
@@ -18023,7 +18030,7 @@
     _inherit(A._CastListBase, A.__CastListBase__CastIterableBase_ListMixin);
     _inherit(A.CastList, A._CastListBase);
     _inheritMany(A.MapBase, [A.CastMap, A.JsLinkedHashMap, A._HashMap, A._JsonMap]);
-    _inheritMany(A.Closure, [A.Closure2Args, A.Closure0Args, A.Instantiation, A.TearOffClosure, A.JsLinkedHashMap_values_closure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A.Future_wait_closure, A.Future_any_onValue, A._Future__chainForeignFuture_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._CustomZone_bindUnaryCallback_closure, A._RootZone_bindUnaryCallback_closure, A._HashMap_values_closure, A.MapBase_entries_closure, A._JsonMap_values_closure, A.Converter_bind_closure, A.LineSplitter_bind_closure, A._Uri__makePath_closure, A._createTables_setChars, A._createTables_setRange, A._StreamSinkImpl__controller_closure, A.jsify__convert, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.dartify_convert, A.ChildProcess_spawn_closure, A.NodeReadableStream_get_stream_onData, A.NodeReadableStream_get_stream_onError, A.NodeReadableStream_get_stream_onDone, A.EventEmitter_once_closure, A.NodeProcessManager_run_closure, A.NodeProcessManager_run_closure0, A.NodeProcess__init_closure, A.NodeProcess__init_closure0, A.StreamForward_forward_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.WindowsStyle_absolutePathToUri_closure, A.mapStackTrace_closure, A.mapStackTrace_closure0, A._prettifyMember_closure, A._prettifyMember_closure0, A.SingleMapping__findLine_closure, A.SingleMapping__findColumn_closure, A.Chain_Chain$parse_closure, A.Chain_toTrace_closure, A.Chain_toString_closure0, A.Chain_toString__closure0, A.Chain_toString_closure, A.Chain_toString__closure, A.StackZoneSpecification__registerUnaryCallback_closure, A.Trace__parseVM_closure, A.Trace$parseV8_closure, A.Trace$parseJSCore_closure, A.Trace$parseFirefox_closure, A.Trace$parseFriendly_closure, A.Trace_toString_closure0, A.Trace_toString_closure, A.logMetric_closure, A.logMetric_closure0, A.getFailingStep_closure, A.getFailingStep_closure0, A.GithubJobsList$fromJson_closure]);
+    _inheritMany(A.Closure, [A.Closure2Args, A.Closure0Args, A.Instantiation, A.TearOffClosure, A.JsLinkedHashMap_values_closure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A.Future_wait_closure, A.Future_any_onValue, A._Future__chainForeignFuture_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._CustomZone_bindUnaryCallback_closure, A._RootZone_bindUnaryCallback_closure, A._HashMap_values_closure, A.MapBase_entries_closure, A._JsonMap_values_closure, A.Converter_bind_closure, A.LineSplitter_bind_closure, A._Uri__makePath_closure, A._createTables_setChars, A._createTables_setRange, A._StreamSinkImpl__controller_closure, A.jsify__convert, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.dartify_convert, A.ChildProcess_spawn_closure, A.NodeReadableStream_get_stream_onData, A.NodeReadableStream_get_stream_onError, A.NodeReadableStream_get_stream_onDone, A.EventEmitter_once_closure, A.NodeProcessManager_run_closure, A.NodeProcessManager_run_closure0, A.NodeProcess__init_closure, A.NodeProcess__init_closure0, A.StreamForward_forward_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.WindowsStyle_absolutePathToUri_closure, A.mapStackTrace_closure, A.mapStackTrace_closure0, A._prettifyMember_closure, A._prettifyMember_closure0, A.SingleMapping__findLine_closure, A.SingleMapping__findColumn_closure, A.Chain_Chain$parse_closure, A.Chain_toTrace_closure, A.Chain_toString_closure0, A.Chain_toString__closure0, A.Chain_toString_closure, A.Chain_toString__closure, A.StackZoneSpecification__registerUnaryCallback_closure, A.Trace__parseVM_closure, A.Trace$parseV8_closure, A.Trace$parseJSCore_closure, A.Trace$parseFirefox_closure, A.Trace$parseFriendly_closure, A.Trace_toString_closure0, A.Trace_toString_closure, A.logMetric_closure, A.logMetric_closure0, A.getFailingStep_closure, A.getFailingStep_closure0, A.GithubJobsList$fromJson_closure, A.GithubJob$fromJson_closure]);
     _inheritMany(A.Closure2Args, [A.CastMap_forEach_closure, A.Primitives_functionNoSuchMethod_closure, A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A.Future_wait_handleError, A.Future_any_onError, A._Future__chainForeignFuture_closure0, A.HashMap_HashMap$from_closure, A.MapBase_mapToString_closure, A.NoSuchMethodError_toString_closure, A.Uri__parseIPv4Address_error, A.Uri_parseIPv6Address_error, A.Uri_parseIPv6Address_parseHex, A._createTables_build, A._StreamSinkImpl__controller_closure0, A.wrapMain_closure0, A.StreamForward_forward_closure1, A.SingleMapping$fromJson_closure, A.Frame_Frame$parseV8_closure_parseLocation, A.StackZoneSpecification__registerBinaryCallback_closure]);
     _inheritMany(A.Error, [A.LateError, A.TypeError, A.JsNoSuchMethodError, A.UnknownJsTypeError, A._CyclicInitializationError, A.RuntimeError, A.AssertionError, A._Error, A.ArgumentError, A.NoSuchMethodError, A.UnsupportedError, A.UnimplementedError, A.StateError, A.ConcurrentModificationError, A._UnreachableError]);
     _inherit(A.UnmodifiableListBase, A.ListBase);
@@ -18096,7 +18103,7 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "String(String)", "~(~())", "String(Frame)", "Null(Object,StackTrace)", "~(Uint8List,String,int)", "~(Object?)", "@()", "~(String,@)", "Trace(String)", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "int(Frame)", "@(String)", "String(Match)", "~(String)", "@(@)", "Object?(Object?)", "Null(@,@)", "~(@,StackTrace?)", "Future<0&>()", "Future<Null>()", "Future<~>(Object,Chain)", "~(Uint8List)", "~(JSObject)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "Uint8List(@,@)", "~(List<int>)", "_Future<@>(@)", "@(@,String)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "Null(~())", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "int(int,int)", "List<Frame>(Trace)", "int(Trace)", "~(String,int?)", "String(Trace)", "0^(0^,0^)<num>", "Null(@,StackTrace)", "Frame(String,String)", "~(String,int)", "~(Symbol0,@)", "_LineSplitterEventSink(EventSink<String>)", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "Chain()", "String(MapEntry<String,String>)", "bool(GithubJob)", "bool(GithubStep)", "GithubJob(@)", "~(int,@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(Object?,Object?)", "~(@,@)", "GithubStep(Map<String,@>)", "0&(JSObject)"],
+    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "~(~())", "String(String)", "String(Frame)", "Null(Object,StackTrace)", "~(Object?)", "@()", "@(@)", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "Trace(String)", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "int(Frame)", "String(Match)", "@(String)", "~(String,@)", "~(Uint8List,String,int)", "~(String)", "Object?(Object?)", "Null(@,@)", "~(@,StackTrace?)", "Future<0&>()", "@(@,String)", "Future<~>(Object,Chain)", "~(Uint8List)", "~(JSObject)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "Future<Null>()", "~(List<int>)", "Uint8List(@,@)", "int(int,int)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "~(String,int?)", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "Null(@,StackTrace)", "List<Frame>(Trace)", "int(Trace)", "~(String,int)", "String(Trace)", "0^(0^,0^)<num>", "~(int,@)", "Frame(String,String)", "~(Symbol0,@)", "_LineSplitterEventSink(EventSink<String>)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(Object?,Object?)", "Chain()", "String(MapEntry<String,String>)", "bool(GithubJob)", "bool(GithubStep)", "GithubJob(@)", "GithubStep(Map<String,@>)", "_Future<@>(@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(@,@)", "Null(~())", "0&(JSObject)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
