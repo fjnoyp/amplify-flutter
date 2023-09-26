@@ -11,16 +11,6 @@ on:
         description: The working directory relative to the repo root
         required: true
         type: string
-    secrets:
-      role-to-assume:
-        description: The role to assume when logging to CloudWatch
-        required: true
-      aws-region:
-        description: The AWS region to log to CloudWatch
-        required: true
-      github-token:
-        description: The GitHub token to use when logging to CloudWatch
-        required: true
 
 jobs:
   native_test:
@@ -103,11 +93,11 @@ jobs:
         if: always()
         uses: ./.github/composite_actions/log_cw_metric_wrapper
         with:
-          role-to-assume: ${{ secrets.role-to-assume }}
-          aws-region: ${{ secrets.aws-region }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
           job-status: ${{ job.status }}
-          github-token: ${{ secrets.github-token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
           test-type: unit
           working-directory: ${{ inputs.working-directory }}

@@ -306,10 +306,10 @@ concurrency:
 jobs:
   test:
     uses: ./.github/workflows/$analyzeAndTestWorkflow
+    secrets: inherit
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
-$passSecrets
 ''',
     );
     if (!isDartPackage) {
@@ -326,10 +326,10 @@ $passSecrets
   native_test:
     needs: test
     uses: ./.github/workflows/$nativeWorkflow
+    secrets: inherit 
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
-$passSecrets
 ''',
       );
 
@@ -339,17 +339,17 @@ $passSecrets
   ddc_test:
     needs: test
     uses: ./.github/workflows/$ddcWorkflow
+    secrets: inherit
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
-$passSecrets
   dart2js_test:
     needs: test
     uses: ./.github/workflows/$dart2JsWorkflow
+    secrets: inherit
     with:
       package-name: ${package.name}
       working-directory: $repoRelativePath
-$passSecrets
 ''',
         );
       }
@@ -504,11 +504,11 @@ concurrency:
 jobs:
   android:
     uses: ./.github/workflows/$androidWorkflow
+    secrets: inherit
     with:
       example-directory: $repoRelativePath/example
       package-name: ${package.name}
       has-native-tests: $hasAndroidTests
-$passSecrets
 ''';
 
     writeWorkflowFile(androidWorkflowFile, androidWorkflowContents);
@@ -575,11 +575,11 @@ concurrency:
 jobs:
   ios:
     uses: ./.github/workflows/$iosWorkflow
+    secrets: inhert
     with:
       example-directory: $repoRelativePath/example
       package-name: ${package.name}
       has-native-tests: $hasIosTests
-$passSecrets
 ''';
 
     writeWorkflowFile(iosWorkflowFile, iosWorkflowContents);
@@ -592,12 +592,6 @@ $passSecrets
     workflowFile.writeAsStringSync(content);
   }
 }
-
-const passSecrets = r'''
-    secrets:
-      role-to-assume: ${{secrets.AWS_ROLE_TO_ASSUME}}
-      aws-region: ${{secrets.AWS_REGION}}
-      github-token: ${{secrets.GITHUB_TOKEN}}''';
 
 const permissionsBlock = '''
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
