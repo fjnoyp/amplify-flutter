@@ -1,7 +1,7 @@
 name: Test Log Calls
 on: push
 jobs:
-  testLogMetric:
+  e2e-android:
     runs-on: macos-latest
 
     # MUST HAVE THIS (check other calls)

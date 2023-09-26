@@ -33,10 +33,7 @@ Future<void> logMetric() async {
 
   final githubToken = core.getRequiredInput('github-token');
   final repo = '${github.context.repo.owner}/${github.context.repo.repo}';
-  final runId = '${github.context.runId}';
-
-  // TEMP FORCE CALL
-  await getFailingStep(jobIdentifier, githubToken, repo, runId);
+  final runId = '5809487600'; //'${github.context.runId}';
 
   final isFailed = jobStatus == 'failure';
   final failingStep = isFailed
@@ -122,36 +119,19 @@ Future<String> getFailingStep(
   String repo,
   String runId,
 ) async {
-  final headers = {
-    'Authorization': 'token $githubToken',
-    'Accept': 'application/vnd.github.v3+json',
-    'user-agent': 'amplify-flutter',
-  };
-
-  final response = await HttpClient().getJson(
-    'https://api.github.com/repos/$repo/actions/runs/$runId/jobs',
-    headers: headers,
-  );
-
-  print('printing response gotten: ');
-  print(response);
-  /*
-  final response = await http.get(
-    Uri.parse('https://api.github.com/repos/$repo/actions/runs/$runId/jobs'),
-    headers: headers,
-  );
-  */
-
-  /*
-  if (response.statusCode != 200) {
-    core.error('Error fetching data from GitHub API.');
-    return '';
-  }
-
-  final jobsListJson = json.decode(response.body) as Map<String, dynamic>;
-  final jobsList = GithubJobsList.fromJson(jobsListJson);
-
   try {
+    final headers = {
+      'Authorization': 'token $githubToken',
+      'Accept': 'application/vnd.github.v3+json',
+      'user-agent': 'amplify-flutter',
+    };
+
+    final response = await HttpClient().getJson(
+      'https://api.github.com/repos/$repo/actions/runs/$runId/jobs',
+      headers: headers,
+    );
+    final jobsList = GithubJobsList.fromJson(response);
+
     final job = jobsList.jobs.firstWhere(
       (element) => element.name == jobIdentifier,
     );
@@ -162,13 +142,9 @@ Future<String> getFailingStep(
 
     return failingStep.name;
   } on Exception catch (e) {
-    // Return empty string if no job found or
-    core.error('Exception in retrieving failing step: $e');
+    core.error('Error fetching data from GitHub API: $e');
     return '';
   }
-  */
-
-  return '';
 }
 
 class GithubJobsList {
