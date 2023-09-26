@@ -139,17 +139,17 @@ Future<String> getFailingStep(
     // Map the response
     final responseMap = dartify(response) as Map<String, dynamic>;
 
-    core.info('exiting first map: $responseMap');
+    core.info('exiting first map');
 
     // Map the jobs
     final jobMap = responseMap['jobs'] as List<dynamic>;
 
-    core.info('exiting job map: ${jobMap.toString()}');
+    core.info('exiting job map');
 
     // Map the steps
-    final stepsMap = jobMap[0]['steps'] as List<dynamic>;
+    final stepsMap = jobMap[0]['steps'] as Map<String, dynamic>;
 
-    core.info('exiting step map: ${stepsMap.toString()}');
+    core.info('exiting step map $stepsMap');
 
     final jobsList =
         GithubJobsList.fromJson(dartify(response) as Map<String, dynamic>);
@@ -171,9 +171,9 @@ Future<String> getFailingStep(
 
 class GithubJobsList {
   GithubJobsList.fromJson(Map<String, dynamic> json)
-      : jobs = (dartify(json['jobs'] ?? []) as List)
+      : jobs = (json['jobs'] as List)
             .map(
-              (job) => GithubJob.fromJson(dartify(job) as Map<String, dynamic>),
+              (job) => GithubJob.fromJson(job as Map<String, dynamic>),
             )
             .toList();
   final List<GithubJob> jobs; // Initializer list to set the final field.
@@ -193,9 +193,8 @@ class GithubJobsList {
 class GithubJob {
   GithubJob.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String,
-        steps = (dartify(json['steps'] ?? []) as List<Map<String, dynamic>>)
-            .map((step) =>
-                GithubStep.fromJson(dartify(step) as Map<String, dynamic>))
+        steps = (json['steps'] as List<Map<String, dynamic>>)
+            .map(GithubStep.fromJson)
             .toList();
 
   final String name;
