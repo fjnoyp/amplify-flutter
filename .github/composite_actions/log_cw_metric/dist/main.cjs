@@ -7807,7 +7807,7 @@
     getFailingStep$body(jobIdentifier, githubToken, repo, runId) {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.String),
-        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, responseMap, jobsMap, job, steps, failingStep, e, t1, t2, t3, exception, $async$exception;
+        $async$returnValue, $async$handler = 2, $async$currentError, headers, response, responseMap, jobsMap, matchingJob, steps, failingStep, e, t1, t2, t3, exception, $async$exception;
       var $async$getFailingStep = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$currentError = $async$result;
@@ -7828,12 +7828,10 @@
               // returning from await.
               response = $async$result;
               responseMap = type$.Map_String_dynamic._as(A.dartify(response));
-              t3 = type$.List_dynamic;
+              t3 = type$.List_Map_String_dynamic;
               jobsMap = t3._as(A.dartify(J.$index$asx(responseMap, "jobs")));
-              t2._as(t1.core).info("jobsMap " + A.S(jobsMap));
-              job = J.firstWhere$1$ax(jobsMap, new A.getFailingStep_closure(jobIdentifier));
-              t2._as(t1.core).info("jobs " + A.S(job));
-              steps = t3._as(A.dartify(J.$index$asx(job, "steps")));
+              matchingJob = J.firstWhere$1$ax(jobsMap, new A.getFailingStep_closure(jobIdentifier));
+              steps = t3._as(A.dartify(J.$index$asx(matchingJob, "steps")));
               t2._as(t1.core).info("steps " + A.S(steps));
               failingStep = type$.Map_dynamic_dynamic._as(A.dartify(J.firstWhere$1$ax(steps, new A.getFailingStep_closure0())));
               t2._as(t1.core).info("faililngSTep " + A.S(failingStep));
@@ -8738,7 +8736,6 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      A._asInt(index);
       if (!(index >= 0 && index < receiver.length))
         throw A.wrapException(A.diagnoseIndexError(receiver, index));
       return receiver[index];
@@ -9104,12 +9101,6 @@
     get$length(receiver) {
       return receiver.length;
     },
-    $index(receiver, index) {
-      A._asInt(index);
-      if (!(index >= 0 && index < receiver.length))
-        throw A.wrapException(A.diagnoseIndexError(receiver, index));
-      return receiver[index];
-    },
     $isJSIndexable: 1,
     $isTrustedGetRuntimeType: 1,
     $isPattern: 1,
@@ -9157,7 +9148,7 @@
   A._EfficientLengthCastIterable.prototype = {$isEfficientLengthIterable: 1};
   A._CastListBase.prototype = {
     $index(_, index) {
-      return this.$ti._rest[1]._as(J.$index$asx(this._source, A._asInt(index)));
+      return this.$ti._rest[1]._as(J.$index$asx(this._source, index));
     },
     $indexSet(_, index, value) {
       var t1 = this.$ti;
@@ -9231,9 +9222,7 @@
       return this._string.length;
     },
     $index(_, i) {
-      var t1;
-      A._asInt(i);
-      t1 = this._string;
+      var t1 = this._string;
       if (!(i >= 0 && i < t1.length))
         return A.ioore(t1, i);
       return t1.charCodeAt(i);
@@ -10292,9 +10281,7 @@
       return t1.index + t1[0].length;
     },
     $index(_, index) {
-      var t1;
-      A._asInt(index);
-      t1 = this._match;
+      var t1 = this._match;
       if (!(index < t1.length))
         return A.ioore(t1, index);
       return t1[index];
@@ -10360,7 +10347,6 @@
       return this.start + this.pattern.length;
     },
     $index(_, g) {
-      A._asInt(g);
       if (g !== 0)
         A.throwExpression(A.RangeError$value(g, null));
       return this.pattern;
@@ -10438,7 +10424,6 @@
   };
   A.NativeTypedArrayOfDouble.prototype = {
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10480,7 +10465,6 @@
       return B.Type_Int16List_uXf;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10492,7 +10476,6 @@
       return B.Type_Int32List_O50;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10504,7 +10487,6 @@
       return B.Type_Int8List_ekJ;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10516,7 +10498,6 @@
       return B.Type_Uint16List_2bx;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10528,7 +10509,6 @@
       return B.Type_Uint32List_2bx;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10543,7 +10523,6 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -10558,7 +10537,6 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      A._asInt(index);
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
@@ -15001,12 +14979,6 @@
   };
   A._DataUri.prototype = {};
   A.Expando.prototype = {
-    $index(_, object) {
-      type$.Object._as(object);
-      if (A._isBool(object) || typeof object == "number" || typeof object == "string" || false)
-        A.Expando__badExpandoKey(object);
-      return this._jsWeakMap.get(object);
-    },
     $indexSet(_, object, value) {
       type$.Object._as(object);
       this.$ti._eval$1("1?")._as(value);
@@ -17982,14 +17954,14 @@
     $signature: 64
   };
   A.getFailingStep_closure.prototype = {
-    call$1(element) {
-      return J.$eq$(J.$index$asx(element, "name"), this.jobIdentifier);
+    call$1(job) {
+      return J.$eq$(type$.Map_String_dynamic._as(job).$index(0, "name"), this.jobIdentifier);
     },
     $signature: 29
   };
   A.getFailingStep_closure0.prototype = {
     call$1(element) {
-      return J.$eq$(J.$index$asx(element, "conclusion"), "failure");
+      return J.$eq$(type$.Map_String_dynamic._as(element).$index(0, "conclusion"), "failure");
     },
     $signature: 29
   };
@@ -18187,7 +18159,7 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "String(String)", "~(~())", "~(Uint8List,String,int)", "~(String,@)", "~(Object?)", "@()", "String(Match)", "Object?(Object?)", "@(@)", "Null(Object,StackTrace)", "~(String)", "int(Frame)", "@(String)", "String(Frame)", "Trace(String)", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "bool(@)", "~(JSObject)", "Future<0&>()", "_Future<@>(@)", "Future<~>(Object,Chain)", "~(Uint8List)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "_LineSplitterEventSink(EventSink<String>)", "~(Symbol0,@)", "0&(JSObject)", "@(@,String)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "int(int,int)", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "~(String,int)", "List<Frame>(Trace)", "int(Trace)", "0^(0^,0^)<num>", "String(Trace)", "~(String,int?)", "Null(@,StackTrace)", "~(@,@)", "Null(~())", "Uint8List(@,@)", "Future<Null>()", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(@,StackTrace?)", "Chain()", "String(MapEntry<String,String>)", "Null(@,@)", "~(int,@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(Object?,Object?)", "Frame(String,String)", "~(List<int>)"],
+    types: ["~()", "bool(String)", "~(Object,StackTrace)", "Trace()", "Frame()", "Frame(String)", "Null()", "~(@)", "Future<~>()", "Null(@)", "String(String)", "~(~())", "~(Uint8List,String,int)", "~(String,@)", "~(Object?)", "@()", "String(Match)", "Object?(Object?)", "@(@)", "Null(Object,StackTrace)", "~(String)", "int(Frame)", "@(String)", "String(Frame)", "Trace(String)", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?,Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?,Object?,Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "bool(Map<String,@>)", "~(JSObject)", "Future<0&>()", "_Future<@>(@)", "Future<~>(Object,Chain)", "~(Uint8List)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "~([@])", "Null([Object?,Object?,Object?])", "NodeProcessManager()", "_LineSplitterEventSink(EventSink<String>)", "~(Symbol0,@)", "0&(JSObject)", "@(@,String)", "String(String?)", "Trace(Trace)", "Frame?(Frame)", "int(int,int)", "bool(TargetLineEntry)", "bool(TargetEntry)", "Map<String,int>()", "~(String,int)", "List<Frame>(Trace)", "int(Trace)", "0^(0^,0^)<num>", "String(Trace)", "~(String,int?)", "Null(@,StackTrace)", "~(@,@)", "Null(~())", "Uint8List(@,@)", "Future<Null>()", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(@,StackTrace?)", "Chain()", "String(MapEntry<String,String>)", "Null(@,@)", "~(int,@)", "Future<0^>([0^/?])<Object?>", "~(Object?[Object?])", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?,Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?,Object?,Object?>", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "~(Object?,Object?)", "Frame(String,String)", "~(List<int>)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
@@ -18250,6 +18222,7 @@
       JavaScriptFunction: findType("JavaScriptFunction"),
       JavaScriptIndexingBehavior_dynamic: findType("JavaScriptIndexingBehavior<@>"),
       JsLinkedHashMap_Symbol_dynamic: findType("JsLinkedHashMap<Symbol0,@>"),
+      List_Map_String_dynamic: findType("List<Map<String,@>>"),
       List_Object: findType("List<Object>"),
       List_String: findType("List<String>"),
       List_dynamic: findType("List<@>"),
