@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:js_util';
 
 import 'package:actions/actions.dart';
+import 'package:actions/src/githubJobs/github_jobs.dart';
 import 'package:actions/src/node/actions/github.dart';
 
 import 'package:actions/src/node/process_manager.dart';
@@ -135,14 +136,34 @@ Future<String> getFailingStep(
       headers: headers,
     );
 
-    final responseMap = dartify(response) as Map<String, dynamic>;
-    final jobsMap = dartify(responseMap['jobs']) as List<Map<String, dynamic>>;
-    final matchingJob = jobsMap.firstWhere(
-      (final job) => job['name'] == jobIdentifier,
+    final jobsList = GithubJobsList.fromJson(response);
+    final matchingJob =
+        jobsList.jobs.firstWhere((job) => job.name == jobIdentifier);
+    final steps = matchingJob.steps;
+    core.info('steps $steps');
+
+    final failingStep = steps.firstWhere(
+      (element) => element.conclusion == 'failure',
     );
-    final steps = dartify(matchingJob['steps']) as List<Map<String, dynamic>>;
+
+    core.info('faililngStep $failingStep');
+
+    core.info('failingStep name ${failingStep.name}');
+
+    return failingStep.name;
+
+    /*
+
+
+    final responseMap = dartify(response) as Map<String, dynamic>;
+    final jobsMap = dartify(responseMap['jobs']) as List<dynamic>;
+    final matchingJob = jobsMap.firstWhere(
+      (job) => job['name'] == jobIdentifier,
+    );
+    final steps = dartify(matchingJob['steps']) as List<dynamic>;
 
     core.info('steps $steps');
+    */
 
     /*
     jobsMap.forEach((element) {
@@ -166,6 +187,7 @@ Future<String> getFailingStep(
       (element) => element.name == jobIdentifier,
     );
     */
+    /*
 
     final failingStep = dartify(steps.firstWhere(
       (element) => element['conclusion'] == 'failure',
@@ -174,12 +196,17 @@ Future<String> getFailingStep(
     core.info('faililngSTep $failingStep');
 
     return failingStep['name'] as String;
+    */
   } on Exception catch (e) {
     core.error('Error fetching data from GitHub API: $e');
     return '';
   }
 }
 
+
+
+/*
+@serializable
 class GithubJobsList {
   GithubJobsList.fromJson(Map<String, dynamic> json)
       : jobs = (json['jobs'] as List<dynamic>)
@@ -190,17 +217,7 @@ class GithubJobsList {
   final List<GithubJob> jobs; // Initializer list to set the final field.
 }
 
-/*
-class GithubJobsList {
-  GithubJobsList.fromJson(Map<String, dynamic> json)
-      : jobs = (json['jobs'] as List<Map<String, dynamic>>)
-            .map(GithubJob.fromJson)
-            .toList();
-
-  final List<GithubJob> jobs;
-}
-*/
-
+@serializable
 class GithubJob {
   GithubJob.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String,
@@ -212,6 +229,7 @@ class GithubJob {
   final List<GithubStep> steps;
 }
 
+@serializable
 class GithubStep {
   GithubStep.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String,
@@ -220,3 +238,4 @@ class GithubStep {
   final String name;
   final String conclusion;
 }
+*/
