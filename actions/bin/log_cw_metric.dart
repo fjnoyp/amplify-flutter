@@ -27,7 +27,14 @@ Future<void> logMetric() async {
       .replaceAll(' ', '');
   final matrix = json.decode(matrixCleanedInput) as Map<String, dynamic>;
 
+  core.info('Matrix cleaned input: $matrixCleanedInput');
+
   final matrixValues = matrix.values.map((e) => e).join(', ');
+
+  core.info('Matrix is empty: ${matrixValues.isEmpty}');
+
+  core.info('Matrix stuff: ${matrixValues}');
+
   final jobIdentifier =
       '${github.context.job} ${matrixValues.isEmpty ? '' : '($matrixValues)'}';
 

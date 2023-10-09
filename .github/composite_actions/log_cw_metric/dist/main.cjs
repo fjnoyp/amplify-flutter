@@ -8076,7 +8076,7 @@
     logMetric() {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$returnValue, t4, matrixValues, jobIdentifier, githubToken, t5, isFailed, failingStep, metricName, testType, packageName, category, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value, t6, t7, cloudArgs, t1, t2, jobStatus, matrixRawInput, t3;
+        $async$returnValue, t3, matrixCleanedInput, matrix, t4, matrixValues, jobIdentifier, githubToken, t5, isFailed, failingStep, metricName, testType, packageName, category, framework, flutterDartChannel, dartVersion, flutterVersion, dartCompiler, platform, platformVersion, value, t6, t7, cloudArgs, t1, t2, jobStatus, matrixRawInput;
       var $async$logMetric = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return A._asyncRethrow($async$result, $async$completer);
@@ -8088,18 +8088,25 @@
               t2 = type$.JSObject;
               jobStatus = A.Core_getRequiredInput(t2._as(t1.core), "job-status");
               matrixRawInput = A.Core_getRequiredInput(t2._as(t1.core), "matrix");
+              t2._as(t1.core).info("Matrix raw input: " + matrixRawInput);
               t3 = A.stringReplaceAllUnchecked(matrixRawInput, "\n", "");
               t3 = A.stringReplaceAllUnchecked(t3, "\\", "");
-              t3 = type$.Map_String_dynamic._as(B.C_JsonCodec.decode$1(A.stringReplaceAllUnchecked(t3, " ", ""))).get$values();
+              matrixCleanedInput = A.stringReplaceAllUnchecked(t3, " ", "");
+              matrix = type$.Map_String_dynamic._as(B.C_JsonCodec.decode$1(matrixCleanedInput));
+              t2._as(t1.core).info("Matrix cleaned input: " + matrixCleanedInput);
+              t3 = matrix.get$values();
               t4 = A._instanceType(t3);
               matrixValues = A.MappedIterable_MappedIterable(t3, t4._eval$1("@(Iterable.E)")._as(new A.logMetric_closure()), t4._eval$1("Iterable.E"), type$.dynamic).join$1(0, ", ");
-              t4 = A._asString(t2._as(t2._as(t1.github).context).job);
-              t3 = matrixValues.length === 0 ? "" : "(" + matrixValues + ")";
-              jobIdentifier = t4 + " " + t3;
+              t4 = matrixValues.length === 0;
+              t2._as(t1.core).info("Matrix is empty: " + t4);
+              t2._as(t1.core).info("Matrix stuff: " + matrixValues);
+              t3 = A._asString(t2._as(t2._as(t1.github).context).job);
+              t4 = t4 ? "" : "(" + matrixValues + ")";
+              jobIdentifier = t3 + " " + t4;
               t2._as(t1.core).info("Job identifier: " + jobIdentifier);
               githubToken = A.Core_getRequiredInput(t2._as(t1.core), "github-token");
-              t3 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).owner);
-              t4 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).repo);
+              t4 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).owner);
+              t3 = A._asString(t2._as(t2._as(t2._as(t1.github).context).repo).repo);
               t5 = A._asInt(t2._as(t2._as(t1.github).context).runId);
               isFailed = jobStatus === "failure";
               $async$goto = isFailed ? 3 : 5;
@@ -8107,7 +8114,7 @@
             case 3:
               // then
               $async$goto = 6;
-              return A._asyncAwait(A.getFailingStep(jobIdentifier, githubToken, t3 + "/" + t4, "" + t5), $async$logMetric);
+              return A._asyncAwait(A.getFailingStep(jobIdentifier, githubToken, t4 + "/" + t3, "" + t5), $async$logMetric);
             case 6:
               // returning from await.
               // goto join
