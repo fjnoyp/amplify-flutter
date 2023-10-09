@@ -18,6 +18,8 @@ Future<void> logMetric() async {
   // Create job identifier from matrix values
   final matrixRawInput = core.getRequiredInput('matrix');
 
+  core.info('Matrix raw input: $matrixRawInput');
+
   // Parse the matrix string (input is raw json string with " and \n)
   final matrixCleanedInput = matrixRawInput
       .replaceAll('\n', '')
