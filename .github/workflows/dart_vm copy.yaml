@@ -1,0 +1,34 @@
+name: Dart (VM)
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: The name of the package being tested
+        required: true
+        type: string
+      working-directory:
+        description: The working directory relative to the repo root
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      # Allows other matrix items to run if one fails
+      fail-fast: false
+      matrix:
+        sdk:
+          # Minimum supported Dart version
+          - "3.0.1"
+          - stable
+          - beta
+        # Skips 'beta' tests on PRs
+        exclude:
+          - sdk: ${{ (github.event_name == 'pull_request') && 'beta' || 'NONE' }}
+    steps:
+      - name: Verify you were run
+        run: |
+          echo "Matrix values: ${{ matrix.sdk }} excluding: ${{ matrix.exclude }} eventName: ${{ github.event_name }}"
