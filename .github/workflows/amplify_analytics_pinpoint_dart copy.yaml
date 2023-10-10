@@ -1,5 +1,5 @@
 # Generated with aft. To update, run: `aft generate workflows`
-name: amplify_analytics_pinpoint_dart_new
+name: aaa_amplify_analytics_pinpoint_dart
 on:
   workflow_dispatch:
   push:
