@@ -41,6 +41,7 @@ on:
     paths:
       - ".github/composite_actions/setup_firefox/action.yaml"
       - ".github/workflows/amplify_analytics_pinpoint_dart.yaml"
+      - ".github/workflows/amplify_analytics_pinpoint_dart copy.yaml"
       - ".github/workflows/dart_dart2js.yaml"
       - ".github/workflows/dart_ddc.yaml"
       - ".github/workflows/dart_native.yaml"
